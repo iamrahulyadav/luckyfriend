@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff">
+
+    <FrameLayout
+        android:id="@+id/mainframe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_gravity="center"
+
+        >
+
+        <RelativeLayout
+            android:id="@+id/circle1"
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/grey_background_apptour"></RelativeLayout>
+
+        <ImageView
+            android:id="@+id/image1"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="left|bottom"
+            android:layout_marginBottom="65dp"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/white_background"
+            android:padding="8dp"
+            android:src="@drawable/apptour_male" />
+
+        <ImageView
+            android:id="@+id/image2"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginLeft="80dp"
+            android:background="@drawable/white_background"
+            android:padding="8dp"
+            android:src="@drawable/apptour_male" />
+
+    </FrameLayout>
+    <!-- innner circle2 -->
+    <FrameLayout
+        android:id="@+id/mainframe2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+
+
+        >
+
+        <RelativeLayout
+            android:id="@+id/circle2"
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+
+            android:background="@drawable/grey_background_apptour"></RelativeLayout>
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="left|center_vertical"
+            android:background="@drawable/white_background"
+            android:padding="8dp"
+            android:src="@drawable/apptour_male"
+
+            />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_vertical|right"
+            android:background="@drawable/white_background"
+            android:padding="8dp"
+            android:src="@drawable/apptour_male" />
+
+
+    </FrameLayout>
+    <!--end here -->
+
+    <!-- innner circle2 -->
+    <FrameLayout
+        android:id="@+id/mainframe3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+
+        >
+
+        <RelativeLayout
+            android:id="@+id/circle3"
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+
+            android:background="@drawable/grey_background_apptour"></RelativeLayout>
+
+
+        <ImageView
+            android:id="@+id/image3"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="bottom|center_horizontal"
+            android:background="@drawable/white_background"
+            android:padding="8dp"
+            android:src="@drawable/apptour_male" />
+
+
+    </FrameLayout>
+    <!--end here -->
+
+    <!-- innner circle3 -->
+    <FrameLayout
+
+        android:id="@+id/mainframe4"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_gravity="center">
+
+        <RelativeLayout
+            android:id="@+id/circle4"
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+
+            android:background="@drawable/grey_background_apptour"></RelativeLayout>
+
+
+    </FrameLayout>
+    <!--end here -->
+    <ImageView
+        android:id="@+id/location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|center_vertical|top"
+        android:src="@drawable/location"
+        android:layout_marginTop="25dp"
+        />
+</FrameLayout>

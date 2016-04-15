@@ -1,0 +1,314 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.init.luckyfriend.activity.Filter"
+    android:orientation="vertical"
+android:background="#fff"
+    >
+
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginRight="20dp"
+
+            >
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Filter"
+
+                android:textSize="18sp"
+                android:textColor="#555e71"
+                android:gravity="center"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/filter_cross_icon"
+                android:layout_gravity="right|center_vertical"
+                android:background="@android:color/transparent"
+                />
+
+        </FrameLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+            <LinearLayout
+                android:id="@+id/ll"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_gravity="center"
+                android:background="@drawable/linearback"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+
+                >
+                <Button
+                    android:id="@+id/m2"
+                    android:layout_width="wrap_content"
+                    android:text="Woman"
+                    android:background="#687484"
+                    android:textColor="#ffffff"
+                    android:textAllCaps="false"
+                    android:focusable="true"
+                    android:textSize="12sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="switchbutton"
+                    />
+                <Button
+                    android:id="@+id/m1"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:text="Man"
+                    android:background="#ffffff"
+                    android:textColor="#687484"
+                    android:focusable="true"
+                    android:textAllCaps="false"
+                    android:textSize="12sp"
+                    android:layout_height="wrap_content"
+                    android:onClick="switchbutton"
+                    />
+
+            </LinearLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="20dp"
+        >
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginRight="10dp"
+
+    >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Years"
+                android:textSize="16sp"
+                android:textColor="#a9aeb9"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="10dp"
+                />
+
+            <com.appyvet.rangebar.RangeBar
+                xmlns:custom="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/rangebar1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                custom:tickColor="#222427"
+                custom:tickStart="15"
+                custom:tickEnd="50"
+                custom:tickHeight="0dp"
+                custom:rangeBarColor="#222427"
+                custom:temporaryPins="false"
+                custom:pinColor="#687484"
+
+                custom:connectingLineColor="#687484"
+                custom:selectorColor="#687484"
+                custom:pinMaxFont="5sp"
+                custom:pinMinFont="3sp"
+
+                />
+
+
+
+        </LinearLayout>
+<View
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="#a9aeb9"
+    />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Feet"
+            android:textSize="16sp"
+            android:textColor="#a9aeb9"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"
+            />
+
+        <com.appyvet.rangebar.RangeBar
+            xmlns:custom="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/rangebar2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            custom:tickColor="#222427"
+            custom:tickStart="15"
+            custom:tickEnd="50"
+            custom:tickHeight="0dp"
+            custom:rangeBarColor="#222427"
+            custom:temporaryPins="false"
+            custom:pinColor="#687484"
+
+            custom:connectingLineColor="#687484"
+            custom:selectorColor="#687484"
+            custom:pinMaxFont="5sp"
+            custom:pinMinFont="3sp"
+
+            />
+
+
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#a9aeb9"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Status"
+            android:textSize="16sp"
+            android:textColor="#a9aeb9"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"
+            />
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Single"
+    android:textSize="16sp"
+    android:textColor="@color/HelpcolorPrimary"
+    android:layout_alignParentRight="true"
+    />
+
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#a9aeb9"
+        />
+
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="15sp"
+    android:layout_marginBottom="15sp"
+    android:text="Mother Tongue"
+    android:textSize="16sp"
+    android:textColor="#a9aeb9"
+    android:drawableRight="@drawable/next"
+    />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#a9aeb9"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15sp"
+        android:layout_marginBottom="15sp"
+        android:text="Country"
+        android:textSize="16sp"
+        android:textColor="#a9aeb9"
+        android:drawableRight="@drawable/next"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#a9aeb9"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15sp"
+        android:layout_marginBottom="15sp"
+        android:text="State"
+        android:textSize="16sp"
+        android:textColor="#a9aeb9"
+        android:drawableRight="@drawable/next"
+        />
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+android:layout_gravity="bottom"
+    >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Search"
+        android:textColor="#fff"
+        android:textSize="17sp"
+        android:gravity="center"
+        android:background="@drawable/blue_selector_baground"
+        android:paddingTop="10sp"
+        android:paddingBottom="10sp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/search"
+        />
+    <TextView
+        android:id="@+id/advanced"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Advanced"
+        android:textColor="#6695ff"
+        android:gravity="center"
+       android:textSize="16sp"
+        android:layout_below="@+id/search"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="15dp"
+        />
+
+
+</RelativeLayout>
+
+</LinearLayout>
+
+
+
+
+
+    </ScrollView>
+
+
+</LinearLayout>
+

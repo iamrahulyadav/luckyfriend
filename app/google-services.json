@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_id": "luckyfriends-1253",
+    "project_number": "554789492420",
+    "name": "LuckyFriends"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:554789492420:android:55eb8b0fad9cd059",
+        "client_id": "android:com.init.luckyfriend",
+        "client_type": 1,
+        "android_client_info": {
+          "package_name": "com.init.luckyfriend",
+          "certificate_hash": []
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "554789492420-uga707u9pefbddqan2t4j4a8ln4vp3nm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.init.luckyfriend",
+            "certificate_hash": "5BE8D7B28A92E0BE989DFEDAA9A17D40E97ECA9E"
+          }
+        },
+        {
+          "client_id": "554789492420-c9qqb8ogk7rjoievvmt24mllu8runl7o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "cloud_messaging_service": {
+          "status": 1,
+          "apns_config": []
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "google_signin_service": {
+          "status": 2
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "client_info": [],
+  "ARTIFACT_VERSION": "1"
+}

@@ -1,0 +1,129 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.init.luckyfriend.activity.Help"
+    android:orientation="vertical"
+    >
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#555e71"        >
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="My Account Help"
+                android:id="@+id/account"
+                android:textSize="18sp"
+                android:textColor="#fff"
+                android:gravity="center"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/back"
+                android:layout_gravity="left|center_vertical"
+                android:background="@drawable/transparent"
+                android:id="@+id/back"
+                />
+
+        </FrameLayout>
+
+    </android.support.v7.widget.Toolbar>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#555e71"
+            android:paddingBottom="20dp"
+            android:paddingTop="10dp"
+            android:layout_gravity="center_vertical"
+            >
+<RelativeLayout
+    android:layout_width="80dp"
+    android:layout_height="80dp"
+    android:background="@drawable/transparent_btn_feed_action"
+    android:layout_gravity="center"
+    >
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/help_question"
+
+                />
+</RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="How can i change my status \n       in profile screen    ? "
+                android:layout_gravity="center"
+                android:textSize="21sp"
+                android:textColor="#fff"
+                android:layout_marginTop="10dp"
+                android:id="@+id/text3"
+
+                />
+        </LinearLayout>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/help_icon"
+            android:layout_gravity="bottom"
+            android:scaleType="fitCenter"
+            android:background="#dadada"
+            android:layout_marginTop="-5dp"
+
+            />
+
+    </LinearLayout>
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="#dadada"
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="17sp"
+        android:layout_marginTop="40dp"
+        android:textColor="@color/HelpcolorPrimary"
+        android:text="When and how you'll get your tickets can \nvary by the type of tickets you ordered.You \ncan check your order status anytime by \ngoing to My tickets at the top of our home- \n page and clicking order."
+        android:id="@+id/text1"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="17sp"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/HelpcolorPrimary"
+        android:text="When you buy tickets, we'll also send you \nan email telling you when to expect them, \nand we'll send you another email as soon \nas they're on their way. "
+        android:id="@+id/text2"
+        />
+
+
+</LinearLayout>
+
+
+</LinearLayout>

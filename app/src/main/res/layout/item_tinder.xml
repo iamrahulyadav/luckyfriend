@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:layout_marginBottom="10dp"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:layout_marginTop="20dp"
+
+    >
+<FrameLayout
+    android:id="@+id/background"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+
+</FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/shape"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <FrameLayout
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+
+            <ImageView
+                android:id="@+id/cardImage"
+                android:layout_width="match_parent"
+                android:layout_height="600dp"
+                android:src="@drawable/iiiii"
+                android:scaleType="centerCrop"
+
+                 />
+        </FrameLayout>
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="bottom"
+
+        >
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            >
+            <RelativeLayout
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@drawable/red_btn_feed_action"
+                android:clickable="true"
+                android:layout_alignParentRight="true"
+                android:id="@+id/item_swipe_right_indicator"
+                >
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/nearby_filled_heart"
+                    android:layout_gravity="center"
+                    android:id="@+id/like"
+                    android:layout_centerInParent="true"
+                    android:background="?attr/selectableItemBackground"
+                    />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@drawable/transparent_btn_feed_action"
+                android:clickable="true"
+                android:id="@+id/item_swipe_left_indicator"
+                >
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/cross_icon"
+                    android:layout_gravity="center"
+                    android:id="@+id/cross"
+                    android:layout_centerInParent="true"
+                    android:background="?attr/selectableItemBackground"
+                    />
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Richael Davidsons"
+            android:textSize="22sp"
+            android:textColor="#fff"
+            android:layout_gravity="center"
+            android:id="@+id/name"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="24 Years, Australia"
+            android:textSize="18sp"
+            android:textColor="#a8a8a8"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:id="@+id/dob"
+            />
+
+    </LinearLayout>
+
+</FrameLayout>

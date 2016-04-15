@@ -1,0 +1,179 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.init.luckyfriend.activity.Login"
+    android:orientation="vertical"
+    android:background="#fff"
+    >
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+
+
+        >
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/login_wall_image"
+        android:scaleType="centerCrop"
+
+        />
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|bottom"
+
+            >
+
+            <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/heart_icon"
+            android:background="@android:color/transparent"
+            android:layout_marginTop="30dp"
+                />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lucky\nFriend"
+            android:layout_gravity="center"
+            android:id="@+id/name"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:textSize="23sp"
+            />
+        </FrameLayout>
+
+   <!--     <com.twitter.sdk.android.core.identity.TwitterLoginButton
+            android:id="@+id/twitter_login_button"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            />
+
+-->
+    </FrameLayout>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_weight="0"
+    >
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Sign Up with"
+    android:textColor="#b6b9c0"
+    android:textSize="17sp"
+    android:gravity="center"
+    android:layout_marginTop="10dp"
+    android:id="@+id/signupwith"
+    />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="bottom"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        >
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+
+            >
+            <RelativeLayout
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@drawable/facebook_background"
+                android:clickable="true"
+                android:id="@+id/fbsignup"
+                >
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/facebook_icon"
+                    android:layout_gravity="center"
+                    android:layout_centerInParent="true"
+
+                      />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@drawable/blue_btn_feed_action"
+                android:layout_centerInParent="true"
+                android:clickable="true"
+                android:id="@+id/twitter"
+                >
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/twitter_icon"
+                    android:layout_gravity="center"
+
+                    android:layout_centerInParent="true"
+                    />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@drawable/google_back_button"
+                android:layout_alignParentRight="true"
+                android:clickable="true"
+                android:id="@+id/google"
+
+                >
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/gplus"
+                    android:layout_gravity="center"
+                    android:layout_centerInParent="true"
+                       />
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:layout_marginTop="20dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Terms of service and privacy"
+        android:textSize="14sp"
+        android:textColor="#b6b9c0"
+        android:layout_alignParentLeft="true"
+        android:id="@+id/terms"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sign up with email"
+        android:textColor="#2f6fff"
+        android:layout_alignParentRight="true"
+        android:id="@+id/signup"
+        android:clickable="true"
+        android:textSize="14sp"
+        />
+
+
+</RelativeLayout>
+    </LinearLayout>
+</LinearLayout>
+</LinearLayout>

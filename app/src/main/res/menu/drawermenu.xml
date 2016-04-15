@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Home"/>
+
+<group android:id="@+id/group1"
+
+    >
+
+
+    <item android:title="Activities"
+
+          android:id="@+id/nav_item_activities"
+        />
+
+
+    <item android:title="Favourites"
+        android:id="@+id/nav_item_favourite"
+        android:icon="@drawable/star"
+        />
+
+
+    <item android:title="Photos"
+        android:id="@+id/nav_item_photos"
+      />
+
+
+
+</group>
+
+    <group android:id="@+id/social"
+
+        >
+
+
+        <item android:title="People Near By"
+            android:id="@+id/nav_item_people"
+            android:icon="@drawable/ic_action_search"/>
+
+        <item android:title="Friends"
+            android:id="@+id/nav_item_friends"
+            android:icon="@drawable/ic_action_search"/>
+
+
+
+        <item android:title="Matches"
+            android:id="@+id/nav_item_matches"
+            android:icon="@drawable/ic_action_search"/>
+
+
+    </group>
+
+
+
+</menu>

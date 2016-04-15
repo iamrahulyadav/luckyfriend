@@ -1,0 +1,169 @@
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".MainActivity"
+    android:orientation="vertical"
+    android:background="#fff"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+
+        >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="right|center_horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="10dp"
+            android:id="@+id/skip"
+            android:layout_weight="0"
+            android:layout_alignParentRight="true"
+            >
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Skip"
+                android:textSize="15sp"
+                android:textColor="#dadada"
+
+                />
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/next_arrow"
+                android:layout_gravity="center_vertical"
+                />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+
+    <android.support.v4.view.ViewPager
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#eff3f7"
+        android:layout_marginTop="2dp"
+        />
+<ImageView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:src="@drawable/downapp"
+    android:layout_gravity="center"
+     android:layout_marginTop="-7.5dp"
+    />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Friends NearBy You!"
+        android:id="@+id/text"
+        android:textColor="@color/HelpcolorPrimary"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_weight="0"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Thousand people nearby you. Look around \nFind your friends nearby you!"
+        android:textColor="@color/HelpcolorPrimary"
+        android:textSize="15sp"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_weight="0"
+        android:id="@+id/messagetext"
+        />
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="5dip"
+    android:layout_weight="0"
+    >
+    <com.viewpagerindicator.CirclePageIndicator
+        android:id="@+id/indicator"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        app:centered="true"
+        app:fillColor="@color/HelpcolorPrimary"
+        app:pageColor="#dadada"
+        app:snap="false"
+        />
+</LinearLayout>
+
+    <Button
+        android:id="@+id/joinnow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Join Now"
+        android:textSize="17sp"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:textColor="#fff"
+        android:background="@drawable/blue_selector_baground"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:textAllCaps="false"
+        android:layout_marginBottom="10dp"
+        />
+
+</LinearLayout>
+
+
+ <FrameLayout
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:layout_gravity="center|top"
+
+     >
+    <ImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@drawable/heart_icon"
+
+
+        />
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Lucky\nFriend"
+    android:layout_gravity="center"
+    android:id="@+id/appname"
+    android:textSize="13sp"
+    android:textStyle="bold"
+    android:textColor="#fff"
+    android:layout_marginTop="-15dp"
+    />
+ </FrameLayout>
+</FrameLayout>

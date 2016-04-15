@@ -1,0 +1,234 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.init.luckyfriend.activity.AfterLogin"
+    android:background="#fff"
+    >
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_weight="1"
+    android:paddingBottom="10dp"
+    >
+
+    <FrameLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        >
+        <View
+
+            android:layout_width="250dp"
+            android:layout_height="260dp"
+            android:background="@drawable/test_back2"
+            android:layout_gravity="right|top"
+            android:rotation="142"
+            android:layout_marginTop="-150dp"
+            android:layout_marginRight="18dp"
+            />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:rotation="142"
+            android:layout_marginTop="-140dp"
+            android:layout_marginLeft="-35dp"
+
+            >
+
+            <View
+
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:background="@drawable/test_back"
+                />
+
+        </FrameLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lucky Friend   "
+            android:textColor="#fff"
+            android:textSize="33.5sp"
+            android:gravity="center"
+            android:id="@+id/appname"
+            android:layout_marginTop="30dp"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tagline Goes here  "
+            android:textColor="#fff"
+            android:textSize="15sp"
+            android:gravity="center"
+            android:id="@+id/tagline"
+            android:layout_marginTop="65dp"
+
+            />
+
+
+    </FrameLayout>
+
+
+
+
+
+    <TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Just fill the little about yourself "
+    android:gravity="center"
+    android:textSize="25sp"
+    android:layout_marginTop="5dp"
+    />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="We will find a perfect match for you"
+        android:gravity="center"
+        android:textSize="17sp"
+        android:layout_marginTop="5dp"
+        />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+ <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+
+    >
+
+<EditText
+    android:id="@+id/location"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="Location"
+    android:layout_marginTop="20dp"
+   android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:textColorHint="#dee0e4"
+    android:textColor="#000"
+    android:textSize="16sp"
+    android:drawableRight="@drawable/next"
+    android:background="@android:color/transparent"
+    />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#dadada"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        />
+    <EditText
+        android:id="@+id/marital_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Marital Status"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textColorHint="#dee0e4"
+        android:textColor="#000"
+        android:textSize="16sp"
+        android:drawableRight="@drawable/next"
+        android:background="@android:color/transparent"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#dadada"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        />
+    <EditText
+        android:id="@+id/gender"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Sexuality"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textColorHint="#dee0e4"
+        android:textColor="#000"
+        android:drawableRight="@drawable/next"
+        android:background="@android:color/transparent"
+        android:textSize="16sp"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#dadada"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        />
+    <EditText
+        android:id="@+id/lookingfor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Looking For"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textColorHint="#dee0e4"
+        android:textColor="#000"
+        android:drawableRight="@drawable/next"
+        android:background="@android:color/transparent"
+        android:textSize="16sp"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#dadada"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        />
+    <EditText
+        android:id="@+id/whatlookingfor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="What you looking for"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textColorHint="#dee0e4"
+        android:textColor="#000"
+        android:drawableRight="@drawable/next"
+        android:background="@android:color/transparent"
+        android:textSize="16sp"
+        />
+</LinearLayout>
+    </ScrollView>
+</LinearLayout>
+    <Button
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:textSize="18sp"
+        android:textAllCaps="false"
+        android:layout_gravity="bottom"
+        android:textColor="#fff"
+        android:background="@drawable/blue_selector_baground"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/submit"
+        android:layout_weight="0"
+        android:layout_marginBottom="10dp"
+
+        />
+</LinearLayout>

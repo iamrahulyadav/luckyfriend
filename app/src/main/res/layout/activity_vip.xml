@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#fff"
+    >
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/vipimage"
+        android:scaleType="centerCrop"
+        android:layout_weight="1"
+
+        />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="#fff"
+            />
+    </LinearLayout>
+        <com.init.luckyfriend.activity.CircleImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/cross_icon"
+            android:background="#20000000"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            />
+
+
+        <RelativeLayout
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:background="@drawable/diamond_background"
+            android:layout_gravity="center_horizontal|bottom"
+           android:layout_marginTop="5dp"
+            >
+
+<ImageView
+    android:layout_width="80dp"
+    android:layout_height="80dp"
+    android:src="@drawable/diamond"
+    android:layout_centerVertical="true"
+    android:layout_centerHorizontal="true" />
+
+
+        </RelativeLayout>
+
+    </FrameLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Get VIP Status Now!"
+        android:id="@+id/text"
+        android:textColor="@color/HelpcolorPrimary"
+        android:textSize="27sp"
+        android:gravity="center"
+        android:layout_marginTop="30dp"
+        android:layout_weight="0"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Thousand people nearby you. Look around \nFind your friends nearby you!"
+        android:textColor="@color/HelpcolorPrimary"
+        android:textSize="17sp"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_weight="0"
+        android:id="@+id/messagetext"
+        />
+
+    <com.viewpagerindicator.CirclePageIndicator
+        android:id="@+id/indicator"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:padding="10dip"
+        app:centered="true"
+        app:fillColor="@color/HelpcolorPrimary"
+        app:pageColor="#dadada"
+        app:snap="false"
+        android:layout_marginTop="20dp"
+        android:layout_weight="0"
+        />
+
+
+    <Button
+        android:id="@+id/joinnow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Get VIP"
+        android:textSize="17sp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:textColor="#fff"
+        android:background="@drawable/blue_selector_baground"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:textAllCaps="false"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="0"
+        />
+</LinearLayout>

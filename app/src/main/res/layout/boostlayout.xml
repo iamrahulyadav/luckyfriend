@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context="com.example.sanju.triangledemo.MainActivity"
+    android:background="#fff"
+    >
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:background="@color/colorAccent"
+
+                />
+
+            <FrameLayout
+                android:id="@+id/rlv2"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:layout_below="@+id/rlv1"
+                android:layout_marginRight="-19dp"
+                android:background="@drawable/triangle"
+                android:rotation="180"
+
+                />
+        </LinearLayout>
+        <View
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:background="@drawable/circle"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:layout_marginTop="14dp"
+            />
+    </FrameLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="300dp"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/boost_background_layout"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingRight="10dp"
+                android:paddingLeft="20dp"
+                >
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:text="1"
+                    android:textColor="#96a1bb"
+                    android:textSize="21sp"
+                    android:gravity="center"
+                    android:background="@drawable/one_drawable"
+                    android:textStyle="bold"
+                    />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="1 Day 2USD"
+                        android:textSize="16sp"
+                        android:gravity="center"
+                        android:textColor="@color/HelpcolorPrimary"
+                        android:textStyle="bold"
+                        />
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Only 2.00 usd per day"
+                        android:textSize="16sp"
+                        android:gravity="center"
+                        android:textColor="@color/HelpcolorPrimary"
+                        />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/boost_background_layout"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingRight="10dp"
+                android:paddingLeft="20dp"
+                >
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:text="1"
+                    android:textColor="#96a1bb"
+                    android:textSize="21sp"
+                    android:gravity="center"
+                    android:background="@drawable/one_drawable"
+                    android:textStyle="bold"
+                    />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="1 Day 2USD"
+                        android:textSize="16sp"
+                        android:gravity="center"
+                        android:textColor="@color/HelpcolorPrimary"
+                        android:textStyle="bold"
+                        />
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Only 2.00 usd per day"
+                        android:textSize="16sp"
+                        android:gravity="center"
+                        android:textColor="@color/HelpcolorPrimary"
+                        />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/boost_background_layout"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingRight="10dp"
+                android:paddingLeft="20dp"
+                >
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:text="1"
+                    android:textColor="#96a1bb"
+                    android:textSize="21sp"
+                    android:gravity="center"
+                    android:background="@drawable/one_drawable"
+                    android:textStyle="bold"
+                    />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="1 Day 2USD"
+                        android:textSize="16sp"
+                        android:gravity="center"
+                        android:textColor="@color/HelpcolorPrimary"
+                        android:textStyle="bold"
+                        />
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Only 2.00 usd per day"
+                        android:textSize="16sp"
+                        android:gravity="center"
+                        android:textColor="@color/HelpcolorPrimary"
+                        />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/red_selector_background"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="0"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Boost"
+                    android:textSize="18sp"
+                    android:textAllCaps="false"
+                    android:layout_centerInParent="true"
+                    android:id="@+id/boost"
+                    android:textColor="#fff"
+
+                    />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/boost"
+                    android:layout_toRightOf="@+id/boost"
+                    android:layout_centerInParent="true"
+                    android:paddingLeft="10dp"
+                    />
+
+            </RelativeLayout>
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+
+</FrameLayout>

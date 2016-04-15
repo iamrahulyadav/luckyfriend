@@ -1,0 +1,160 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.init.luckyfriend.activity.NearByFragment">
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    >
+
+<ImageView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:src="@drawable/iiiii"
+    android:scaleType="centerCrop"
+    />
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="vertical"
+       android:layout_gravity="bottom"
+
+       >
+
+       <RelativeLayout
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginLeft="30dp"
+           android:layout_marginRight="30dp"
+
+           >
+       <RelativeLayout
+           android:layout_width="70dp"
+           android:layout_height="70dp"
+           android:background="@drawable/red_btn_feed_action"
+           android:clickable="true"
+           android:layout_alignParentRight="true"
+           >
+       <ImageView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:src="@drawable/nearby_filled_heart"
+               android:layout_gravity="center"
+               android:id="@+id/like"
+               android:layout_centerInParent="true"
+           android:background="?attr/selectableItemBackground"
+               />
+           </RelativeLayout>
+           <RelativeLayout
+               android:layout_width="70dp"
+               android:layout_height="70dp"
+               android:background="@drawable/transparent_btn_feed_action"
+               android:clickable="true"
+               >
+               <ImageView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:src="@drawable/cross_icon"
+                   android:layout_gravity="center"
+                   android:id="@+id/cross"
+                   android:layout_centerInParent="true"
+                   android:background="?attr/selectableItemBackground"
+                   />
+           </RelativeLayout>
+
+       </RelativeLayout>
+
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="Richael Davidsons"
+           android:textSize="22sp"
+           android:textColor="#fff"
+           android:layout_gravity="center"
+           />
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="24 Years, Australia"
+           android:textSize="18sp"
+           android:textColor="#a8a8a8"
+           android:layout_gravity="center"
+
+           />
+
+   </LinearLayout>
+</FrameLayout>
+ <!--   <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:orientation="horizontal"
+        android:layout_gravity="bottom"
+        android:id="@+id/bottom"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Search"
+            android:id="@+id/search"
+            android:drawableTop="@drawable/friends_copy"
+            android:padding="8dp"
+            android:layout_weight="1"
+            android:textSize="10sp"
+            android:background="@color/colorAccent"
+            android:gravity="center"
+
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nearby"
+            android:id="@+id/nearby"
+            android:drawableTop="@drawable/friends_copy"
+            android:padding="8dp"
+            android:layout_weight="1"
+            android:textSize="10sp"
+            android:gravity="center"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Messages"
+            android:id="@+id/messages"
+            android:drawableTop="@drawable/friends_copy"
+            android:padding="8dp"
+            android:layout_weight="1"
+            android:textSize="10sp"
+            android:gravity="center"
+
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Notification"
+            android:id="@+id/notification"
+            android:drawableTop="@drawable/friends_copy"
+            android:padding="8dp"
+            android:layout_weight="1"
+            android:textSize="10sp"
+            android:lines="1"
+            android:gravity="center"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Matches"
+            android:id="@+id/matches"
+            android:drawableTop="@drawable/matches_copy"
+            android:padding="8dp"
+            android:layout_weight="1"
+            android:textSize="10sp"
+            android:gravity="center"
+            />
+
+    </LinearLayout>
+    -->
+</FrameLayout>

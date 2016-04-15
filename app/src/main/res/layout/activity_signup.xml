@@ -1,0 +1,195 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.init.luckyfriend.activity.AfterLogin"
+    android:background="#fff"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:paddingBottom="10dp"
+        >
+
+        <FrameLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            >
+            <View
+
+                android:layout_width="250dp"
+                android:layout_height="260dp"
+                android:background="@drawable/test_back2"
+                android:layout_gravity="right|top"
+                android:rotation="142"
+                android:layout_marginTop="-120dp"
+                android:layout_marginRight="13dp"
+                />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:rotation="142"
+                android:layout_marginTop="-120dp"
+                android:layout_marginLeft="-35dp"
+
+                >
+
+                <View
+
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:background="@drawable/test_back"
+                    />
+
+            </FrameLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Lucky Friend   "
+                android:textColor="#fff"
+                android:textSize="33.5sp"
+                android:gravity="center"
+                android:id="@+id/appname"
+                android:layout_marginTop="30dp"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tagline Goes here  "
+                android:textColor="#fff"
+                android:textSize="15sp"
+                android:gravity="center"
+                android:id="@+id/tagline"
+                android:layout_marginTop="70dp"
+
+                />
+
+
+        </FrameLayout>
+
+
+
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+
+                >
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Username"
+                    android:textColorHint="#a9aeb9"
+                    android:id="@+id/inputUsername"
+                    android:textColor="#000"
+                    android:background="@android:color/transparent"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="16sp"
+                    android:maxLines="1"
+
+                    />
+                <View
+
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#b6b9c1"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="20dp"
+                    />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Email"
+                    android:textSize="16sp"
+                    android:textColorHint="#a9aeb9"
+                    android:id="@+id/inputEmail"
+                    android:textColor="#000"
+                    android:background="@android:color/transparent"
+                    android:layout_marginLeft="20dp"
+                    android:maxLines="1"
+                    android:inputType="textEmailAddress"
+                    />
+                <View
+
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#b6b9c1"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="20dp"
+                    />
+
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Password"
+                    android:textColor="#000"
+                    android:textColorHint="#a9aeb9"
+                    android:id="@+id/inputPassword"
+                    android:background="@android:color/transparent"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="16sp"
+                    android:maxLines="1"
+                    />
+                <View
+
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#b6b9c1"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="20dp"
+                    />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Re-Password"
+                    android:textColorHint="#a9aeb9"
+                    android:id="@+id/inputRepassword"
+                    android:textSize="16sp"
+                    android:textColor="#000"
+                    android:background="@android:color/transparent"
+                    android:layout_marginLeft="20dp"
+                    android:maxLines="1"
+                    />
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+    <Button
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sign up"
+        android:textSize="17sp"
+        android:textAllCaps="false"
+        android:layout_gravity="bottom"
+        android:textColor="#fff"
+        android:background="@drawable/blue_selector_baground"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/submit"
+        android:layout_weight="0"
+        android:layout_marginBottom="10dp"
+
+        />
+</LinearLayout>

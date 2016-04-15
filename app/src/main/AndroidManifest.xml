@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.init.luckyfriend" >
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <!-- To access accounts configured on device -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <!-- To use account credentials -->
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+
+    <uses-feature
+        android:name="android.hardware.touchscreen"
+        android:required="false" />
+    <uses-feature
+        android:name="android.software.leanback"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.touchscreen"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.Camera"
+        android:required="true"></uses-feature>
+
+    <uses-permission android:name="android.permission.CAMERA"></uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+        android:name=".activity.Singleton"
+        android:allowBackup="true"
+        android:icon="@drawable/heart_icon"
+        android:label="@string/app_name"
+        android:theme="@style/MyMaterialTheme" >
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="1670451923204029" />
+
+        <activity
+            android:name=".activity.MainActivity"
+            android:label="@string/app_name" >
+
+
+        </activity>
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <activity
+            android:name=".activity.Help"
+            android:label="My Account Help"
+            android:theme="@style/MyTheme" />
+        <activity
+            android:name=".activity.HelpTopics"
+            android:label="@string/title_activity_help_topics"
+            android:theme="@style/WhiteTheme" >
+        </activity>
+        <activity
+            android:name=".activity.MaritalFilter"
+            android:label="@string/title_activity_marital_filter"
+            android:theme="@style/WhiteTheme" >
+        </activity>
+        <activity
+            android:name=".activity.Filter"
+            android:label="@string/title_activity_filter"
+            android:theme="@style/WhiteTheme" >
+        </activity>
+        <activity
+            android:name=".activity.Settings"
+            android:label="@string/title_activity_settings"
+            android:theme="@style/SettingsTheme" />
+        <activity
+            android:name=".activity.AfterLogin"
+            android:label="@string/title_activity_after_login" />
+        <activity android:name=".activity.ChatFragment.ChatActivity" />
+        <activity
+            android:name=".activity.Login"
+            android:label="@string/title_activity_sign_up"
+            android:theme="@style/WhiteTheme" />
+        <activity android:name=".activity.FillUserMandatoryFields" >
+
+
+
+        </activity>
+        <activity
+            android:name=".activity.LoginActivity"
+            android:label="@string/title_activity_login"
+            android:theme="@style/PinkTheme" />
+        <activity
+            android:name=".Test"
+            android:label="@string/title_activity_test" />
+        <activity
+            android:name=".activity.SignUpActivity"
+            android:label="@string/title_activity_sign_up"
+            android:theme="@style/PinkTheme" />
+        <activity
+            android:name=".activity.VipActivity"
+            android:label="@string/title_activity_vip" />
+        <activity
+            android:name=".activity.Boost"
+            android:label="@string/title_activity_boost"
+            android:theme="@style/WhiteTheme" />
+        <activity
+            android:name=".activity.AppTour.AppTourSlides"
+            android:label="Lucky Friend"
+            android:theme="@style/WhiteTheme" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+        <activity
+            android:name=".activity.NewPost"
+            android:label="@string/title_activity_new_post" >
+        </activity>
+        <activity
+            android:name=".activity.EditProfile.MainUserProfile"
+            android:label="@string/title_activity_main_user_profile" />
+        <activity
+            android:name=".activity.EditProfile.EditProfile"
+            android:label="@string/title_activity_edit_profile" >
+        </activity>
+        <activity
+            android:name=".activity.UpdateStatus"
+            android:label="@string/title_activity_update_status" >
+        </activity>
+    </application>
+
+</manifest>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
+
+    <item
+        android:icon="@drawable/ic_action_action_info_outline"
+        android:title="Edit Profile"
+        app:showAsAction="ifRoom">
+        <menu>
+            <group
+                android:checkableBehavior="none"
+                android:menuCategory="container" >
+                <item
+                    android:id="@+id/editprofile"
+                    android:title="Edit Profile">
+                </item>
+            </group>
+        </menu>
+    </item>
+
+</menu>

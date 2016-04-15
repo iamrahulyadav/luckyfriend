@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="350dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="#f51046"
+        android:orientation="vertical"
+        >
+    </LinearLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:rotation="142"
+        android:layout_marginTop="-20dp"
+        android:layout_marginLeft="-45dp"
+
+        >
+
+        <com.init.luckyfriend.activity.RoundedImageView
+
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:background="@drawable/test_back"
+            android:src="@drawable/girlicon"
+            android:scaleType="fitXY"
+            app:riv_corner_radius="30dip"
+            app:riv_border_width="0dip"
+            app:riv_oval="false"
+            app:riv_border_color="#fff"
+
+            />
+
+    </FrameLayout>
+
+</FrameLayout>

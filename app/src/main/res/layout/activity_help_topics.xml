@@ -1,0 +1,208 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.init.luckyfriend.activity.HelpTopics"
+    android:orientation="vertical"
+    android:background="#fff"
+    >
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+            >
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Help Topics"
+
+                android:textSize="18sp"
+                android:textColor="#555e71"
+                android:gravity="center"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/help_previous_icon"
+                android:layout_gravity="left|center_vertical"
+                android:background="@android:color/transparent"
+
+                />
+
+        </FrameLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+    <View
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="#dadada"
+    android:layout_marginTop="20dp"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp"
+    />
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="15dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="My Account"
+        android:textSize="18sp"
+        android:textColor="@color/HelpcolorPrimary"
+        android:gravity="start"
+        android:layout_toLeftOf="@+id/accountopen"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        />
+
+<ImageButton
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:src="@drawable/next"
+    android:background="@android:color/transparent"
+    android:gravity="end"
+    android:layout_centerInParent="true"
+
+    android:layout_alignParentEnd="true"
+    android:id="@+id/accountopen"
+    />
+
+</RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#dadada"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Privacy"
+            android:textSize="18sp"
+            android:textColor="@color/HelpcolorPrimary"
+            android:gravity="start"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:layout_toLeftOf="@+id/privacy"
+            />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/next"
+            android:background="@android:color/transparent"
+            android:layout_centerInParent="true"
+            android:gravity="end"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/privacy"
+            />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#dadada"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Policy"
+            android:textSize="18sp"
+            android:textColor="@color/HelpcolorPrimary"
+            android:gravity="start"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:layout_toLeftOf="@+id/policy"
+            />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/next"
+            android:background="@android:color/transparent"
+            android:layout_centerInParent="true"
+            android:gravity="end"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/policy"
+            />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#dadada"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Conditions"
+            android:textSize="18sp"
+            android:textColor="@color/HelpcolorPrimary"
+            android:gravity="start"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:layout_toLeftOf="@+id/conditions"
+            />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/next"
+            android:background="@android:color/transparent"
+            android:layout_centerInParent="true"
+            android:gravity="end"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/conditions"
+            />
+
+    </RelativeLayout>
+
+
+</LinearLayout>

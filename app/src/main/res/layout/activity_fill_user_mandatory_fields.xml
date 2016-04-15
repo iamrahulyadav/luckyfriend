@@ -1,0 +1,370 @@
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="?attr/colorPrimaryDark"
+
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                >
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_alignParentRight="true"
+                android:paddingBottom="6dp"
+                android:paddingTop="6dp"
+                android:clickable="true"
+                android:id="@+id/send_info"
+                >
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="#dadada"
+                    android:layout_marginRight="10dp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SAVE"
+                    android:textColor="#fff"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:layout_marginRight="10dp"
+                    android:drawablePadding="10dp"
+                    />
+            </LinearLayout>
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
+    <ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#fff"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+
+
+
+        <LinearLayout  android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+
+            tools:context=".MainActivity"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:paddingBottom="10dp"
+
+            >
+            <com.init.luckyfriend.activity.CircleImageView
+                android:id="@+id/profile_image"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:src="@drawable/female_icon"
+
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:clickable="true"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="15dp"
+                >
+
+
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="I'm"
+
+                android:textColor="#000"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:id="@+id/im"
+                />
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp"
+                android:id="@+id/gender"
+                >
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Male"
+                    android:textColor="#000"
+                    android:id="@+id/male"
+                    android:checked="true"
+                    android:buttonTint="?attr/colorPrimaryDark"
+                    />
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Female"
+                    android:textColor="#000"
+                    android:id="@+id/female"
+                    android:layout_marginLeft="25dp"
+                    android:buttonTint="?attr/colorPrimaryDark"
+                    />
+            </RadioGroup>
+
+
+
+            <TextView
+                android:id="@+id/datebirth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Date of Birth"
+                android:textColor="#000"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginTop="6dp"
+
+                />
+           <TextView
+               android:id="@+id/date"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:textColor="#000"
+               android:hint="Date of birth"
+               android:textColorHint="#dadada"
+               android:drawableRight="@drawable/spinner_expand"
+               android:background="@drawable/rounded_corners"
+               android:clickable="true"
+               android:layout_marginTop="10dp"
+               android:textSize="16sp"
+               />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Country of residence"
+                android:layout_marginTop="10dp"
+                android:textColor="#000"
+                android:textStyle="bold"
+                android:textSize="16sp"
+
+                />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corners"
+                android:layout_marginTop="10dp"
+
+                >
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/country"
+                    android:id="@+id/country"
+                    android:background="@null"
+                    ></Spinner>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="20dp"
+                >
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:hint="City"
+                    android:textColorHint="#dadada"
+
+                    android:id="@+id/location"
+                    android:layout_weight="1"
+
+                    android:background="@drawable/rounded_corners"
+
+                    />
+
+
+            </LinearLayout>
+
+         <!--   <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Seeking a"
+                android:layout_marginTop="10dp"
+                android:textColor="#000"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:id="@+id/seeking"
+                />
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:id="@+id/seekingfor"
+                >
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Male"
+                    android:textColor="#000"
+                    android:id="@+id/seekingmale"
+                    android:buttonTint="?attr/colorPrimaryDark"
+                    android:checked="true"
+                    />
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Female"
+                    android:textColor="#000"
+                    android:id="@+id/seekingfemale"
+                    android:layout_marginLeft="25dp"
+                    android:buttonTint="?attr/colorPrimaryDark"
+                    />
+            </RadioGroup>
+-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Marital Status"
+                android:layout_marginTop="6dp"
+                android:textColor="#000"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:id="@+id/relstatus"
+                />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corners"
+                android:layout_marginTop="10dp"
+
+                >
+                <Spinner
+                    android:id="@+id/spinrelstatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/relationshipstatus"
+                    android:background="@null"
+                    ></Spinner>
+            </RelativeLayout>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sexuality Status"
+                android:layout_marginTop="10dp"
+                android:textColor="#000"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:id="@+id/sexualitystatus"
+                />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corners"
+                android:layout_marginTop="10dp"
+
+                >
+                <Spinner
+                    android:id="@+id/spinsexstaatus"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/sexuality"
+                    android:background="@null"
+                    ></Spinner>
+            </RelativeLayout>
+
+
+
+
+
+   <!--         <EditText
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@drawable/rounded_corners"
+                android:hint="About me"
+                android:textColorHint="#dadada"
+                android:layout_marginTop="20dp"
+                android:gravity="top"
+                android:textColor="#000"
+                android:id="@+id/aboutme"
+                />
+-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Looking for"
+                android:layout_marginTop="15dp"
+                android:textColor="#000"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:id="@+id/lookfor"
+                />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corners"
+                android:layout_marginTop="10dp"
+
+                >
+                <Spinner
+                    android:id="@+id/spinlookingfor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/lookingfor"
+                    android:background="@null"
+                    ></Spinner>
+            </RelativeLayout>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@drawable/rounded_corners"
+                android:hint="What you looking for"
+                android:textColorHint="#dadada"
+                android:layout_marginTop="20dp"
+                android:gravity="top"
+                android:textColor="#000"
+                android:id="@+id/whatyoulookingfor"
+                />
+
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+</ScrollView>
+</LinearLayout>

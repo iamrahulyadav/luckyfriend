@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:E="http://schemas.android.com/tools"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:layout_margin="5dp"
+
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+
+        >
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:id="@+id/layout"
+
+            >
+
+            <ImageView
+                android:id="@+id/profilepic"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/iiiii"
+                android:layout_alignParentLeft="true"
+                android:scaleType="centerCrop"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_toRightOf="@+id/profilepic"
+                android:layout_toLeftOf="@+id/icon"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Richael davidsons"
+                    android:textSize="14sp"
+                    android:textColor="#000"
+                    android:id="@+id/name"
+
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1 mar 2015 at 10.00"
+                    android:textSize="12sp"
+                    android:textColor="#000"
+                    android:id="@+id/date"
+                    />
+
+
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/dots_icon"
+                android:layout_alignParentRight="true"
+                android:id="@+id/icon"
+
+                />
+
+
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="text here...."
+            android:textSize="16sp"
+            android:textColor="#000"
+
+            android:layout_marginLeft="10dp"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#dadada"
+            android:layout_marginTop="10dp"
+            android:id="@+id/view"
+
+            />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2"
+                android:layout_alignParentLeft="true"
+                android:drawableLeft="@drawable/post_comments_icob"
+                android:drawablePadding="5dp"
+                android:id="@+id/postcomment"
+                android:gravity="center"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/post_share_icon"
+                android:drawablePadding="5dp"
+                android:layout_toLeftOf="@+id/postlike"
+                android:layout_marginRight="20dp"
+                android:id="@+id/postshare"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2"
+                android:drawablePadding="5dp"
+                android:layout_alignParentRight="true"
+                android:drawableLeft="@drawable/post_like_icon"
+                android:id="@+id/postlike"
+                android:paddingRight="10dp"
+                android:gravity="center"
+                />
+
+
+
+
+        </RelativeLayout>
+
+
+
+
+
+
+
+
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>

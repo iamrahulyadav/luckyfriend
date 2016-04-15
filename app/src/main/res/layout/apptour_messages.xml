@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#fff"
+    android:id="@+id/layout1"
+
+    >
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+
+
+      <ImageView
+          android:layout_width="50dp"
+          android:layout_height="50dp"
+          android:src="@drawable/logo"
+          android:layout_centerInParent="true"
+          android:layout_marginTop="20dp"
+          android:background="@color/transparent"
+            android:visibility="gone"
+          />
+
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_gravity="right"
+    android:layout_marginTop="20dp"
+    android:layout_marginRight="10dp"
+    android:id="@+id/skip"
+    android:layout_weight="0"
+    android:layout_alignParentRight="true"
+    >
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Skip"
+        android:textSize="18sp"
+        android:textColor="#dadada"
+
+        />
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/next_arrow"
+        android:layout_gravity="center_vertical"
+        />
+
+</LinearLayout>
+  </RelativeLayout>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+
+
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Friends NearBy You!"
+        android:id="@+id/text"
+        android:textColor="@color/HelpcolorPrimary"
+        android:textSize="27sp"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_weight="0"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Thousand people nearby you. Look around \nFind your friends nearby you!"
+        android:textColor="@color/HelpcolorPrimary"
+        android:textSize="17sp"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_weight="0"
+        android:id="@+id/messagetext"
+        />
+
+    <com.viewpagerindicator.CirclePageIndicator
+        android:id="@+id/indicator"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:padding="10dip"
+        app:centered="true"
+        app:fillColor="@color/HelpcolorPrimary"
+        app:pageColor="#dadada"
+        app:snap="false"
+        android:layout_marginTop="20dp"
+        android:layout_weight="0"
+        />
+
+
+    <Button
+        android:id="@+id/joinnow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Join Now"
+        android:textSize="17sp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:textColor="#fff"
+        android:background="@drawable/blue_selector_baground"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:textAllCaps="false"
+        android:layout_marginBottom="10dp"
+        />
+</LinearLayout>
