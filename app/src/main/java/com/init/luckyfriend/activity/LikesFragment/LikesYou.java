@@ -65,6 +65,8 @@ public class LikesYou extends android.support.v4.app.Fragment {
         feedAdapter = new YouLikeAdapter(getActivity(),items);
         rvFeed.setAdapter(feedAdapter);
 
+        prog=new ProgressDialog(getContext());
+        prog.setMessage("wait loading data..");
 
         getLike();
 
@@ -75,11 +77,12 @@ public class LikesYou extends android.support.v4.app.Fragment {
 
     private void getLike() {
 
+        prog.show();
         RequestQueue queue = Volley.newRequestQueue(getActivity());
         StringRequest sr = new StringRequest(Request.Method.POST, getResources().getString(R.string.url), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                //prog.dismiss();
+                prog.dismiss();
                 Log.e("likes you", response.toString());
                 try {
 
@@ -126,6 +129,7 @@ public class LikesYou extends android.support.v4.app.Fragment {
         },new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+            prog.dismiss();
             }
         }) {
             @Override

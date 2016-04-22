@@ -68,8 +68,8 @@ public class YouVisited extends Fragment {
         feedAdapter = new VisitedYouAdapter(getActivity(),items);
         rvFeed.setAdapter(feedAdapter);
 
-
-
+prog=new ProgressDialog(getContext());
+prog.setMessage("wait loading data..");
 
 
         // Inflate the layout for this fragment
@@ -79,12 +79,12 @@ public class YouVisited extends Fragment {
 
 
     private void getYouVisited() {
-
+prog.show();
         RequestQueue queue = Volley.newRequestQueue(getActivity());
         StringRequest sr = new StringRequest(Request.Method.POST, getResources().getString(R.string.url), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                //   prog.dismiss();
+                   prog.dismiss();
                 Log.e("you visited", response.toString());
                 items.clear();
                 try {
@@ -132,6 +132,7 @@ public class YouVisited extends Fragment {
         },new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+            prog.dismiss();
             }
         }) {
             @Override

@@ -77,18 +77,22 @@ public class PostFragment extends Fragment {
         rvFeed.setAdapter(feedAdapter);
 
 
+        prog=new ProgressDialog(getContext());
+        prog.setMessage("wait loading data");
+
         // Inflate the layout for this fragment
         return rootView;
 
     }
 
     private void getPost() {
+        prog.show();
         RequestQueue queue = Volley.newRequestQueue(getContext());
         StringRequest sr = new StringRequest(Request.Method.POST, getResources().getString(R.string.url), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.e("mypost", response.toString());
-//                prog.dismiss();
+                prog.dismiss();
                 try {
 
                     JSONObject jobj = new JSONObject(response.toString());
@@ -131,7 +135,7 @@ public class PostFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("response",error.getMessage()+"");
-                //prog.dismiss();
+                prog.dismiss();
             }
         }) {
             @Override

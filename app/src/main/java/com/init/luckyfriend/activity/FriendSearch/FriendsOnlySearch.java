@@ -73,6 +73,8 @@ public class FriendsOnlySearch extends Fragment {
         feedAdapter = new FriendsOnlyAdapter(getActivity(),items);
         rvFeed.setAdapter(feedAdapter);
 
+        prog=new ProgressDialog(getActivity());
+        prog.setMessage("wait loading data ....");
 
         // Inflate the layout for this fragment
         return rootView;
@@ -81,13 +83,13 @@ public class FriendsOnlySearch extends Fragment {
 
     private void getFriends() {
 
-        //prog.show();
+        prog.show();
         RequestQueue queue = Volley.newRequestQueue(getActivity());
         StringRequest sr = new StringRequest(Request.Method.POST,getResources().getString(R.string.url), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.e("friends only", response.toString());
-          //      prog.dismiss();
+                prog.dismiss();
                 try {
 
                     JSONObject jobj = new JSONObject(response.toString());
@@ -140,7 +142,7 @@ public class FriendsOnlySearch extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-            //    prog.dismiss();
+                prog.dismiss();
                    Log.e("error",error.getMessage());
             }
         }) {
