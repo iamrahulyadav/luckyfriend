@@ -1,10 +1,10 @@
-package com.init.luckyfriend.activity.LikesFragment;
+package com.init.luckyfriend.activity.Visitors;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -21,11 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.init.luckyfriend.R;
-import com.init.luckyfriend.activity.DATA.FavouriteDataBean;
-import com.init.luckyfriend.activity.DATA.WallDataBean;
-import com.init.luckyfriend.activity.HomeFragment.WallFeedAdapter;
 import com.init.luckyfriend.activity.Singleton;
-import com.init.luckyfriend.activity.WallSearch.FavouriteAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -35,87 +31,89 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-public class YouLike extends android.support.v4.app.Fragment {
+
+public class YouVisited extends Fragment {
     RecyclerView rvFeed;
     LinearLayoutManager linearLayoutManager;
-    YouLikeAdapter feedAdapter;
+    VisitedYouAdapter feedAdapter;
+    private ProgressDialog prog;
+    private ArrayList<VisitedYouDataBean> items=new ArrayList<>();
 
-    private ArrayList<FavouriteDataBean> items=new ArrayList<>();
-    ProgressDialog prog;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        getYouVisited();
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_you_visited, container, false);
 
         rvFeed=(RecyclerView)rootView.findViewById(R.id.recycler_view);
-        // getActivity().getSupportActionBar().setTitle("Homeeee");
 
         linearLayoutManager = new LinearLayoutManager(getActivity()) {
             @Override
             protected int getExtraLayoutSpace(RecyclerView.State state) {
+
                 return 300;
             }
         };
         rvFeed.setLayoutManager(linearLayoutManager);
 
-        feedAdapter = new YouLikeAdapter(getActivity(),items);
+        feedAdapter = new VisitedYouAdapter(getActivity(),items);
         rvFeed.setAdapter(feedAdapter);
 
-        prog=new ProgressDialog(getContext());
-        prog.setMessage("wait loading data...");
 
-        getLike();
+
+
 
         // Inflate the layout for this fragment
         return rootView;
 
     }
 
-    private void getLike() {
 
-        prog.show();
+    private void getYouVisited() {
+
         RequestQueue queue = Volley.newRequestQueue(getActivity());
         StringRequest sr = new StringRequest(Request.Method.POST, getResources().getString(R.string.url), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                //prog.dismiss();
-                Log.e("you like", response.toString());
-                prog.dismiss();
+                //   prog.dismiss();
+                Log.e("you visited", response.toString());
+                items.clear();
                 try {
 
                     JSONObject jobj = new JSONObject(response.toString());
                     JSONArray jarray = jobj.getJSONArray("data");
                     if (jarray.length() == 0) {
                         // dataleft = false;
-                        Toast.makeText(getContext(), "No favourites yet", Toast.LENGTH_LONG).show();
+                       // Toast.makeText(getActivity(), "No favourites yet", Toast.LENGTH_LONG).show();
                         return;
                     }
                     for (int i = 0; i < jarray.length(); i++) {
                         JSONObject jo = jarray.getJSONObject(i);
-                        FavouriteDataBean fdb = new FavouriteDataBean();
+                        VisitedYouDataBean fdb = new VisitedYouDataBean();
                         fdb.setPost_img(jo.getString("post_img"));
                         fdb.setPost_likes(jo.getString("post_likes"));
                         fdb.setPost_comments(jo.getString("post_comments"));
-                        fdb.setPost_user_first_name(jo.getString("user_name"));
-                        fdb.setPost_user_last_name(jo.getString("last_name"));
-                        fdb.setPost_user_profile_pic(jo.getString("person_profile_pic"));
-                        fdb.setPost_user_country(jo.getString("person_country"));
-                        fdb.setPost_user_dob(jo.getString("person_dob"));
+                        fdb.setPerson_dob(jo.getString("person_dob"));
+                        fdb.setPerson_country(jo.getString("person_country"));
+                        fdb.setUser_name(jo.getString("user_name"));
+                        fdb.setLast_name(jo.getString("last_name"));
+                        fdb.setPerson_profile_pic(jo.getString("person_profile_pic"));
 
                         int year=0,mon=0,day=0;
-                        String[] data=fdb.getPost_user_dob().split("-");
+                        String[] data=fdb.getPerson_dob().split("-");
                         year=Integer.parseInt(data[0]);
                         mon=Integer.parseInt(data[1]);
                         day=Integer.parseInt(data[2]);
-                        fdb.setPost_user_dob(getAge(year,mon,day)+"years"+"");
+                        fdb.setPerson_dob(getAge(year,mon,day)+"Years"+"");
                         items.add(fdb);
                     }
 
@@ -134,14 +132,14 @@ public class YouLike extends android.support.v4.app.Fragment {
         },new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-            prog.dismiss();
             }
         }) {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("rqid", 13+"");
-                params.put("person_id",Singleton.pref.getString("person_id",""));
+                params.put("rqid", 20+"");
+                params.put("person_id", Singleton.pref.getString("person_id",""));
+
                 return params;
             }
 
@@ -153,6 +151,8 @@ public class YouLike extends android.support.v4.app.Fragment {
             }
         };
         queue.add(sr);
+
+
 
 
     }
@@ -180,3 +180,4 @@ public class YouLike extends android.support.v4.app.Fragment {
 
 
 }
+

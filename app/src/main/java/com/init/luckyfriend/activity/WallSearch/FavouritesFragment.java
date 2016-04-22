@@ -123,7 +123,7 @@ public void getFavourite(final String person_id)
                     fdb.setPost_user_last_name(jo.getString("post_user_last_name"));
                     fdb.setPost_user_profile_pic(jo.getString("post_user_profile_pic"));
                     fdb.setPost_user_country(jo.getString("post_user_country"));
-                    fdb.setPost_user_dob(jo.getString("post_user_dob"));
+                  fdb.setPost_user_dob(jo.getString("post_user_dob"));
 
                     int year=0,mon=0,day=0;
                     String[] data=fdb.getPost_user_dob().split("-");

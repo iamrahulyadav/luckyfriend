@@ -30,6 +30,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -107,6 +108,7 @@ public class HomeFragment extends Fragment {
             public void onResponse(String response) {
                 Log.e("response", response.toString());
                 prog.dismiss();
+                items.clear();
                 try {
 
                     JSONObject jobj = new JSONObject(response.toString());
@@ -121,13 +123,23 @@ public class HomeFragment extends Fragment {
                         pdb.setLast_name(jo.getString("last_name"));
                         pdb.setUser_name(jo.getString("user_name"));
                         pdb.setPost_img(jo.getString("post_img"));
-                        pdb.setPost_comments(jo.getString("post_comments"));
+                        pdb.setPost_comments(jo.getInt("post_comments"));
                         pdb.setPost_likes(jo.getInt("post_likes"));
                         pdb.setPerson_country(jo.getString("person_country"));
                         pdb.setPerson_profile_img(jo.getString("person_profile_img"));
                         pdb.setPost_id(jo.getString("post_id"));
                         pdb.setPerson_id(jo.getString("person_id"));
                         pdb.setUser_id(jo.getString("user_id"));
+                        pdb.setPeron_dob(jo.getString("person_dob"));
+
+                        int year=0,mon=0,day=0;
+                        String[] data=pdb.getPeron_dob().split("-");
+                        year=Integer.parseInt(data[0]);
+                        mon=Integer.parseInt(data[1]);
+                        day=Integer.parseInt(data[2]);
+                        pdb.setPeron_dob(getAge(year, mon, day) + "years" + "");
+                        items.add(pdb);
+
 
                         items.add(pdb);
                     }
@@ -136,6 +148,7 @@ public class HomeFragment extends Fragment {
 // rv.setAdapter(adapter);
                    // skipdata = shopdata.size();
                     feedAdapter.notifyDataSetChanged();
+
                 } catch (Exception ex) {
                     Log.e("error", ex.getMessage());
                 }
@@ -167,5 +180,27 @@ public class HomeFragment extends Fragment {
         queue.add(sr);
 
     }
+    public int getAge(int DOByear, int DOBmonth, int DOBday) {
+
+        int age;
+
+        final Calendar calenderToday = Calendar.getInstance();
+        int currentYear = calenderToday.get(Calendar.YEAR);
+        int currentMonth = 1 + calenderToday.get(Calendar.MONTH);
+        int todayDay = calenderToday.get(Calendar.DAY_OF_MONTH);
+
+        age = currentYear - DOByear;
+
+        if(DOBmonth > currentMonth){
+            --age;
+        }
+        else if(DOBmonth == currentMonth){
+            if(DOBday > todayDay){
+                --age;
+            }
+        }
+        return age;
+    }
+
 
 }

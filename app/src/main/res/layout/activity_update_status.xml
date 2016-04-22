@@ -3,6 +3,8 @@
     android:layout_height="match_parent"
     tools:context="com.init.luckyfriend.activity.UpdateStatus"
     android:orientation="vertical"
+
+    android:padding="10dp"
     >
 
 
@@ -13,8 +15,11 @@
         android:textColorHint="@android:color/darker_gray"
         android:textColor="#000"
         android:scrollbars="vertical"
-
+        android:inputType="textMultiLine"
         android:layout_gravity="top"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
+        android:id="@+id/writestatus"
         />
 
    <LinearLayout

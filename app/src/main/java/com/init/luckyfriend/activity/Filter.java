@@ -7,6 +7,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.appyvet.rangebar.RangeBar;
 import com.init.luckyfriend.R;
@@ -16,7 +18,9 @@ public class Filter extends AppCompatActivity {
 
     Button woman,man;
     RangeBar rangebar;
-
+    ImageButton close;
+    TextView search;
+    String searchfor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +30,24 @@ public class Filter extends AppCompatActivity {
             woman=(Button)findViewById(R.id.m2);
             man=(Button)findViewById(R.id.m1);
             rangebar=(RangeBar)findViewById(R.id.rangebar1);
+            close=(ImageButton)findViewById(R.id.close);
+            search=(TextView)findViewById(R.id.search);
 
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String minage=rangebar.getLeftPinValue();
+                String maxage=rangebar.getRightPinValue();
+
+            }
+        });
+
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
 
     }
@@ -51,17 +72,18 @@ public class Filter extends AppCompatActivity {
                 man.setBackgroundColor(Color.parseColor("#687484"));
                 woman.setTextColor(Color.BLACK);
                 woman.setBackgroundColor(Color.WHITE);
-              //  signup.setVisibility(View.GONE);
-               // login.setVisibility(View.VISIBLE);
+
+                searchfor="man";
+
                 break;
             case R.id.m2:
                 woman.setTextColor(Color.WHITE);
                 woman.setBackgroundColor(Color.parseColor("#687484"));
                 man.setTextColor(Color.BLACK);
                 man.setBackgroundColor(Color.WHITE);
-                //lo.setVisibility(View.GONE);
-                //signup.setVisibility(View.VISIBLE);
-                break;
+
+                searchfor="woman";
+                 break;
         }
 
 

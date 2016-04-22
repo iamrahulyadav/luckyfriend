@@ -12,9 +12,18 @@ public class WallDataBean
     String person_country;
     String post_img;
     int post_likes;
-    String post_comments;
+    int post_comments;
     String post_id;
     String like_person_id;
+    String peron_dob;
+
+    public String getPeron_dob() {
+        return peron_dob;
+    }
+
+    public void setPeron_dob(String peron_dob) {
+        this.peron_dob = peron_dob;
+    }
 
     public String getLike_person_id() {
         return like_person_id;
@@ -83,11 +92,11 @@ public class WallDataBean
     public WallDataBean(){
     }
 
-    public String getPost_comments() {
+    public int getPost_comments() {
         return post_comments;
     }
 
-    public void setPost_comments(String post_comments) {
+    public void setPost_comments(int post_comments) {
         this.post_comments = post_comments;
     }
 

@@ -52,6 +52,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -84,6 +85,7 @@ public class FillUserMandatoryFields extends Activity implements View.OnClickLis
     Uri fileUri;
     Uri selectedImage;
     String picturePath;
+    String fileName;
 
     private AlertDialog alert;
     public static int CAMERA_INTENT_CALLED=100;
@@ -102,6 +104,7 @@ public class FillUserMandatoryFields extends Activity implements View.OnClickLis
 
         profileimage=(ImageView)findViewById(R.id.profile_image);
 
+        fileName=new Date().getTime()+"luckyfriend"+".jpg";
         //save information
         datetime.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -297,14 +300,13 @@ public class FillUserMandatoryFields extends Activity implements View.OnClickLis
                 params.put("usexualitystatus",spinsexstatus.getSelectedItem().toString());
                 params.put("ucountry",country.getSelectedItem().toString());
                 params.put("ucity",city.getText().toString());
-//                params.put("useekingfor",useekingfor);
                 params.put("uwhatlookingfor",whatyoulookingfor.getText().toString());
-  //              params.put("uaboutme",aboutme);
                 params.put("umaritalstatus",spinrelstatus.getSelectedItem().toString());
                 params.put("ulookingfor",spinlookingfor.getSelectedItem().toString());
                 params.put("person_id",Singleton.pref.getString("person_id", ""));
                 params.put("encoded_image",encodedImage);
-                //params.put("profile_pic",profile_pic);
+                params.put("fname",fileName);
+
                 return params;
             }
 
@@ -519,4 +521,10 @@ public class FillUserMandatoryFields extends Activity implements View.OnClickLis
         return cache.getAbsolutePath();
 
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }
+

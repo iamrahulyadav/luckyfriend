@@ -1,9 +1,12 @@
 package com.init.luckyfriend.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
@@ -13,11 +16,26 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.init.luckyfriend.R;
+
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class NewPost extends AppCompatActivity {
 
@@ -26,7 +44,9 @@ public class NewPost extends AppCompatActivity {
     public static int GALLERY_INTENT_CALLED=200;
     String imgEncoded,description;
     EditText desc;
-
+    ProgressDialog prog;
+    String date;
+    String fileName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +57,11 @@ public class NewPost extends AppCompatActivity {
         upload=(ImageButton)findViewById(R.id.upload);
         cross=(ImageButton)findViewById(R.id.cross);
         desc=(EditText)findViewById(R.id.adddesc);
+
+        prog=new ProgressDialog(this);
+        prog.setMessage("wait uploading post...");
+
+        fileName = new Date().getTime()+"luckyfriends"+".jpg";
 
         imgchoose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,7 +76,84 @@ public class NewPost extends AppCompatActivity {
 
         description=desc.getText().toString();
 
+        upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (imgEncoded == null) {
+                    Toast.makeText(getApplicationContext(), "Please select image", Toast.LENGTH_LONG).show();
+                    return;
+                }
+               else if(imgEncoded!=null) {
+                   sendpost();
+
+                }
+                }
+        });
+
+        cross.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        Calendar cal = Calendar.getInstance();
+        //cal.setTime(date);
+
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH)+1;
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+
+        date=month+"/"+day+"/"+year;
+        Log.e("date",date);
     }
+
+    private void sendpost() {
+
+        prog.show();
+        RequestQueue queue = Volley.newRequestQueue(this);
+        StringRequest sr = new StringRequest(Request.Method.POST, getResources().getString(R.string.url), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                //prog.setVisibility(View.GONE);
+                Log.e("post", response.toString());
+                prog.dismiss();
+                Toast.makeText(getApplicationContext(),"uploaded successfully",Toast.LENGTH_LONG).show();
+                finish();
+            }
+
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("response",error.getMessage()+"");
+                prog.dismiss();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("rqid", 15+"");
+                params.put("person_id",Singleton.pref.getString("person_id", ""));
+                params.put("encoded_image",imgEncoded);
+                params.put("description",description);
+                params.put("date",date+"");
+                params.put("fname",fileName);
+
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/x-www-form-urlencoded");
+                return params;
+            }
+        };
+        queue.add(sr);
+
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         //super.onActivityResult(requestCode, resultCode, data);
@@ -74,6 +176,7 @@ public class NewPost extends AppCompatActivity {
 
                     byteArray = stream.toByteArray();
                     imgEncoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
 
                     Log.e("encoded", imgEncoded);
 

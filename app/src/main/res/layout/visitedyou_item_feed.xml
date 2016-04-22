@@ -41,6 +41,8 @@
                     android:textSize="16sp"
                     android:textColor="#000"
                     android:paddingLeft="10dp"
+                    android:id="@+id/fullname"
+
                     />
 
                 <TextView
@@ -50,6 +52,7 @@
                     android:textSize="13sp"
                     android:textColor="#828282"
                     android:paddingLeft="10dp"
+                    android:id="@+id/yearsandcountry"
                     />
 
             </LinearLayout>
@@ -60,6 +63,7 @@
                 android:src="@drawable/cancel_greyicon"
                 android:background="@drawable/btn_feed_action"
                 android:layout_gravity="center"
+                android:id="@+id/cross"
                 />
 
         </LinearLayout>
@@ -68,7 +72,7 @@
             android:layout_height="wrap_content"
 
             >
-            <ImageView
+            <com.init.luckyfriend.Utils.ResizableImageView
                 android:id="@+id/ivFeedCenter"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -93,6 +97,7 @@
                     android:text="I like fashion and music"
                     android:layout_gravity="bottom"
                     android:textColor="#fff"
+
                     />
                 <RelativeLayout
                     android:layout_width="match_parent"

@@ -75,6 +75,7 @@ public class FriendsSearchFragment extends Fragment {
             switch (position)
             {
                 case 0 : return new FriendsOnlySearch();
+
                 case 1 : return new FriendsFragment();
                  }
             return null;

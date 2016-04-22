@@ -9,13 +9,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="#2f6fff"
+        android:background="#fff"
 
         >
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/delete_post"
+            android:src="@drawable/filter_cross_icon"
             android:background="@android:color/transparent"
             android:id="@+id/cross"
             android:layout_alignParentLeft="true"
@@ -29,18 +29,18 @@
             android:text="New Post"
             android:layout_centerInParent="true"
             android:layout_toRightOf="@+id/cross"
-            android:layout_marginLeft="10dp"
-            android:textColor="#fff"
+            android:textColor="#2f6fff"
             android:textSize="18sp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
+            android:gravity="center"
 
             />
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/check_post"
+            android:src="@drawable/edit_check"
             android:layout_alignParentRight="true"
             android:background="@android:color/transparent"
             android:paddingRight="10dp"

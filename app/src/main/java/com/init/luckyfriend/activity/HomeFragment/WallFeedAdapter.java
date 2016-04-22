@@ -74,7 +74,7 @@ public class WallFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         WallDataBean gd = data.get(position);
 
 
-        holder.likes.setText(gd.getPost_likes() + "");
+        holder.likes.setText(gd.getPost_likes()+ "");
         Singleton.imageLoader.displayImage(gd.getPerson_profile_img(), holder.ivUserProfile, Singleton.defaultOptions);
 
         // post images
@@ -82,8 +82,8 @@ public class WallFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
 
         holder.country.setText(gd.getPerson_country());
-        holder.comment.setText(gd.getPost_comments());
-        holder.name.setText(gd.getUser_name());
+        //holder.comment.setText(2+"");
+        holder.name.setText(gd.getUser_name()+" "+gd.getLast_name());
 
 
     }

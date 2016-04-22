@@ -1,9 +1,12 @@
 package com.init.luckyfriend.activity.MyPost;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.internal.view.ContextThemeWrapper;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.init.luckyfriend.R;
+import com.init.luckyfriend.activity.CircleImageView;
+import com.init.luckyfriend.activity.Singleton;
 
 import java.util.List;
 
@@ -49,58 +54,39 @@ public class PostFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     private void bindDefaultFeedItem(int position, CellFeedViewHolder holder) {
 
-//        WallDataBean gd=data.get(position);
-       /* Glide.with(context)
-
-                .load(gd.getImageurl())
-                .into(holder.ivFeedCenter)
-         ;*/
-        // Animation anim = AnimationUtils.loadAnimation(context,R.anim.fadein);
-
-     /*   Glide.with(context)
-                .load(R.drawable.female_icon)
-                        // The placeholder image is shown immediately and
-                        // replaced by the remote image when Picasso has
-                        // finished fetching it.
-                .placeholder(R.mipmap.ic_launcher)
-                        //A request will be retried three times before the error placeholder is shown.
-                .error(R.mipmap.ic_launcher)
-                        // Transform images to better fit into layouts and to
-                        // reduce memory size.
-         //       .animate(anim)
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                .into(holder.ivFeedCenter);
-*/
+       PostDataBean gd=data.get(position);
 
 
-        // holder.caption.setText(gd.getCaption());
-        // holder.btnComments.setTag(position);
-        // holder.btnMore.setTag(position);
-//        holder.ivFeedCenter.setTag(holder);
-        // holder.btnLike.setTag(holder);
 
-    }
+
+        Singleton.imageLoader.displayImage(gd.getPerson_profile_pic(),holder.profilepic,Singleton.defaultOptions);
+        Singleton.imageLoader.displayImage(gd.getPost_img(),holder.postimage,Singleton.defaultOptions);
+
+        holder.name.setText(gd.getUser_name() + " " + gd.getLast_name());
+        holder.date.setText(gd.getPost_date());
+        holder.like.setText(gd.getPost_likes());
+        holder.comment.setText(gd.getPost_comments());
+       }
 
 
     @Override
     public int getItemCount() {
-        /*if(data==null)
+        if(data==null)
             return 0;
         else
         return data.size();
-        */
-        return 10;
+
     }
 
     public class CellFeedViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        ImageView profilepic, postimage, options;
-
+        ImageView  postimage, options;
+        CircleImageView profilepic;
         TextView name, date, comment, like;
 
         public CellFeedViewHolder(View view) {
             super(view);
 
-            profilepic = (ImageView) view.findViewById(R.id.profilepic);
+            profilepic = (CircleImageView) view.findViewById(R.id.profilepic);
             postimage = (ImageView) view.findViewById(R.id.ivFeedCenter);
             name = (TextView) view.findViewById(R.id.name);
             date = (TextView) view.findViewById(R.id.date);

@@ -63,13 +63,7 @@ public class Nearby extends Fragment implements FlingCardListener.ActionDownInte
         prog=new ProgressDialog(getActivity());
         prog.setMessage("Wait loading nearby....");
 
-       /* al = new ArrayList<>();
-        al.add(new Data("http://i.ytimg.com/vi/PnxsTxV8y3g/maxresdefault.jpg"));
-        al.add(new Data("http://switchboard.nrdc.org/blogs/dlashof/mission_impossible_4-1.jpg"));
-        al.add(new Data("http://i.ytimg.com/vi/PnxsTxV8y3g/maxresdefault.jpg"));
-        al.add(new Data("http://switchboard.nrdc.org/blogs/dlashof/mission_impossible_4-1.jpg" ));
-        al.add(new Data("http://i.ytimg.com/vi/PnxsTxV8y3g/maxresdefault.jpg"));
-*/
+
 
         getnearby();
         myAppAdapter = new MyAppAdapter(al, getActivity());
@@ -215,13 +209,14 @@ public class Nearby extends Fragment implements FlingCardListener.ActionDownInte
 
     private void getnearby() {
         prog.show();
-        String url ="http://108.178.10.78/androidios/test.php";
+       // String url ="http://108.178.10.78/androidios/test.php";
         RequestQueue queue = Volley.newRequestQueue(getActivity());
-        StringRequest sr = new StringRequest(Request.Method.POST,url, new Response.Listener<String>() {
+        StringRequest sr = new StringRequest(Request.Method.POST,getResources().getString(R.string.url), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.e("nearby response", response.toString());
             prog.dismiss();
+                al.clear();
                 try {
 
                     JSONObject jobj = new JSONObject(response.toString());

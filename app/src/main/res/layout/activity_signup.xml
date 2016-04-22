@@ -97,7 +97,8 @@
                     android:background="@android:color/transparent"
                     android:layout_marginLeft="20dp"
                     android:textSize="16sp"
-                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:imeOptions="actionNext"
 
                     />
                 <View
@@ -121,8 +122,9 @@
                     android:textColor="#000"
                     android:background="@android:color/transparent"
                     android:layout_marginLeft="20dp"
-                    android:maxLines="1"
+                    android:singleLine="true"
                     android:inputType="textEmailAddress"
+                    android:imeOptions="actionNext"
                     />
                 <View
 
@@ -146,7 +148,7 @@
                     android:background="@android:color/transparent"
                     android:layout_marginLeft="20dp"
                     android:textSize="16sp"
-                    android:maxLines="1"
+                    android:singleLine="true"
                     />
                 <View
 
@@ -169,7 +171,8 @@
                     android:textColor="#000"
                     android:background="@android:color/transparent"
                     android:layout_marginLeft="20dp"
-                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:imeOptions="actionDone"
                     />
 
             </LinearLayout>

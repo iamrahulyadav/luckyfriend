@@ -48,8 +48,13 @@ public class YouLikeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         FavouriteDataBean gd=data.get(position);
 
         holder.likecount.setText(gd.getPost_likes() + "");
-        Singleton.imageLoader.displayImage(gd.getPost_img(), holder.ivFeedCenter, Singleton.defaultOptions);
-        Singleton.imageLoader.displayImage(gd.getPost_user_profile_pic(), holder.userimg, Singleton.defaultOptions);
+if(gd.getPost_img()!=null) {
+    Singleton.imageLoader.displayImage(gd.getPost_img(), holder.ivFeedCenter, Singleton.defaultOptions);
+
+}
+        else
+holder.ivFeedCenter.setImageResource(R.drawable.iiiii);
+    Singleton.imageLoader.displayImage(gd.getPost_user_profile_pic(), holder.userimg, Singleton.defaultOptions);
         holder.username.setText(gd.getPost_user_first_name() + " " + gd.getPost_user_last_name());
 
         holder.userdetails.setText(gd.getPost_user_dob() + "," + gd.getPost_user_country());

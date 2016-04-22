@@ -3,6 +3,7 @@ package com.init.luckyfriend.activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -258,6 +259,8 @@ public class Login extends AppCompatActivity implements  View.OnClickListener,Go
             Log.e("gplus response", useremail + userimage + username);
 
           //  mStatusTextView.setText(getString(R.string.signed_in_fmt, acct.getDisplayName()));
+
+        //    senddatatoserver();
             updateUI(true);
         } else {
             // Signed out, show unauthenticated UI.
@@ -265,19 +268,32 @@ public class Login extends AppCompatActivity implements  View.OnClickListener,Go
         }
     }
 
+    private void senddatatoserver() {
+
+
+    }
+
     private void updateUI(boolean b) {
 
         if (b == true) {
             //findViewById(R.id.sign_in_button).setVisibility(View.GONE);
             //findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
+            SharedPreferences.Editor edit = Singleton.pref.edit();
+            edit.putString("uname",acct.getDisplayName());
+            edit.putString("uemail",acct.getEmail());
+            edit.putString("uimage",userimage);
 
+            //  edit.putString("person_id", jobj.getString("person_id"));
+            edit.commit();
 
             Intent main = new Intent(this, MainActivity.class);
-            main.putExtra("typeLogin",3);
-            main.putExtra("displayname", acct.getDisplayName());
-            main.putExtra("imageurl", acct.getPhotoUrl().toString());
+            main.putExtra("typeLogin", 3);
             startActivity(main);
             finish();
+
+
+
+
         } else {
             //findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
             //findViewById(R.id.sign_out_and_disconnect).setVisibility(View.GONE);
@@ -334,12 +350,12 @@ public class Login extends AppCompatActivity implements  View.OnClickListener,Go
         switch (view.getId()) {
             case R.id.fbsignup:
               // Toast.makeText(getApplicationContext(), "clicked", Toast.LENGTH_LONG).show();
-              LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "user_friends", "email", "user_location","user_birthday","user_posts"));
+       //       LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "user_friends", "email", "user_location","user_birthday","user_posts"));
                 break;
 
             case R.id.google:
             //    Toast.makeText(getApplicationContext(),"clicked gplus ",Toast.LENGTH_LONG).show();
-               signIn();
+     //          signIn();
                 break;
 
             case R.id.signup:
@@ -371,6 +387,12 @@ public class Login extends AppCompatActivity implements  View.OnClickListener,Go
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
 
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        finish();
     }
 }
 

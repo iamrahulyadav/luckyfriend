@@ -111,17 +111,22 @@ public class LoginActivity extends AppCompatActivity {
 
 
                       //save data on shared preference
-
-                       SharedPreferences.Editor edit= Singleton.pref.edit();
+                        SharedPreferences.Editor edit= Singleton.pref.edit();
                         edit.putString("uname",jobj.getString("uname"));
                         edit.putString("person_id",jobj.getString("person_id"));
                         edit.putString("user_email",jobj.getString("user_email"));
+                        edit.putString("person_gender",jobj.getString("person_gender"));
+                        edit.putString("person_country",jobj.getString("person_country"));
+                        edit.putString("person_city",jobj.getString("person_location"));
+                        edit.putString("profile_pic",jobj.getString("profilepic"));
+
 
 
                         edit.commit();
 
-                        startActivity(login);
 
+                        startActivity(login);
+                        finish();
                     }
                     else
                     {

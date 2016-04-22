@@ -69,7 +69,7 @@ public class VisitorFragment extends Fragment {
             switch (position)
             {
                 case 0 : return new VistedYouFragment();
-                case 1 : return new VistedYouFragment();
+                case 1 : return new YouVisited();
                }
             return null;
         }

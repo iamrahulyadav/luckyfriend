@@ -144,6 +144,7 @@ public class SignUpActivity extends AppCompatActivity {
                          Intent afterLogin=new Intent(getApplicationContext(),FillUserMandatoryFields.class);
                          afterLogin.putExtra("typeLogin",4);
                         startActivity(afterLogin);
+                        finish();
 
                     }
                     else
@@ -236,4 +237,6 @@ public class SignUpActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }

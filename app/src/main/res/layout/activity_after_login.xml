@@ -116,8 +116,10 @@
     android:textColorHint="#dee0e4"
     android:textColor="#000"
     android:textSize="16sp"
+    android:singleLine="true"
     android:drawableRight="@drawable/next"
     android:background="@android:color/transparent"
+    android:imeOptions="actionNext"
     />
 
     <View
@@ -141,6 +143,8 @@
         android:textSize="16sp"
         android:drawableRight="@drawable/next"
         android:background="@android:color/transparent"
+        android:imeOptions="actionNext"
+        android:singleLine="true"
         />
 
     <View
@@ -164,6 +168,8 @@
         android:drawableRight="@drawable/next"
         android:background="@android:color/transparent"
         android:textSize="16sp"
+        android:singleLine="true"
+        android:imeOptions="actionNext"
         />
 
     <View
@@ -187,6 +193,8 @@
         android:drawableRight="@drawable/next"
         android:background="@android:color/transparent"
         android:textSize="16sp"
+        android:singleLine="true"
+        android:imeOptions="actionNext"
         />
 
     <View
@@ -210,6 +218,8 @@
         android:drawableRight="@drawable/next"
         android:background="@android:color/transparent"
         android:textSize="16sp"
+        android:imeOptions="actionDone"
+
         />
 </LinearLayout>
     </ScrollView>

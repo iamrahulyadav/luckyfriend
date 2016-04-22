@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -28,6 +29,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,7 +47,7 @@ public class FriendsOnlySearch extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //prog=new ProgressDialog(getActivity());
+       // prog=new ProgressDialog(getActivity());
         //prog.setMessage("wait loading data ....");
         // getData();
         getFriends();
@@ -56,7 +58,7 @@ public class FriendsOnlySearch extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_friends_only_search, container, false);
 
         rvFeed=(RecyclerView)rootView.findViewById(R.id.recycler_view);
 
@@ -79,18 +81,20 @@ public class FriendsOnlySearch extends Fragment {
 
     private void getFriends() {
 
+        //prog.show();
         RequestQueue queue = Volley.newRequestQueue(getActivity());
         StringRequest sr = new StringRequest(Request.Method.POST,getResources().getString(R.string.url), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.e("friends only", response.toString());
-//                prog.dismiss();
+          //      prog.dismiss();
                 try {
 
                     JSONObject jobj = new JSONObject(response.toString());
                     JSONArray jarray = jobj.getJSONArray("data");
                     if (jarray.length() == 0) {
                         // dataleft = false;
+                       // Toast.makeText(getActivity(),"No friends yet..",Toast.LENGTH_LONG).show();
                         return;
                     }
                     for (int i = 0; i < jarray.length(); i++) {
@@ -98,14 +102,24 @@ public class FriendsOnlySearch extends Fragment {
                         WallDataBean pdb = new WallDataBean();
                         pdb.setLast_name(jo.getString("last_name"));
                         pdb.setUser_name(jo.getString("user_name"));
-                        //pdb.setPost_img(jo.getString("post_img"));
-                       // pdb.setPost_comments(jo.getString("post_comments"));
-                       // pdb.setPost_likes(jo.getInt("post_likes"));
+                        pdb.setPost_img(jo.getString("post_img"));
+                        pdb.setPost_comments(jo.getInt("post_comments"));
+                        pdb.setPost_likes(jo.getInt("post_likes"));
                         pdb.setPerson_country(jo.getString("person_country"));
                         pdb.setPerson_profile_img(jo.getString("person_profile_pic"));
+                        pdb.setPeron_dob(jo.getString("person_dob"));
                         //pdb.setPost_id(jo.getString("post_id"));
                         //pdb.setPerson_id(jo.getString("person_id"));
                        // pdb.setUser_id(jo.getString("user_id"));
+
+                        int year=0,mon=0,day=0;
+                        String[] data=pdb.getPeron_dob().split("-");
+                        year=Integer.parseInt(data[0]);
+                        mon=Integer.parseInt(data[1]);
+                        day=Integer.parseInt(data[2]);
+                        pdb.setPeron_dob(getAge(year,mon,day)+""+"Years");
+
+
 
                         items.add(pdb);
                     }
@@ -126,16 +140,15 @@ public class FriendsOnlySearch extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                prog.dismiss();
-//            Log.e("error",error.getMessage());
+            //    prog.dismiss();
+                   Log.e("error",error.getMessage());
             }
         }) {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("rqid", 13+"");
-                params.put("person_id", Singleton.pref.getString("person_id",""));
-
+                params.put("rqid", 17+"");
+                params.put("person_id", Singleton.pref.getString("person_id", ""));
                 return params;
             }
 
@@ -161,4 +174,29 @@ public class FriendsOnlySearch extends Fragment {
     public void onDetach() {
         super.onDetach();
     }
+
+    public int getAge(int DOByear, int DOBmonth, int DOBday) {
+
+        int age;
+
+        final Calendar calenderToday = Calendar.getInstance();
+        int currentYear = calenderToday.get(Calendar.YEAR);
+        int currentMonth = 1 + calenderToday.get(Calendar.MONTH);
+        int todayDay = calenderToday.get(Calendar.DAY_OF_MONTH);
+
+        age = currentYear - DOByear;
+
+        if(DOBmonth > currentMonth){
+            --age;
+        }
+        else if(DOBmonth == currentMonth){
+            if(DOBday > todayDay){
+                --age;
+            }
+        }
+        return age;
+    }
+
+
+
 }

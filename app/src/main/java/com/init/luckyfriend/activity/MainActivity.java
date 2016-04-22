@@ -1,6 +1,7 @@
 package com.init.luckyfriend.activity;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -26,6 +27,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -33,9 +35,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.init.luckyfriend.R;
 
 
+import com.init.luckyfriend.activity.DATA.WallDataBean;
 import com.init.luckyfriend.activity.EditProfile.MainUserProfile;
 import com.init.luckyfriend.activity.ExtendedProfile.FullExtendedProfile;
 import com.init.luckyfriend.activity.ExtendedProfile.FullProfile;
@@ -51,7 +61,12 @@ import com.init.luckyfriend.activity.Profile.Profile;
 import com.init.luckyfriend.activity.Visitors.VisitorFragment;
 import com.init.luckyfriend.activity.WallSearch.FavouritesFragment;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements FragmentDrawer.FragmentDrawerListener {
 
@@ -77,6 +92,9 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     Integer type;
     FrameLayout menu_layout;
     ImageButton status;
+    ProgressDialog prog;
+     Dialog dialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,17 +106,51 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         toolbartitle=(TextView)findViewById(R.id.toolbar_title);
         toolbaricon=(ImageButton)findViewById(R.id.toolbar_icon);
         status=(ImageButton)findViewById(R.id.update_status);
+
+//        prog=new ProgressDialog(this);
+  //      prog.setMessage("Updating status...");
+
+        toolbaricon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent filter=new Intent(getApplicationContext(),Filter.class);
+                startActivity(filter);
+            }
+        });
+
         status.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final Dialog dialog = new Dialog(MainActivity.this);
+               dialog = new Dialog(MainActivity.this);
                 dialog.setContentView(R.layout.activity_update_status);
                 dialog.setTitle("New status....");
 
+                final EditText status=(EditText)dialog.findViewById(R.id.writestatus);
 
                 Button dialogButton = (Button) dialog.findViewById(R.id.ok);
                 // if button is clicked, close the custom dialog
                 dialogButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(status.getText().toString().length()==0){
+                            Toast.makeText(getApplicationContext(),"Please write the status",Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        else {
+                            UpdateStatus(status.getText().toString());
+
+                        }
+                        dialog.dismiss();
+
+
+                    }
+                });
+
+
+                Button cancel = (Button) dialog.findViewById(R.id.cancel);
+                // if button is clicked, close the custom dialog
+                cancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         dialog.dismiss();
@@ -159,14 +211,23 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
       type=getIntent().getIntExtra("typeLogin",1);
         //Toast.makeText(MainActivity.this, "type " + type, Toast.LENGTH_SHORT).show();
-      if(type == 4) {
+
+        if(type==3){
+            name=Singleton.pref.getString("uname","");
+            String profilepic=Singleton.pref.getString("uimage","");
+            username.setText(name);
+
+            Singleton.imageLoader.displayImage(profilepic,profileimage,Singleton.defaultOptions);
+
+        }
+
+
+        if(type == 4) {
               name=Singleton.pref.getString("uname","");
               username.setText(name);
                 gender=Singleton.pref.getString("person_gender","");
           String profilepic=Singleton.pref.getString("profile_pic","");
-          byte[] decodedString = Base64.decode(profilepic, Base64.DEFAULT);
-          Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-          profileimage.setImageBitmap(decodedByte);
+          Singleton.imageLoader.displayImage(profilepic,profileimage,Singleton.defaultOptions);
 
           if(gender.compareToIgnoreCase("Male")==0)
           {
@@ -192,9 +253,35 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
           }
       }
           if(type == 5) {
-              Singleton.pref.getString("uname","");
+              Singleton.pref.getString("uname", "");
               username.setText(Singleton.pref.getString("uname", ""));
 
+              gender=Singleton.pref.getString("person_gender","");
+              String profilepic=Singleton.pref.getString("profile_pic","");
+              Singleton.imageLoader.displayImage(profilepic,profileimage,Singleton.defaultOptions);
+
+              if(gender.compareToIgnoreCase("Male")==0)
+              {
+                  menu_layout.setBackgroundColor(Color.parseColor("#2f6fff"));
+                  if (Build.VERSION.SDK_INT >= 21) {
+                      Window window = getWindow();
+                      window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                      window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                      window.setStatusBarColor(getResources().getColor(R.color.textColorPrimary));
+                  }
+
+
+              }
+
+              else {
+                  menu_layout.setBackgroundColor(Color.parseColor("#f63e65"));
+                  if (Build.VERSION.SDK_INT >= 21) {
+                      Window window = getWindow();
+                      window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                      window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                      window.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
+                  }
+              }
           }
 
         if (type == 3) {
@@ -599,8 +686,79 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        finish();
+
+    public void UpdateStatus(final String statusText){
+//        prog.show();
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        StringRequest sr = new StringRequest(Request.Method.POST,getResources().getString(R.string.url), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.e("response", response.toString());
+                //prog.dismiss();
+
+                /*try {
+
+                    JSONObject jobj = new JSONObject(response.toString());
+                    JSONArray jarray = jobj.getJSONArray("data");
+                    if (jarray.length() == 0) {
+                        // dataleft = false;
+                        return;
+                    }
+                    for (int i = 0; i < jarray.length(); i++) {
+                        JSONObject jo = jarray.getJSONObject(i);
+                        WallDataBean pdb = new WallDataBean();
+                        pdb.setLast_name(jo.getString("last_name"));
+                        pdb.setUser_name(jo.getString("user_name"));
+                        pdb.setPost_img(jo.getString("post_img"));
+                        pdb.setPost_comments(jo.getInt("post_comments"));
+                        pdb.setPost_likes(jo.getInt("post_likes"));
+                        pdb.setPerson_country(jo.getString("person_country"));
+                        pdb.setPerson_profile_img(jo.getString("person_profile_img"));
+                        pdb.setPost_id(jo.getString("post_id"));
+                        pdb.setPerson_id(jo.getString("person_id"));
+                        pdb.setUser_id(jo.getString("user_id"));
+
+                        items.add(pdb);
+                    }
+
+
+// rv.setAdapter(adapter);
+                    // skipdata = shopdata.size();
+                    feedAdapter.notifyDataSetChanged();
+
+                } catch (Exception ex) {
+                    Log.e("error", ex.getMessage());
+                }
+
+*/
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+               // prog.dismiss();
+//            Log.e("error",error.getMessage());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("rqid", 23+"");
+                params.put("person_id",Singleton.pref.getString("person_id",""));
+                params.put("status",statusText);
+
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/x-www-form-urlencoded");
+                return params;
+            }
+        };
+        queue.add(sr);
+
+
     }
+
 }

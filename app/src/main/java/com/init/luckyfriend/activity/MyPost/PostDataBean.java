@@ -5,48 +5,86 @@ package com.init.luckyfriend.activity.MyPost;
  */
 public class PostDataBean
 {
-    public int type;
+    String post_comments;
+    String post_likes;
+    String post_img;
+    String post_id;
+    String post_date;
+    String last_name,user_name,person_profile_pic;
+
+    public String getPerson_profile_pic() {
+        return person_profile_pic;
+    }
+
+    public void setPerson_profile_pic(String person_profile_pic) {
+        this.person_profile_pic = person_profile_pic;
+    }
+
+    public String getUser_name() {
+
+        return user_name;
+    }
+
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
+    }
+
+    public String getLast_name() {
+
+        return last_name;
+    }
+
+    public void setLast_name(String last_name) {
+        this.last_name = last_name;
+    }
+
     public PostDataBean(){
     }
 
-    public PostDataBean(int type){
-        this.type = type;
-        //      this.modelContent = modelContent;
+    public String getPost_date() {
+        return post_date;
+    }
+
+    public void setPost_date(String post_date) {
+        this.post_date = post_date;
+    }
+
+    public String getPost_id() {
+
+        return post_id;
+    }
+
+    public void setPost_id(String post_id) {
+        this.post_id = post_id;
+    }
+
+    public String getPost_likes() {
+
+        return post_likes;
+    }
+
+    public void setPost_likes(String post_likes) {
+        this.post_likes = post_likes;
     }
 
 
-    public String getCaption() {
-        return caption;
+    public String getPost_img() {
+        return post_img;
     }
 
-    public void setCaption(String caption) {
-        this.caption = caption;
+    public void setPost_img(String post_img) {
+        this.post_img = post_img;
     }
 
-    public String getImageurl() {
-        return imageurl;
+    public String getPost_comments() {
+
+        return post_comments;
     }
 
-    public void setImageurl(String imageurl) {
-        this.imageurl = imageurl;
+    public void setPost_comments(String post_comments) {
+        this.post_comments = post_comments;
     }
 
-    public Number getLikecount() {
-        return likecount;
-    }
 
-    public void setLikecount(Number likecount) {
-        this.likecount = likecount;
-    }
 
-    public Number getCommentcount() {
-        return commentcount;
-    }
-
-    public void setCommentcount(Number commentcount) {
-        this.commentcount = commentcount;
-    }
-
-    private String caption,imageurl;
-private Number likecount,commentcount;
 }

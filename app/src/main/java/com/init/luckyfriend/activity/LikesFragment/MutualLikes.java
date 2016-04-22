@@ -1,10 +1,11 @@
 package com.init.luckyfriend.activity.LikesFragment;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
+
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -22,10 +23,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.init.luckyfriend.R;
 import com.init.luckyfriend.activity.DATA.FavouriteDataBean;
-import com.init.luckyfriend.activity.DATA.WallDataBean;
-import com.init.luckyfriend.activity.HomeFragment.WallFeedAdapter;
 import com.init.luckyfriend.activity.Singleton;
-import com.init.luckyfriend.activity.WallSearch.FavouriteAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -35,13 +33,13 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-public class YouLike extends android.support.v4.app.Fragment {
+
+public class MutualLikes extends android.support.v4.app.Fragment {
     RecyclerView rvFeed;
     LinearLayoutManager linearLayoutManager;
     YouLikeAdapter feedAdapter;
-
+    private ProgressDialog prog;
     private ArrayList<FavouriteDataBean> items=new ArrayList<>();
-    ProgressDialog prog;
 
 
     @Override
@@ -69,8 +67,6 @@ public class YouLike extends android.support.v4.app.Fragment {
         feedAdapter = new YouLikeAdapter(getActivity(),items);
         rvFeed.setAdapter(feedAdapter);
 
-        prog=new ProgressDialog(getContext());
-        prog.setMessage("wait loading data...");
 
         getLike();
 
@@ -81,14 +77,13 @@ public class YouLike extends android.support.v4.app.Fragment {
 
     private void getLike() {
 
-        prog.show();
         RequestQueue queue = Volley.newRequestQueue(getActivity());
         StringRequest sr = new StringRequest(Request.Method.POST, getResources().getString(R.string.url), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 //prog.dismiss();
                 Log.e("you like", response.toString());
-                prog.dismiss();
+                items.clear();
                 try {
 
                     JSONObject jobj = new JSONObject(response.toString());
@@ -134,13 +129,12 @@ public class YouLike extends android.support.v4.app.Fragment {
         },new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-            prog.dismiss();
             }
         }) {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("rqid", 13+"");
+                params.put("rqid", 21+"");
                 params.put("person_id",Singleton.pref.getString("person_id",""));
                 return params;
             }

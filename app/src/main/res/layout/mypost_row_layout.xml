@@ -30,7 +30,7 @@ android:orientation="vertical"
 
         >
 
-        <ImageView
+        <com.init.luckyfriend.activity.CircleImageView
             android:id="@+id/profilepic"
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -89,12 +89,12 @@ android:orientation="vertical"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         >
-        <ImageView
+        <com.init.luckyfriend.Utils.ResizableImageView
             android:id="@+id/ivFeedCenter"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:src="@drawable/iiiii"
-            android:scaleType="centerCrop"
+
             />
 
 
@@ -104,6 +104,7 @@ android:orientation="vertical"
             android:orientation="vertical"
             android:layout_gravity="bottom"
             android:background="#20000000"
+android:paddingTop="15dp"
             >
 
             <RelativeLayout

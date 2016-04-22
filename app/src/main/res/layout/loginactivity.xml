@@ -102,6 +102,8 @@
         android:layout_marginLeft="20dp"
         android:textSize="16sp"
         android:id="@+id/username"
+        android:singleLine="true"
+        android:imeOptions="actionNext"
         />
     <View
 
@@ -124,6 +126,9 @@
         android:background="@android:color/transparent"
         android:layout_marginLeft="20dp"
         android:id="@+id/password"
+
+        android:singleLine="true"
+        android:imeOptions="actionDone"
         />
     </LinearLayout>
     <TextView

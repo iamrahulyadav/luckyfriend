@@ -74,8 +74,8 @@ public class LikesTabFragment extends Fragment {
             switch (position)
             {
                 case 0 : return new YouLike();
-                case 1 : return new FriendsFragment();
-                case 2 : return new FriendsFragment();
+                case 1 : return new MutualLikes();
+                case 2 : return new LikesYou();
                  }
             return null;
         }

@@ -51,13 +51,13 @@ public class FriendsOnlyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         Singleton.imageLoader.displayImage(gd.getPerson_profile_img(), holder.ivUserProfile, Singleton.defaultOptions);
 
         // post images
-        Singleton.imageLoader.displayImage(gd.getPerson_profile_img(), holder.ivFeedCenter, Singleton.defaultOptions);
+        Singleton.imageLoader.displayImage(gd.getPost_img(), holder.ivFeedCenter, Singleton.defaultOptions);
 
 
-        holder.country.setText(gd.getPerson_country());
-        //holder.comment.setText(gd.getPost_comments());
+        holder.country.setText(gd.getPeron_dob()+","+gd.getPerson_country());
+        holder.comment.setText(gd.getPost_comments()+"");
         holder.name.setText(gd.getUser_name());
-
+        holder.likes.setText(gd.getPost_likes()+"");
     }
 
 
@@ -84,11 +84,11 @@ public class FriendsOnlyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
             ivUserProfile = (CircleImageView) view.findViewById(R.id.ivUserProfile);
             ivFeedCenter = (ImageView) view.findViewById(R.id.ivFeedCenter);
-            likeicon = (ImageButton) view.findViewById(R.id.like_icon);
-            commenticon = (ImageButton) view.findViewById(R.id.comment_icon);
+            likeicon = (ImageButton) view.findViewById(R.id.like);
+//            commenticon = (ImageButton) view.findViewById(R.id.comment_icon);
             caption = (TextView) view.findViewById(R.id.caption);
-            likes = (TextView) view.findViewById(R.id.likes);
-            comment = (TextView) view.findViewById(R.id.comments);
+            likes = (TextView) view.findViewById(R.id.likescount);
+            comment = (TextView) view.findViewById(R.id.commentscount);
             country = (TextView) view.findViewById(R.id.country);
             name = (TextView) view.findViewById(R.id.name);
 
