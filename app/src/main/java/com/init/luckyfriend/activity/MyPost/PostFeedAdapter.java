@@ -153,9 +153,8 @@ public class PostFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     //Toast.makeText(context, "Edit Clicked" + pos, Toast.LENGTH_SHORT).show();
                     PostDataBean post=data.get(pos);
                     Intent Edit=new Intent(context, EditPost.class);
-                    Edit.putExtra("post_id",post.getPost_id());
-                    Edit.putExtra("post_img",post.getPost_img());
-
+                    Edit.putExtra("data",post);
+                    Edit.putExtra("post",pos);
 
                     context.startActivity(Edit);
                     break;
@@ -172,7 +171,7 @@ public class PostFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                         public void onClick(DialogInterface arg0, int arg1) {
                            // Toast.makeText(context, "You clicked yes button", Toast.LENGTH_LONG).show();
                             PostDataBean post=data.get(pos);
-                            deletePost(post.getPost_id());
+                            deletePost(post.getPost_id(),pos);
 
 
                         }
@@ -195,7 +194,7 @@ public class PostFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
 
-    private void deletePost(final String post_id) {
+    private void deletePost(final String post_id,final int pos) {
         RequestQueue queue = Volley.newRequestQueue(context);
         StringRequest sr = new StringRequest(Request.Method.POST,context.getResources().getString(R.string.url), new Response.Listener<String>() {
             @Override
@@ -204,6 +203,8 @@ public class PostFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 //prog.dismiss();
 
                 Toast.makeText(context,"post deleted",Toast.LENGTH_LONG).show();
+                data.remove(pos);
+                notifyDataSetChanged();
 
 
             }

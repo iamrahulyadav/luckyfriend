@@ -45,6 +45,7 @@ import com.android.volley.toolbox.Volley;
 import com.init.luckyfriend.R;
 
 
+import com.init.luckyfriend.activity.AppTour.AppTourSlides;
 import com.init.luckyfriend.activity.DATA.WallDataBean;
 import com.init.luckyfriend.activity.EditProfile.MainUserProfile;
 import com.init.luckyfriend.activity.ExtendedProfile.FullExtendedProfile;
@@ -80,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     FragmentTransaction mFragmentTransaction;
     RecyclerView recyclerView;
     TextView toolbartitle;
-    TextView activities,favourites,photos,likes,friends,nearby,help,visitors,messages,settings,matches,myposts;
+    TextView activities,favourites,photos,likes,friends,nearby,help,visitors,messages,settings,matches,myposts,logout;
     TextView notification,search,bottommessages,bottomneraby,bottommatches;
     LinearLayout bottomLayout;
     CircleImageView profileimage;
@@ -207,6 +208,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         myposts=(TextView)findViewById(R.id.myposts);
         username.setTypeface(customfont1);
         menu_layout=(FrameLayout)findViewById(R.id.menu_layout);
+        logout=(TextView)findViewById(R.id.logout);
 
 
       type=getIntent().getIntExtra("typeLogin",1);
@@ -330,18 +332,23 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
               }
           }
 
-       /* if (type == 3) {
-              String googlename = getIntent().getStringExtra("displayname");
-              String image = getIntent().getStringExtra("imageurl");
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-              //Log.e("image",image);
-              username.setText(googlename);
-              if (image == null) {
-                  profileimage.setImageResource(R.drawable.iiiii);
-              } else
-                  new DownloadImageTask(profileimage).execute(image);
-          }*/
 
+          SharedPreferences.Editor editor= Singleton.pref.edit();
+                editor.clear();
+                editor.commit();
+                Toast.makeText(getApplicationContext(),"Logout successful..",Toast.LENGTH_LONG).show();
+                Intent main=new Intent(MainActivity.this, AppTourSlides.class);
+                main.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(main);
+                finish();
+
+
+            }
+        });
 
         myposts.setOnClickListener(new View.OnClickListener() {
             @Override

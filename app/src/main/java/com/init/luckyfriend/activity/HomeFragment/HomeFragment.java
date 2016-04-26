@@ -25,6 +25,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.init.luckyfriend.R;
 import com.init.luckyfriend.activity.DATA.WallDataBean;
+import com.init.luckyfriend.activity.Singleton;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -130,6 +131,7 @@ public class HomeFragment extends Fragment {
                         pdb.setPost_id(jo.getString("post_id"));
                         pdb.setPerson_id(jo.getString("person_id"));
                         pdb.setPeron_dob(jo.getString("person_dob"));
+                        pdb.setIsLiked(jo.getInt("isliked"));
 
                         int year=0,mon=0,day=0;
                         String[] data=pdb.getPeron_dob().split("-");
@@ -137,7 +139,6 @@ public class HomeFragment extends Fragment {
                         mon=Integer.parseInt(data[1]);
                         day=Integer.parseInt(data[2]);
                         pdb.setPeron_dob(getAge(year, mon, day) + "years" + "");
-                        items.add(pdb);
 
 
                         items.add(pdb);
@@ -165,6 +166,7 @@ public class HomeFragment extends Fragment {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("rqid", 1+"");
+                params.put("person_id", Singleton.pref.getString("person_id",""));
 
                 return params;
             }

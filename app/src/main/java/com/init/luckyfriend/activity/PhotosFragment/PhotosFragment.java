@@ -84,7 +84,7 @@ public class PhotosFragment extends Fragment {
         //fillAdapter();
 
 
-        adapter=new PhotoMultipleRowAdapter(getActivity(),items,this,result);
+        adapter=new PhotoMultipleRowAdapter(getActivity(),items,this,encodedImage);
         recyclerView.setAdapter(adapter);
 
 
@@ -240,7 +240,7 @@ public class PhotosFragment extends Fragment {
 
                 PhotosDataBean object2 = new PhotosDataBean();
                 object2.setType(4);
-                //object2.setPerson_img_path(encodedImage);
+                object2.setPerson_img_path(encodedImage);
                 items.add(object2);
 
 

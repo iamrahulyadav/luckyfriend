@@ -25,6 +25,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.init.luckyfriend.R;
+import com.init.luckyfriend.activity.MyPost.PostDataBean;
+import com.init.luckyfriend.activity.MyPost.PostFragment;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -48,7 +53,8 @@ public class EditPost extends AppCompatActivity {
     String fname;
     String post_id,post_img;
     TextView text;
-
+    PostDataBean pdb;
+    int pos=-1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,8 +71,13 @@ public class EditPost extends AppCompatActivity {
         prog.setMessage("wait uploading post...");
 
         text.setText("Edit Post");
-        post_id=getIntent().getStringExtra("post_id");
-        post_img=getIntent().getStringExtra("post_img");
+        Bundle extra=getIntent().getExtras();
+        if(extra!=null) {
+            pdb = (PostDataBean) extra.get("data");
+            post_id=pdb.getPost_id();
+            post_img =pdb.getPost_img();
+            pos=extra.getInt("pos");
+        }
         //getPost(post_id);
 
         fname = new Date().getTime()+"luckyfriendsnewpost"+".jpg";
@@ -129,9 +140,20 @@ public class EditPost extends AppCompatActivity {
                 //prog.setVisibility(View.GONE);
                 Log.e("post", response.toString());
                 prog.dismiss();
-                Toast.makeText(getApplicationContext(),"uploaded successfully",Toast.LENGTH_LONG).show();
 
-            }
+                    try {
+                        JSONObject jobj=new JSONObject(response.toString());
+                        String urlimage=jobj.getString("post_img");
+                        Toast.makeText(getApplicationContext(),"uploaded successfully",Toast.LENGTH_LONG).show();
+                        PostFragment.pf.refresh(urlimage, pos);
+                        finish();
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
+              }
 
 
         }, new Response.ErrorListener() {

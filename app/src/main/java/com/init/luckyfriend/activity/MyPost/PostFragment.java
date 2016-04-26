@@ -1,6 +1,7 @@
 package com.init.luckyfriend.activity.MyPost;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -45,7 +46,7 @@ public class PostFragment extends Fragment {
     TextView notification;
     FragmentManager mFragmentManager;
     FragmentTransaction mFragmentTransaction;
-
+    public static PostFragment  pf;
 
 
     @Override
@@ -54,7 +55,7 @@ public class PostFragment extends Fragment {
 
              prog=new ProgressDialog(getActivity());
              prog.setMessage("wait loading data");
-
+             pf=this;
         getPost();
 
          }
@@ -167,5 +168,12 @@ public class PostFragment extends Fragment {
 
 
     }
+public void refresh(String url,int pos)
+{
+    Toast.makeText(getActivity(),"called",Toast.LENGTH_LONG).show();
+    PostDataBean pdb=items.get(pos);
+    pdb.setPost_img(url);
+    feedAdapter.notifyDataSetChanged();
+}
 
 }

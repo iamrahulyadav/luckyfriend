@@ -133,6 +133,9 @@
             android:label="@string/title_activity_update_status" >
         </activity>
         <activity android:name=".activity.EditPost"/>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="b0ac7ea1dfea7bf5490049b7fb8935df519695f6" />
     </application>
 
 </manifest>

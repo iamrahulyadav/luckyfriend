@@ -47,14 +47,14 @@ public class PhotoMultipleRowAdapter extends RecyclerView.Adapter<PhotoMultipleR
     Activity context;
     PhotosFragment photos;
     PhotoMultipleRowAdapter adapter;
-    Bitmap encoded;
+    String encodedImg;
 
-    public PhotoMultipleRowAdapter(Activity context, List<PhotosDataBean> multipleRowModelList,PhotosFragment photos,Bitmap encoded) {
+    public PhotoMultipleRowAdapter(Activity context, List<PhotosDataBean> multipleRowModelList,PhotosFragment photos,String encoded) {
         this.multipleRowModelList = multipleRowModelList;
         inflater = LayoutInflater.from(context);
         this.context = context;
         this.photos=photos;
-        this.encoded=encoded;
+        this.encodedImg=encoded;
        }
 
     @Override
@@ -87,14 +87,18 @@ public class PhotoMultipleRowAdapter extends RecyclerView.Adapter<PhotoMultipleR
             });
 
         }
-        else {
-//            if(encoded==null){
-                holder.image.setImageResource(R.drawable.iiiii);
-  //          }
-    //        holder.image.setImageBitmap(encoded);
+            else
+            {
+                byte[] decodedString = Base64.decode(multipleRowModelList.get(position).getPerson_img_path(), Base64.DEFAULT);
+                Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+                Log.e("bitmap",multipleRowModelList.get(position).getPerson_img_path()+"");
+                holder.image.setImageBitmap(decodedByte);
+
+            }
             // Singleton.imageLoader.displayImage(multipleRowModelList.get(position).getPerson_img_path(), holder.image, Singleton.defaultOptions);
             //holder.image.setImageResource(R.drawable.iiiii);
-        }
+
 
     }
 

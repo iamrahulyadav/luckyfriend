@@ -1,9 +1,11 @@
 package com.init.luckyfriend.activity.MyPost;
 
+import java.io.Serializable;
+
 /**
  * Created by sanjay on 12/30/2015.
  */
-public class PostDataBean
+public class PostDataBean implements Serializable
 {
     String post_comments;
     String post_likes;

@@ -18,7 +18,7 @@
 
             android:layout_gravity="left|center"
             android:src="@drawable/iiiii"
-
+            android:layout_marginLeft="10dp"
 
             />
 
@@ -37,7 +37,7 @@
                 android:text="Deven Mer"
                 android:textSize="15sp"
                 android:layout_gravity="left"
-
+                android:layout_marginTop="5dp"
                 android:layout_weight="1"
                 android:textStyle="bold"
                 android:textColor="@color/abc_search_url_text_pressed"/>
@@ -64,7 +64,9 @@
                 android:layout_gravity="center_horizontal|bottom|left"/>
             <View android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="@color/common_action_bar_splitter">
+                android:background="@color/common_action_bar_splitter"
+                android:layout_marginTop="5dp"
+                >
             </View>
         </LinearLayout>
 
