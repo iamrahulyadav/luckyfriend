@@ -47,13 +47,15 @@ public class PhotoMultipleRowAdapter extends RecyclerView.Adapter<PhotoMultipleR
     Activity context;
     PhotosFragment photos;
     PhotoMultipleRowAdapter adapter;
+    Bitmap encoded;
 
-    public PhotoMultipleRowAdapter(Activity context, List<PhotosDataBean> multipleRowModelList,PhotosFragment photos) {
+    public PhotoMultipleRowAdapter(Activity context, List<PhotosDataBean> multipleRowModelList,PhotosFragment photos,Bitmap encoded) {
         this.multipleRowModelList = multipleRowModelList;
         inflater = LayoutInflater.from(context);
         this.context = context;
         this.photos=photos;
-    }
+        this.encoded=encoded;
+       }
 
     @Override
     public PhotoMultipleRowViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -85,9 +87,14 @@ public class PhotoMultipleRowAdapter extends RecyclerView.Adapter<PhotoMultipleR
             });
 
         }
-        else
-           // Singleton.imageLoader.displayImage("R.id.", holder.image, Singleton.defaultOptions);
-        holder.image.setImageResource(R.drawable.iiiii);
+        else {
+//            if(encoded==null){
+                holder.image.setImageResource(R.drawable.iiiii);
+  //          }
+    //        holder.image.setImageBitmap(encoded);
+            // Singleton.imageLoader.displayImage(multipleRowModelList.get(position).getPerson_img_path(), holder.image, Singleton.defaultOptions);
+            //holder.image.setImageResource(R.drawable.iiiii);
+        }
 
     }
 

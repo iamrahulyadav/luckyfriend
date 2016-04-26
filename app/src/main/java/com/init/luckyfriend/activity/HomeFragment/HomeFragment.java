@@ -129,7 +129,6 @@ public class HomeFragment extends Fragment {
                         pdb.setPerson_profile_img(jo.getString("person_profile_img"));
                         pdb.setPost_id(jo.getString("post_id"));
                         pdb.setPerson_id(jo.getString("person_id"));
-                        pdb.setUser_id(jo.getString("user_id"));
                         pdb.setPeron_dob(jo.getString("person_dob"));
 
                         int year=0,mon=0,day=0;

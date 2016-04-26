@@ -52,8 +52,12 @@ public class PostFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+             prog=new ProgressDialog(getActivity());
+             prog.setMessage("wait loading data");
+
         getPost();
-    }
+
+         }
 
 
     @Override
@@ -77,8 +81,8 @@ public class PostFragment extends Fragment {
         rvFeed.setAdapter(feedAdapter);
 
 
-        prog=new ProgressDialog(getContext());
-        prog.setMessage("wait loading data");
+
+
 
         // Inflate the layout for this fragment
         return rootView;
@@ -92,13 +96,16 @@ public class PostFragment extends Fragment {
             @Override
             public void onResponse(String response) {
                 Log.e("mypost", response.toString());
-                prog.dismiss();
-                try {
+              prog.dismiss();
 
+                try {
+                    items.clear();
                     JSONObject jobj = new JSONObject(response.toString());
                     JSONArray jarray = jobj.getJSONArray("data");
                     if (jarray.length() == 0) {
                         // dataleft = false;
+                        Toast.makeText(getContext(),"No posts yet...",Toast.LENGTH_LONG).show();
+
                         return;
                     }
                     for (int i = 0; i < jarray.length(); i++) {
@@ -122,7 +129,7 @@ public class PostFragment extends Fragment {
                     // skipdata = shopdata.size();
                     feedAdapter.notifyDataSetChanged();
                 } catch (Exception ex) {
-                    Log.e("error", ex.getMessage());
+//                    Log.e("error", ex.getMessage());
                 }
 
 
@@ -135,7 +142,7 @@ public class PostFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("response",error.getMessage()+"");
-                prog.dismiss();
+      //          prog.dismiss();
             }
         }) {
             @Override

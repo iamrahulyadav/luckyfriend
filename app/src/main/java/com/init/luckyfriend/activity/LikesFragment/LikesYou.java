@@ -90,7 +90,7 @@ public class LikesYou extends android.support.v4.app.Fragment {
                     JSONArray jarray = jobj.getJSONArray("data");
                     if (jarray.length() == 0) {
                         // dataleft = false;
-                        Toast.makeText(getContext(), "No favourites yet", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "Noone likes you yet", Toast.LENGTH_LONG).show();
                         return;
                     }
                     for (int i = 0; i < jarray.length(); i++) {

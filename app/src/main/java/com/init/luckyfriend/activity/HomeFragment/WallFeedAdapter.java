@@ -2,15 +2,20 @@ package com.init.luckyfriend.activity.HomeFragment;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.SharedPreferences;
+import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,10 +27,17 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.init.luckyfriend.R;
+import com.init.luckyfriend.activity.ChatFragment.ChatActivity;
+import com.init.luckyfriend.activity.ChatFragment.ChatListAdapter;
+import com.init.luckyfriend.activity.ChatFragment.ChatMessage;
+import com.init.luckyfriend.activity.ChatFragment.Status;
+import com.init.luckyfriend.activity.ChatFragment.UserType;
 import com.init.luckyfriend.activity.CircleImageView;
+import com.init.luckyfriend.activity.DATA.CommentData;
 import com.init.luckyfriend.activity.DATA.WallDataBean;
 import com.init.luckyfriend.activity.ExtendedProfile.FullExtendedProfile;
 import com.init.luckyfriend.activity.ExtendedProfile.FullProfile;
+import com.init.luckyfriend.activity.PhotosFragment.PhotosFragment;
 import com.init.luckyfriend.activity.Profile.Profile;
 import com.init.luckyfriend.activity.Singleton;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -33,9 +45,15 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 
 public class WallFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -44,6 +62,10 @@ public class WallFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     List<WallDataBean> data;
     ImageLoader imageLoader = ImageLoader.getInstance();
     public ImageButton likeicon;
+    private boolean side = false;
+    ArrayList<CommentData> loaded=new ArrayList<>();
+    ProgressBar progress;
+
 
     public WallFeedAdapter(Activity context, List<WallDataBean> list) {
         this.context = context;
@@ -78,12 +100,16 @@ public class WallFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         Singleton.imageLoader.displayImage(gd.getPerson_profile_img(), holder.ivUserProfile, Singleton.defaultOptions);
 
         // post images
-        Singleton.imageLoader.displayImage(gd.getPost_img(), holder.ivFeedCenter, Singleton.defaultOptions);
+        if(gd.getPost_img()==null){
+            holder.ivFeedCenter.setImageResource(R.drawable.iiiii);
+            }
+        else
+           Singleton.imageLoader.displayImage(gd.getPost_img(), holder.ivFeedCenter, Singleton.defaultOptions);
 
 
         holder.country.setText(gd.getPerson_country());
         //holder.comment.setText(2+"");
-        holder.name.setText(gd.getUser_name()+" "+gd.getLast_name());
+        holder.name.setText(gd.getUser_name() + " " + gd.getLast_name());
 
 
     }
@@ -156,7 +182,9 @@ public class WallFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         ImageView ivFeedCenter;
         TextView caption, likes, comment, country, name;
         ImageButton add, commenticon;
-
+        EditText comments;
+        ImageButton send;
+        CommentArrayAdapter adapter;
 
         public CellFeedViewHolder(View view) {
             super(view);
@@ -197,10 +225,42 @@ public class WallFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     break;
 
                 case R.id.comment_icon:
-                    Dialog comment = new Dialog(context, R.style.FullHeightDialog);
+                    final Dialog comment = new Dialog(context, R.style.MyDialog);
                     comment.setContentView(R.layout.comments);
-                    ProgressBar progress = (ProgressBar) comment.findViewById(R.id.progress);
-                    progress.setVisibility(View.GONE);
+
+                    RecyclerView loadcomments=(RecyclerView)comment.findViewById(R.id.cardList);
+                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context);
+                    loadcomments.setLayoutManager(mLayoutManager);
+
+
+                    comments=(EditText)comment.findViewById(R.id.commentbox);
+                     send=(ImageButton)comment.findViewById(R.id.send);
+                    TextView close=(TextView)comment.findViewById(R.id.closedialog);
+                    close.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            comment.dismiss();
+                        }
+                    });
+                     progress = (ProgressBar) comment.findViewById(R.id.progress);
+                    progress.setVisibility(View.VISIBLE);
+
+                     adapter=new CommentArrayAdapter(context,loaded);
+                    loadcomments.setAdapter(adapter);
+
+                    loaded.clear();
+                    addList();
+
+                    send.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                        //   sendMessage(comments.getText().toString(), UserType.OTHER);
+                        send(comments.getText().toString());
+
+                        }
+                    });
+
+
                     comment.show();
                     break;
 
@@ -214,13 +274,29 @@ public class WallFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 // Replace whatever is in the fragment_container view with this fragment,
 // and add the transaction to the back stack if needed
                     transaction.replace(R.id.container_body ,new Profile());
-                    transaction.addToBackStack(null);
+
 
 // Commit the transaction
                     transaction.commit();
 
             }
         }
+
+        private void send(String comment) {
+
+            String date = new SimpleDateFormat("dd-mm-yyyy").format(new Date());
+            CommentData commentData=new CommentData();
+            commentData.setCommenttxxt(comment);
+            commentData.setUname(Singleton.pref.getString("uname", ""));
+            commentData.setProfilepic(Singleton.pref.getString("profile_pic", ""));
+            commentData.setCtime(date);
+            loaded.add(commentData);
+
+            adapter.notifyDataSetChanged();
+            comments.setText("");
+
+        }
+
 
         private void sendFriendRequest(final String friend_person_id) {
             //String url ="http://192.168.0.7/test.php";
@@ -276,4 +352,25 @@ public class WallFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
 
     }
+
+    private void addList() {
+       String name[]={"deven","sanjay","naveen","rajesh"};
+        String com[]={"nice1","nice1","nice","nice"};
+        String img[]={"http://e2ua.com/data/wallpapers/62/WDF_1074487.jpg","http://e2ua.com/data/wallpapers/62/WDF_1074487.jpg","http://e2ua.com/data/wallpapers/62/WDF_1074487.jpg","http://e2ua.com/data/wallpapers/62/WDF_1074487.jpg"};
+        String date[]={"23-4-2014","23-4-2015","23-4-2016","23-4-2017"};
+
+        for (int i =0;i<name.length;i++){
+
+            progress.setVisibility(View.GONE);
+            CommentData commentData=new CommentData();
+            commentData.setCommenttxxt(com[i]);
+            commentData.setUname(name[i]);
+            commentData.setProfilepic(img[i]);
+            commentData.setCtime(date[i]);
+            loaded.add(commentData);
+        }
+
+    }
+
+
 }

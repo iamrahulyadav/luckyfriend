@@ -7,7 +7,15 @@ import java.io.Serializable;
  */
 public class CommentData implements Serializable {
 private String uname;
+    String ctime;
 
+    public String getCtime() {
+        return ctime;
+    }
+
+    public void setCtime(String ctime) {
+        this.ctime = ctime;
+    }
 
     public String getCommenttxxt() {
         return commenttxxt;

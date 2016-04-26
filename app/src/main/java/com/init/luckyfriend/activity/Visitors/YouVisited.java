@@ -45,6 +45,10 @@ public class YouVisited extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+        prog=new ProgressDialog(getContext());
+        prog.setMessage("wait loading data..");
+
         getYouVisited();
     }
 
@@ -68,8 +72,6 @@ public class YouVisited extends Fragment {
         feedAdapter = new VisitedYouAdapter(getActivity(),items);
         rvFeed.setAdapter(feedAdapter);
 
-prog=new ProgressDialog(getContext());
-prog.setMessage("wait loading data..");
 
 
         // Inflate the layout for this fragment
@@ -79,7 +81,7 @@ prog.setMessage("wait loading data..");
 
 
     private void getYouVisited() {
-prog.show();
+    prog.show();
         RequestQueue queue = Volley.newRequestQueue(getActivity());
         StringRequest sr = new StringRequest(Request.Method.POST, getResources().getString(R.string.url), new Response.Listener<String>() {
             @Override
@@ -93,7 +95,7 @@ prog.show();
                     JSONArray jarray = jobj.getJSONArray("data");
                     if (jarray.length() == 0) {
                         // dataleft = false;
-                       // Toast.makeText(getActivity(), "No favourites yet", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "No data..", Toast.LENGTH_LONG).show();
                         return;
                     }
                     for (int i = 0; i < jarray.length(); i++) {

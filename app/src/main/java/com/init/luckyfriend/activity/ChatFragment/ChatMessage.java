@@ -8,6 +8,12 @@ public class ChatMessage {
     private String messageText;
     private UserType userType;
     private Status messageStatus;
+    public boolean left;
+    public String message;
+
+    public ChatMessage(){
+
+    }
 
     public long getMessageTime() {
         return messageTime;

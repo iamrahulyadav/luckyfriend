@@ -46,6 +46,12 @@ public class MutualLikes extends android.support.v4.app.Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        prog=new ProgressDialog(getContext());
+        prog.setMessage("wait loading data..");
+
+        getLike();
+
+
     }
 
     @Override
@@ -67,10 +73,6 @@ public class MutualLikes extends android.support.v4.app.Fragment {
         feedAdapter = new YouLikeAdapter(getActivity(),items);
         rvFeed.setAdapter(feedAdapter);
 
-        prog=new ProgressDialog(getContext());
-        prog.setMessage("wait loading data..");
-
-        getLike();
 
         // Inflate the layout for this fragment
         return rootView;
@@ -84,7 +86,7 @@ prog.show();
             @Override
             public void onResponse(String response) {
                 prog.dismiss();
-                Log.e("you like", response.toString());
+                Log.e("mutual like", response.toString());
                 items.clear();
                 try {
 
@@ -92,7 +94,7 @@ prog.show();
                     JSONArray jarray = jobj.getJSONArray("data");
                     if (jarray.length() == 0) {
                         // dataleft = false;
-                        Toast.makeText(getContext(), "No favourites yet", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "No mutual likes yet", Toast.LENGTH_LONG).show();
                         return;
                     }
                     for (int i = 0; i < jarray.length(); i++) {

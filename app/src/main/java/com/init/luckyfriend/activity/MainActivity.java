@@ -212,12 +212,53 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
       type=getIntent().getIntExtra("typeLogin",1);
         //Toast.makeText(MainActivity.this, "type " + type, Toast.LENGTH_SHORT).show();
 
+       if(type==1){
+           name=Singleton.pref.getString("uname","");
+           username.setText(name);
+           String profilepic=Singleton.pref.getString("uimage","");
+            gender=Singleton.pref.getString("ugender","");
+
+           if (profilepic == "") {
+               profileimage.setImageResource(R.drawable.iiiii);
+           } else
+               Singleton.imageLoader.displayImage(profilepic, profileimage, Singleton.defaultOptions);
+
+           if(gender.compareToIgnoreCase("Male")==0)
+           {
+               menu_layout.setBackgroundColor(Color.parseColor("#2f6fff"));
+               if (Build.VERSION.SDK_INT >= 21) {
+                   Window window = getWindow();
+                   window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                   window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                   window.setStatusBarColor(getResources().getColor(R.color.textColorPrimary));
+               }
+
+
+           }
+
+           else {
+               menu_layout.setBackgroundColor(Color.parseColor("#f63e65"));
+               if (Build.VERSION.SDK_INT >= 21) {
+                   Window window = getWindow();
+                   window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                   window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                   window.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
+               }
+           }
+
+       }
+
+
         if(type==3){
             name=Singleton.pref.getString("uname","");
-            String profilepic=Singleton.pref.getString("uimage","");
             username.setText(name);
+            String profilepic=Singleton.pref.getString("uimage","");
+          // Singleton.imageLoader.displayImage(profilepic, profileimage, Singleton.defaultOptions);
+            if (profilepic == "") {
+                profileimage.setImageResource(R.drawable.iiiii);
+            } else
+                Singleton.imageLoader.displayImage(profilepic, profileimage, Singleton.defaultOptions);
 
-            Singleton.imageLoader.displayImage(profilepic,profileimage,Singleton.defaultOptions);
 
         }
 
@@ -256,8 +297,13 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
               Singleton.pref.getString("uname", "");
               username.setText(Singleton.pref.getString("uname", ""));
 
-              gender=Singleton.pref.getString("person_gender","");
+              gender = Singleton.pref.getString("person_gender","");
               String profilepic=Singleton.pref.getString("profile_pic","");
+
+              if(profilepic==""){
+                  profileimage.setImageResource(R.drawable.iiiii);
+              }
+              else
               Singleton.imageLoader.displayImage(profilepic,profileimage,Singleton.defaultOptions);
 
               if(gender.compareToIgnoreCase("Male")==0)
@@ -284,7 +330,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
               }
           }
 
-        if (type == 3) {
+       /* if (type == 3) {
               String googlename = getIntent().getStringExtra("displayname");
               String image = getIntent().getStringExtra("imageurl");
 
@@ -294,7 +340,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                   profileimage.setImageResource(R.drawable.iiiii);
               } else
                   new DownloadImageTask(profileimage).execute(image);
-          }
+          }*/
 
 
         myposts.setOnClickListener(new View.OnClickListener() {

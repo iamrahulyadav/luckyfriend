@@ -132,6 +132,7 @@
             android:name=".activity.UpdateStatus"
             android:label="@string/title_activity_update_status" >
         </activity>
+        <activity android:name=".activity.EditPost"/>
     </application>
 
 </manifest>

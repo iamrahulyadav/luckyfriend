@@ -4,11 +4,15 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +24,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -37,14 +48,19 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.init.luckyfriend.R;
+import com.init.luckyfriend.activity.DATA.WallDataBean;
 import com.init.luckyfriend.activity.HomeFragment.HomeFragment;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 
-
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
-
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class Login extends AppCompatActivity implements  View.OnClickListener,GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
@@ -148,6 +164,22 @@ public class Login extends AppCompatActivity implements  View.OnClickListener,Go
         // facebook signup
         fbsignup.setOnClickListener(this);
 
+        /*try {
+            PackageInfo info = getPackageManager().getPackageInfo(
+                    "com.init.luckyfriend",
+                    PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.e("hashkey", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+
+        } catch (NoSuchAlgorithmException e) {
+
+        }
+*/
+
         callbackManager = CallbackManager.Factory.create();
 
         LoginManager.getInstance().registerCallback(callbackManager,
@@ -176,6 +208,7 @@ public class Login extends AppCompatActivity implements  View.OnClickListener,Go
                                             email = object.getString("email");
                                             gender = object.getString("gender");
 
+                                            //Toast.makeText(getApplicationContext(),"value" +id,Toast.LENGTH_LONG).show();
                                             //creating json object
                                             JSONObject jobj = new JSONObject();
                                             jobj.put("fbid", id);
@@ -186,8 +219,21 @@ public class Login extends AppCompatActivity implements  View.OnClickListener,Go
                                             jobj.put("email", email);
                                             jobj.put("gender", gender);
                                             Log.e("data", jobj.toString());
+
+                                            saveFBData(id, fname, lname, email, gender);
+
+                                            SharedPreferences.Editor edit=Singleton.pref.edit();
+                                            edit.putString("uname",fname+" "+lname);
+                                            edit.putString("ugender",gender);
+                                            edit.putString("ucountry",country);
+                                            edit.putString("uimage","https://graph.facebook.com/"+id+"/picture?type=large");
+                                            edit.commit();
+
+
                                             Intent   intent = new Intent(getApplicationContext(),MainActivity.class);
-                                            intent.putExtra("data", jobj.toString());
+                                            //intent.putExtra("data", jobj.toString());
+
+                                            intent.putExtra("typeLogin",1);
                                             startActivity(intent);
                                             // checkFbuser(id);
 
@@ -200,7 +246,7 @@ public class Login extends AppCompatActivity implements  View.OnClickListener,Go
                                 });
 
                         Bundle parameters = new Bundle();
-                        parameters.putString("fields", "id,first_name,last_name,email,gender, birthday,locale,location{location}");
+                        parameters.putString("fields", "id,first_name,last_name,email,gender, birthday,locale,location{location},picture.type(large)");
                         request.setParameters(parameters);
                         request.executeAsync();
                     }
@@ -218,6 +264,63 @@ public class Login extends AppCompatActivity implements  View.OnClickListener,Go
 
     }
 
+    private void saveFBData(final String id,final String fname,final String lname,final String email,final String gender) {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        StringRequest sr = new StringRequest(Request.Method.POST,getResources().getString(R.string.url), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.e(" fb response", response.toString());
+
+
+                try {
+                    JSONObject jobj = new JSONObject(response.toString());
+
+
+                    if (jobj.getBoolean("status")) {
+                        String person_id = jobj.getString("person_id");
+
+                        SharedPreferences.Editor edit=Singleton.pref.edit();
+                        edit.putString("person_id",person_id);
+                        edit.commit();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+               // prog.dismiss();
+//            Log.e("error",error.getMessage());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("rqid", 25+"");
+                params.put("fbid",id);
+                params.put("fname",fname);
+                params.put("lname",lname);
+                params.put("gender",gender);
+                params.put("email",email);
+
+
+
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/x-www-form-urlencoded");
+                return params;
+            }
+        };
+        queue.add(sr);
+
+    }
 
 
     @Override
@@ -260,15 +363,83 @@ public class Login extends AppCompatActivity implements  View.OnClickListener,Go
 
           //  mStatusTextView.setText(getString(R.string.signed_in_fmt, acct.getDisplayName()));
 
-        //    senddatatoserver();
-            updateUI(true);
+            senddatatoserver(username, useremail, userimage);
+            //updateUI(true);
         } else {
             // Signed out, show unauthenticated UI.
-            updateUI(false);
+            //updateUI(false);
         }
     }
 
-    private void senddatatoserver() {
+    private void senddatatoserver(final String username,final String useremail,final String userimage) {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        StringRequest sr = new StringRequest(Request.Method.POST,getResources().getString(R.string.url), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.e("response", response.toString());
+
+                    try {
+                        JSONObject jobj = new JSONObject(response.toString());
+
+                        if(jobj.getBoolean("status")) {
+                            String person_id = jobj.getString("person_id");
+                            String name = jobj.getString("uname");
+
+
+                            SharedPreferences.Editor edit = Singleton.pref.edit();
+                            edit.putString("uname", name);
+                            Toast.makeText(Login.this, name, Toast.LENGTH_SHORT).show();
+                           // edit.putString("uemail", jobj.getString("uemail"));
+                             edit.putString("uimage", userimage);
+                            edit.putString("person_id", person_id);
+
+                            edit.commit();
+
+
+                            Intent main = new Intent(getApplicationContext(), MainActivity.class);
+                            main.putExtra("typeLogin", 3);
+                            startActivity(main);
+                            finish();
+
+                        }
+                        else
+                        {
+                            Toast.makeText(getApplicationContext(),"Unable to register now! ",Toast.LENGTH_LONG).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+               // prog.dismiss();
+//            Log.e("error",error.getMessage());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("rqid", 26+"");
+                params.put("username",username);
+                params.put("useremail",useremail);
+                params.put("userimage",userimage);
+
+
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/x-www-form-urlencoded");
+                return params;
+            }
+        };
+        queue.add(sr);
 
 
     }
@@ -278,14 +449,6 @@ public class Login extends AppCompatActivity implements  View.OnClickListener,Go
         if (b == true) {
             //findViewById(R.id.sign_in_button).setVisibility(View.GONE);
             //findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
-            SharedPreferences.Editor edit = Singleton.pref.edit();
-            edit.putString("uname",acct.getDisplayName());
-            edit.putString("uemail",acct.getEmail());
-            edit.putString("uimage",userimage);
-
-            //  edit.putString("person_id", jobj.getString("person_id"));
-            edit.commit();
-
             Intent main = new Intent(this, MainActivity.class);
             main.putExtra("typeLogin", 3);
             startActivity(main);
@@ -295,9 +458,7 @@ public class Login extends AppCompatActivity implements  View.OnClickListener,Go
 
 
         } else {
-            //findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
-            //findViewById(R.id.sign_out_and_disconnect).setVisibility(View.GONE);
-            //Toast.makeText(getApplicationContext(),"Not signed in",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),"Not signed in",Toast.LENGTH_LONG).show();
 
         }
     }
@@ -349,13 +510,13 @@ public class Login extends AppCompatActivity implements  View.OnClickListener,Go
     {
         switch (view.getId()) {
             case R.id.fbsignup:
-              // Toast.makeText(getApplicationContext(), "clicked", Toast.LENGTH_LONG).show();
-       //       LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "user_friends", "email", "user_location","user_birthday","user_posts"));
+               Toast.makeText(getApplicationContext(), "clicked", Toast.LENGTH_LONG).show();
+             LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "user_friends", "email", "user_location","user_birthday","user_posts"));
                 break;
 
             case R.id.google:
-            //    Toast.makeText(getApplicationContext(),"clicked gplus ",Toast.LENGTH_LONG).show();
-     //          signIn();
+                Toast.makeText(getApplicationContext(),"clicked gplus ",Toast.LENGTH_LONG).show();
+                signIn();
                 break;
 
             case R.id.signup:

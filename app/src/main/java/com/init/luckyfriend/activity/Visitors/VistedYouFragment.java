@@ -47,6 +47,9 @@ public class VistedYouFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        prog=new ProgressDialog(getContext());
+        prog.setMessage("wait loading data...");
+
         getVisitedYou();
     }
 
@@ -72,8 +75,6 @@ public class VistedYouFragment extends Fragment {
         rvFeed.setAdapter(feedAdapter);
 
 
-        prog=new ProgressDialog(getContext());
-        prog.setMessage("wait loading data...");
 
         // Inflate the layout for this fragment
         return rootView;
@@ -96,7 +97,7 @@ public class VistedYouFragment extends Fragment {
                      JSONArray jarray = jobj.getJSONArray("data");
                      if (jarray.length() == 0) {
                          // dataleft = false;
-                         Toast.makeText(getContext(), "No favourites yet", Toast.LENGTH_LONG).show();
+                         Toast.makeText(getContext(), "No visitors yet", Toast.LENGTH_LONG).show();
                          return;
                      }
                      for (int i = 0; i < jarray.length(); i++) {

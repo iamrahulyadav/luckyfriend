@@ -16,6 +16,15 @@ public class WallDataBean
     String post_id;
     String like_person_id;
     String peron_dob;
+    Boolean isLiked;
+
+    public Boolean getIsLiked() {
+        return isLiked;
+    }
+
+    public void setIsLiked(Boolean isLiked) {
+        this.isLiked = isLiked;
+    }
 
     public String getPeron_dob() {
         return peron_dob;

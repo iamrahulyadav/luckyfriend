@@ -47,8 +47,8 @@ public class FriendsOnlySearch extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-       // prog=new ProgressDialog(getActivity());
-        //prog.setMessage("wait loading data ....");
+        prog=new ProgressDialog(getActivity());
+        prog.setMessage("wait loading data ....");
         // getData();
         getFriends();
 
@@ -73,8 +73,6 @@ public class FriendsOnlySearch extends Fragment {
         feedAdapter = new FriendsOnlyAdapter(getActivity(),items);
         rvFeed.setAdapter(feedAdapter);
 
-        prog=new ProgressDialog(getActivity());
-        prog.setMessage("wait loading data ....");
 
         // Inflate the layout for this fragment
         return rootView;
@@ -96,7 +94,7 @@ public class FriendsOnlySearch extends Fragment {
                     JSONArray jarray = jobj.getJSONArray("data");
                     if (jarray.length() == 0) {
                         // dataleft = false;
-                       // Toast.makeText(getActivity(),"No friends yet..",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(),"No friends yet..",Toast.LENGTH_LONG).show();
                         return;
                     }
                     for (int i = 0; i < jarray.length(); i++) {
@@ -143,7 +141,7 @@ public class FriendsOnlySearch extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 prog.dismiss();
-                   Log.e("error",error.getMessage());
+//                   Log.e("error",error.getMessage());
             }
         }) {
             @Override

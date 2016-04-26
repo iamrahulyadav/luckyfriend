@@ -56,12 +56,12 @@ public class PhotosFragment extends Fragment {
     Uri fileUri;
     String picturePath;
     String fileName;
-    String encodedImage;
+     String encodedImage;
     Uri selectedImage;
     Bitmap photo;
-
+    public static AlertDialog.Builder dialog;
     public static ArrayList<PhotosDataBean> items=new ArrayList<>();
-
+    Bitmap result;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -84,7 +84,7 @@ public class PhotosFragment extends Fragment {
         //fillAdapter();
 
 
-        adapter=new PhotoMultipleRowAdapter(getActivity(),items,this);
+        adapter=new PhotoMultipleRowAdapter(getActivity(),items,this,result);
         recyclerView.setAdapter(adapter);
 
 
@@ -119,7 +119,7 @@ public class PhotosFragment extends Fragment {
                     adapter.notifyDataSetChanged();
 
                 } catch (Exception ex) {
-                    Log.e("notification error", ex.getMessage() + "");
+                    Log.e("error", ex.getMessage() + "");
                 }
             }
         }, new Response.ErrorListener() {
@@ -143,7 +143,7 @@ public class PhotosFragment extends Fragment {
     }
 
     public void showDialog() {
-        AlertDialog.Builder dialog= new AlertDialog.Builder(getActivity());
+         dialog= new AlertDialog.Builder(getActivity());
         LayoutInflater inflater= (LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View v=inflater.inflate(R.layout.alertdialog_layout,null);
         // dialog.setTitle("Email Verification");
@@ -211,8 +211,10 @@ public class PhotosFragment extends Fragment {
 
                 //.setImageBitmap(photo);
 
-
+                alert.dismiss();
+                //PhotoMultipleRowViewHolder.image.setImageBitmap(photo);
                 // Cursor to get image uri to display
+
 
                 String[] filePathColumn = {MediaStore.Images.Media.DATA};
                 Cursor cursor = getActivity().getContentResolver().query(selectedImage,
@@ -230,7 +232,7 @@ public class PhotosFragment extends Fragment {
                 bm.compress(Bitmap.CompressFormat.JPEG, 90, bao);
                 byte[] ba = bao.toByteArray();
                 encodedImage = Base64.encodeToString(ba, Base64.DEFAULT);
-                items.remove(items.size()-1);
+                items.remove(items.size() - 1);
                 PhotosDataBean object = new PhotosDataBean();
                 object.setType(5);
                 object.setPerson_img_path(encodedImage);
@@ -238,7 +240,9 @@ public class PhotosFragment extends Fragment {
 
                 PhotosDataBean object2 = new PhotosDataBean();
                 object2.setType(4);
+                //object2.setPerson_img_path(encodedImage);
                 items.add(object2);
+
 
                 adapter.notifyDataSetChanged();
 
@@ -261,6 +265,9 @@ public class PhotosFragment extends Fragment {
 
                 //alert.dismiss();
 
+                alert.dismiss();
+                //PhotoMultipleRowViewHolder.image.setImageBitmap(selectedImage);
+
                 if (selectedImage != null) {
 
                 //    profileimage.setImageBitmap(selectedImage);
@@ -272,15 +279,18 @@ public class PhotosFragment extends Fragment {
 
                     byteArray = stream.toByteArray();
                     encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                    items.remove(items.size()-1);
+                    items.remove(items.size() - 1);
                     PhotosDataBean object = new PhotosDataBean();
                     object.setType(5);
                     object.setPerson_img_path(encodedImage);
                     items.add(object);
+//                    setBitmap(encodedImage);
+
 
                     PhotosDataBean object2 = new PhotosDataBean();
                     object2.setType(4);
                     items.add(object2);
+
 
                     adapter.notifyDataSetChanged();
 
@@ -296,5 +306,15 @@ public class PhotosFragment extends Fragment {
         }
 
     }
+
+    private Bitmap setBitmap(String encodedImage) {
+        byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+        Log.e("bitmap",decodedByte+"");
+
+        return decodedByte;
+    }
+
 
 }

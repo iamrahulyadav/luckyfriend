@@ -28,7 +28,7 @@ public class Singleton extends Application {
 
         // UNIVERSAL IMAGE LOADER SETUP
          defaultOptions = new DisplayImageOptions.Builder()
-                .cacheOnDisc(true).cacheInMemory(true)
+                .cacheOnDisk(true).cacheInMemory(true)
                 .imageScaleType(ImageScaleType.EXACTLY)
                 .build();
 
@@ -36,9 +36,35 @@ public class Singleton extends Application {
                 getApplicationContext())
                 .defaultDisplayImageOptions(defaultOptions)
                 .memoryCache(new WeakMemoryCache())
-                .discCacheSize(100 * 1024 * 1024).build();
+                .diskCacheSize(100 * 1024 * 1024).build();
 
         imageLoader=ImageLoader.getInstance();
         imageLoader.init(config);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
