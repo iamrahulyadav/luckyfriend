@@ -396,6 +396,8 @@
     <string name="tab1">BASIC INFO</string>
     <string name="tab2">PERSONALITY</string>
     <string name="title_activity_update_status">UpdateStatus</string>
+    <string name="title_activity_country_filter">CountryFilter</string>
+    <string name="title_activity_state_filter">StateFilter</string>
 
 
 </resources>

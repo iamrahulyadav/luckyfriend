@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -28,6 +29,7 @@ import com.init.luckyfriend.activity.DATA.WallDataBean;
 import com.init.luckyfriend.activity.Singleton;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -59,11 +61,67 @@ public class HomeFragment extends Fragment {
 
         prog=new ProgressDialog(getActivity());
         prog.setMessage("wait loading data ....");
+     Bundle extra= getArguments();
+     if(extra==null)
         getData();
-
+        else
+     {
+     //    Toast.makeText(getActivity(),extra.getString("data"),Toast.LENGTH_SHORT).show();
+         ParseData(extra.getString("data"));
+     }
 
     }
+private void ParseData(String response)
+{
+    try {
 
+        JSONObject jobj = new JSONObject(response.toString());
+        JSONArray jarray = jobj.getJSONArray("data");
+        if (jarray.length() == 0) {
+            // dataleft = false;
+            Toast.makeText(getActivity(),"No data available",Toast.LENGTH_LONG).show();
+            return;
+        }
+        for (int i = 0; i < jarray.length(); i++) {
+            JSONObject jo = jarray.getJSONObject(i);
+            WallDataBean pdb = new WallDataBean();
+            pdb.setLast_name(jo.getString("last_name"));
+            pdb.setUser_name(jo.getString("user_name"));
+            pdb.setPost_img(jo.getString("post_img"));
+            pdb.setPost_comments(jo.getInt("post_comments"));
+            pdb.setPost_likes(jo.getInt("post_likes"));
+            pdb.setPerson_country(jo.getString("person_country"));
+            pdb.setPerson_profile_img(jo.getString("person_profile_pic"));
+            pdb.setPost_id(jo.getString("post_id"));
+            pdb.setPerson_id(jo.getString("person_id"));
+            pdb.setPeron_dob(jo.getString("person_dob"));
+            pdb.setIsLiked(jo.getInt("isliked"));
+
+            int year=0,mon=0,day=0;
+            String[] data=pdb.getPeron_dob().split("-");
+            year=Integer.parseInt(data[0]);
+            mon=Integer.parseInt(data[1]);
+            day=Integer.parseInt(data[2]);
+            pdb.setPeron_dob(getAge(year, mon, day) + "years" + "");
+
+
+            items.add(pdb);
+            Log.e("items",items+"");
+
+        }
+
+
+// rv.setAdapter(adapter);
+        // skipdata = shopdata.size();
+        feedAdapter.notifyDataSetChanged();
+
+    } catch (Exception ex) {
+        Log.e("error", ex.getMessage());
+        Toast.makeText(getContext(),"No data",Toast.LENGTH_LONG).show();
+    }
+
+
+}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -80,6 +138,7 @@ public class HomeFragment extends Fragment {
             }
         };
         rvFeed.setLayoutManager(linearLayoutManager);
+
 
         feedAdapter = new WallFeedAdapter(getActivity(),items);
         rvFeed.setAdapter(feedAdapter);

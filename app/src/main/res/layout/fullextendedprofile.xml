@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+
+    >
+
+    <android.support.v7.widget.Toolbar
+      android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        >
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Username"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:id="@+id/username"
+
+                />
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/back_icon"
+                android:background="@android:color/transparent"
+                android:layout_gravity="left"
+                android:id="@+id/back"
+                />
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/comment_grey"
+                android:background="@android:color/transparent"
+                android:layout_gravity="right"
+            android:paddingRight="10dp"
+                android:id="@+id/message"
+                />
+        </FrameLayout>
+
+</android.support.v7.widget.Toolbar>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#e7f0f3"
+            >
+
+            <FrameLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+
+                >
+
+                <!-- Top Sliding Banners -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#fff"
+                    >
+
+                    <android.support.v4.view.ViewPager
+                        android:id="@+id/pager"
+                        android:layout_width="fill_parent"
+                        android:layout_height="300dp"
+                        android:layout_alignParentTop="true"
+
+                        />
+
+
+
+
+                </RelativeLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_gravity="bottom"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginLeft="20dp"
+
+                    >
+                    <com.viewpagerindicator.CirclePageIndicator
+                        android:id="@+id/indicator"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:gravity="center"
+                        android:padding="10dip"
+                        app:centered="true"
+                        app:fillColor="#ffffff"
+                        app:pageColor="#dadada"
+                        app:snap="false"
+
+                        />
+
+
+
+                </LinearLayout>
+
+            </FrameLayout>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="In a nutshell,about myself in my life I have \nknown two extremes, two concepts of life.\nFirst, immediately after graduation"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:textColor="@color/HelpcolorPrimary"
+        android:layout_marginTop="20dp"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Amsterdam, Netherlands"
+        android:layout_marginTop="5dp"
+        android:textSize="16sp"
+        android:drawableLeft="@drawable/sliding_menu_nearby"
+        android:padding="10dp"
+        android:drawablePadding="3dp"
+        android:id="@+id/place"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Interests"
+
+        android:textSize="16sp"
+        android:drawableLeft="@drawable/interest_icon"
+        android:padding="10dp"
+        android:drawablePadding="3dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Snowboarding"
+        android:textSize="11.5sp"
+        android:padding="10dp"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/white_selector_background"
+        android:layout_marginTop="5dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="net surfing"
+        android:padding="10dp"
+        android:textSize="11.5sp"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/white_selector_background"
+        android:layout_marginTop="5dp"
+        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Languages"
+
+                android:textSize="16sp"
+                android:drawableLeft="@drawable/language_icon"
+                android:padding="10dp"
+                android:drawablePadding="3dp"
+                />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="English, Hindi"
+
+                android:textSize="16sp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginBottom="20dp"
+                android:id="@+id/languages"
+
+                />
+
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:background="@drawable/blue_selector_baground"
+            android:layout_alignParentRight="true"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/plus"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#fff"
+
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Block this user"
+            android:textColor="#e69196"
+            android:drawableLeft="@drawable/block_icon"
+            android:textSize="10sp"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/block_background"
+            android:drawablePadding="10dp"
+            android:gravity="center"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:paddingLeft="10dp"
+            android:paddingBottom="10dp"
+            />
+    </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

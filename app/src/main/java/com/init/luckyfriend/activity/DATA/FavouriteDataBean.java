@@ -5,11 +5,43 @@ package com.init.luckyfriend.activity.DATA;
  */
 public class FavouriteDataBean {
     String post_img;
-    String post_likes;
-    String post_comments;
-    String post_user_first_name,post_user_last_name,post_user_profile_pic,post_user_dob,post_user_country;
+    int post_likes;
+    int post_comments;
+    String post_user_first_name;
+    String post_user_last_name;
+    String post_user_profile_pic;
+    String post_user_dob;
+    String post_user_country;
+    int isliked;
+    String person_id;
 
-    public String getPost_comments() {
+    public String getPerson_id() {
+        return person_id;
+    }
+
+    public void setPerson_id(String person_id) {
+        this.person_id = person_id;
+    }
+
+    public int getIsliked() {
+        return isliked;
+    }
+
+    public void setIsliked(int isliked) {
+        this.isliked = isliked;
+    }
+
+    public String getPost_id() {
+        return post_id;
+    }
+
+    public void setPost_id(String post_id) {
+        this.post_id = post_id;
+    }
+
+    String post_id;
+
+    public int getPost_comments() {
         return post_comments;
     }
 
@@ -57,16 +89,16 @@ public class FavouriteDataBean {
         this.post_user_first_name = post_user_first_name;
     }
 
-    public void setPost_comments(String post_comments) {
+    public void setPost_comments(int post_comments) {
         this.post_comments = post_comments;
     }
 
-    public String getPost_likes() {
+    public int getPost_likes() {
 
         return post_likes;
     }
 
-    public void setPost_likes(String post_likes) {
+    public void setPost_likes(int post_likes) {
         this.post_likes = post_likes;
     }
 

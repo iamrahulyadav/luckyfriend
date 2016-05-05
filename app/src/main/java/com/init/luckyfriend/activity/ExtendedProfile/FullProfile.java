@@ -1,19 +1,34 @@
 package com.init.luckyfriend.activity.ExtendedProfile;
 
+import android.app.Fragment;
 import android.os.Bundle;
 
 import android.os.Handler;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.init.luckyfriend.R;
+import com.init.luckyfriend.activity.MyPost.PostDataBean;
+import com.init.luckyfriend.activity.Singleton;
 import com.viewpagerindicator.CirclePageIndicator;
 
-import java.util.ArrayList;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class FullProfile extends Fragment {
@@ -31,6 +46,7 @@ public class FullProfile extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
     }
 
     @Override
@@ -39,10 +55,11 @@ public class FullProfile extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_full_profile, container, false);
         init();
 
-
         // Inflate the layout for this fragment
+
         return rootView;
     }
+
 
     private void init() {
         for(int i=0;i<IMAGES.length;i++)

@@ -1,17 +1,19 @@
-package com.init.luckyfriend.activity.Visitors;
+package com.init.luckyfriend.activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -21,7 +23,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.init.luckyfriend.R;
-import com.init.luckyfriend.activity.Singleton;
+import com.init.luckyfriend.activity.DATA.WallDataBean;
+import com.init.luckyfriend.activity.HomeFragment.WallFeedAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -31,63 +34,85 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Created by user on 5/5/2016.
+ */
+public class SearchFragment extends Fragment {
 
-public class YouVisited extends Fragment {
     RecyclerView rvFeed;
     LinearLayoutManager linearLayoutManager;
-    VisitedYouAdapter feedAdapter;
+    WallFeedAdapter feedAdapter;
     private ProgressDialog prog;
-    private ArrayList<VisitedYouDataBean> items=new ArrayList<>();
+    private ArrayList<WallDataBean> items=new ArrayList<>();
+    Toolbar topToolBar;
+    TextView notification;
+    FragmentManager mFragmentManager;
+    FragmentTransaction mFragmentTransaction;
 
 
+    public SearchFragment() {
+        // Required empty public constructor
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-        prog=new ProgressDialog(getContext());
-        prog.setMessage("wait loading data..");
-
-        getYouVisited();
+       /* prog=new ProgressDialog(getActivity());
+        prog.setMessage("wait loading data ....");
+        getData();
+*/
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_you_visited, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
         rvFeed=(RecyclerView)rootView.findViewById(R.id.recycler_view);
+        // getActivity().getSupportActionBar().setTitle("Homeeee");
 
         linearLayoutManager = new LinearLayoutManager(getActivity()) {
             @Override
             protected int getExtraLayoutSpace(RecyclerView.State state) {
-
                 return 300;
             }
         };
         rvFeed.setLayoutManager(linearLayoutManager);
 
-        feedAdapter = new VisitedYouAdapter(getActivity(),items);
-        rvFeed.setAdapter(feedAdapter);
+        Bundle data=this.getArguments();
+        String message=data.getString("message");
+        Log.e("me",message);
 
-
+  //      feedAdapter = new WallFeedAdapter(getActivity(),items);
+   //     rvFeed.setAdapter(feedAdapter);
 
         // Inflate the layout for this fragment
         return rootView;
-
     }
 
 
-    private void getYouVisited() {
-    prog.show();
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+    }
+
+    private void getData() {
+        prog.show();
+        // String url ="http://192.168.0.7/test.php";
         RequestQueue queue = Volley.newRequestQueue(getActivity());
-        StringRequest sr = new StringRequest(Request.Method.POST, getResources().getString(R.string.url), new Response.Listener<String>() {
+        StringRequest sr = new StringRequest(Request.Method.POST,getResources().getString(R.string.url), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                   prog.dismiss();
-                Log.e("you visited", response.toString());
+                Log.e("response", response.toString());
+                prog.dismiss();
                 items.clear();
                 try {
 
@@ -95,56 +120,56 @@ public class YouVisited extends Fragment {
                     JSONArray jarray = jobj.getJSONArray("data");
                     if (jarray.length() == 0) {
                         // dataleft = false;
-                        Toast.makeText(getActivity(), "you visited no one yet...", Toast.LENGTH_LONG).show();
                         return;
                     }
                     for (int i = 0; i < jarray.length(); i++) {
                         JSONObject jo = jarray.getJSONObject(i);
-                        VisitedYouDataBean fdb = new VisitedYouDataBean();
-                        fdb.setPost_img(jo.getString("post_img"));
-                        fdb.setPost_likes(jo.getInt("post_likes"));
-                        fdb.setPost_comments(jo.getInt("post_comments"));
-                        fdb.setPerson_dob(jo.getString("person_dob"));
-                        fdb.setPerson_country(jo.getString("person_country"));
-                        fdb.setUser_name(jo.getString("user_name"));
-                        fdb.setLast_name(jo.getString("last_name"));
-                        fdb.setPerson_profile_pic(jo.getString("person_profile_pic"));
-                        fdb.setPerson_id(jo.getString("person_id"));
-                        fdb.setPost_id(jo.getString("post_id"));
-                        fdb.setIsliked(jo.getInt("isliked"));
-
+                        WallDataBean pdb = new WallDataBean();
+                        pdb.setLast_name(jo.getString("last_name"));
+                        pdb.setUser_name(jo.getString("user_name"));
+                        pdb.setPost_img(jo.getString("post_img"));
+                        pdb.setPost_comments(jo.getInt("post_comments"));
+                        pdb.setPost_likes(jo.getInt("post_likes"));
+                        pdb.setPerson_country(jo.getString("person_country"));
+                        pdb.setPerson_profile_img(jo.getString("person_profile_img"));
+                        pdb.setPost_id(jo.getString("post_id"));
+                        pdb.setPerson_id(jo.getString("person_id"));
+                        pdb.setPeron_dob(jo.getString("person_dob"));
+                        pdb.setIsLiked(jo.getInt("isliked"));
 
                         int year=0,mon=0,day=0;
-                        String[] data=fdb.getPerson_dob().split("-");
+                        String[] data=pdb.getPeron_dob().split("-");
                         year=Integer.parseInt(data[0]);
                         mon=Integer.parseInt(data[1]);
                         day=Integer.parseInt(data[2]);
-                        fdb.setPerson_dob(getAge(year,mon,day)+"Years"+"");
-                        items.add(fdb);
+                        pdb.setPeron_dob(getAge(year, mon, day) + "years" + "");
+
+
+                        items.add(pdb);
                     }
 
 
-                    // rv.setAdapter(adapter);
+// rv.setAdapter(adapter);
                     // skipdata = shopdata.size();
                     feedAdapter.notifyDataSetChanged();
 
                 } catch (Exception ex) {
-
                     Log.e("error", ex.getMessage());
                 }
 
-            }
 
-        },new Response.ErrorListener() {
+            }
+        }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-            prog.dismiss();
+                prog.dismiss();
+//            Log.e("error",error.getMessage());
             }
         }) {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("rqid", 20+"");
+                params.put("rqid", 1+"");
                 params.put("person_id", Singleton.pref.getString("person_id",""));
 
                 return params;
@@ -158,9 +183,6 @@ public class YouVisited extends Fragment {
             }
         };
         queue.add(sr);
-
-
-
 
     }
     public int getAge(int DOByear, int DOBmonth, int DOBday) {

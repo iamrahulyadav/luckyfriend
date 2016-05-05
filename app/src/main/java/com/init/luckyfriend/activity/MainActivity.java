@@ -83,11 +83,11 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     TextView toolbartitle;
     TextView activities,favourites,photos,likes,friends,nearby,help,visitors,messages,settings,matches,myposts,logout;
     TextView notification,search,bottommessages,bottomneraby,bottommatches;
-    LinearLayout bottomLayout;
+    public static LinearLayout bottomLayout;
     CircleImageView profileimage;
     public static TextView username;
     Typeface customfont,customfont1;
-    ImageButton toolbaricon;
+    ImageButton toolbaricon,toolbarplus;
     SharedPreferences pref;
     String name,gender;
     Integer type;
@@ -106,6 +106,8 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
         toolbartitle=(TextView)findViewById(R.id.toolbar_title);
         toolbaricon=(ImageButton)findViewById(R.id.toolbar_icon);
+        toolbarplus=(ImageButton)findViewById(R.id.toolbar_plus);
+
         status=(ImageButton)findViewById(R.id.update_status);
 
 //        prog=new ProgressDialog(this);
@@ -116,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             public void onClick(View view) {
 
                 Intent filter=new Intent(getApplicationContext(),Filter.class);
-                startActivity(filter);
+                startActivityForResult(filter, 10);
             }
         });
 
@@ -249,6 +251,18 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
            }
 
        }
+        if(type==2){
+            name=Singleton.pref.getString("uname","");
+            username.setText(name);
+           /* String profilepic=Singleton.pref.getString("uimage","");
+            // Singleton.imageLoader.displayImage(profilepic, profileimage, Singleton.defaultOptions);
+            if (profilepic == "") {
+                profileimage.setImageResource(R.drawable.iiiii);
+            } else
+                Singleton.imageLoader.displayImage(profilepic, profileimage, Singleton.defaultOptions);
+*/
+
+        }
 
 
         if(type==3){
@@ -356,13 +370,15 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
                 //bottomLayout.setVisibility(View.VISIBLE);
 
-                toolbaricon.setImageResource(R.drawable.toolbar_plus);
+                //toolbaricon.setImageResource(R.drawable.toolbar_plus);
+                toolbarplus.setVisibility(View.VISIBLE);
+                toolbaricon.setVisibility(View.GONE);
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
                 mFragmentManager = getSupportFragmentManager();
                 mFragmentTransaction = mFragmentManager.beginTransaction();
                 mFragmentTransaction.replace(R.id.container_body, new PostFragment()).commit();
 
-                toolbaricon.setOnClickListener(new View.OnClickListener() {
+                toolbarplus.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
 
@@ -425,6 +441,8 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 mFragmentManager = getSupportFragmentManager();
                 mFragmentTransaction = mFragmentManager.beginTransaction();
                 mFragmentTransaction.replace(R.id.container_body, new MatchesFragment()).commit();
+                toolbarplus.setVisibility(View.GONE);
+                toolbaricon.setVisibility(View.VISIBLE);
 
 
 
@@ -462,6 +480,9 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 mFragmentTransaction = mFragmentManager.beginTransaction();
                 mFragmentTransaction.replace(R.id.container_body, new NotificationFragment()).commit();
 
+                toolbarplus.setVisibility(View.GONE);
+                toolbaricon.setVisibility(View.VISIBLE);
+
             }
         });
 
@@ -497,6 +518,9 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 mFragmentTransaction.replace(R.id.container_body, new Nearby()).commit();
                 search.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.home_serach_icon, 0, 0);
 
+                toolbarplus.setVisibility(View.GONE);
+                toolbaricon.setVisibility(View.VISIBLE);
+
             }
         });
 
@@ -531,6 +555,8 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 mFragmentTransaction = mFragmentManager.beginTransaction();
                 mFragmentTransaction.replace(R.id.container_body, new MessageTabFragment()).commit();
                 search.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.home_serach_icon, 0, 0);
+                toolbarplus.setVisibility(View.GONE);
+                toolbaricon.setVisibility(View.VISIBLE);
 
 
             }
@@ -563,6 +589,9 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 mFragmentTransaction = mFragmentManager.beginTransaction();
                 mFragmentTransaction.replace(R.id.container_body, new HomeFragment()).commit();
 
+                toolbarplus.setVisibility(View.GONE);
+                toolbaricon.setVisibility(View.VISIBLE);
+
             }
         });
 
@@ -570,9 +599,13 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             @Override
             public void onClick(View view) {
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
+                MainActivity.bottomLayout.setVisibility(View.VISIBLE);
                 mFragmentManager = getSupportFragmentManager();
                 mFragmentTransaction = mFragmentManager.beginTransaction();
                 mFragmentTransaction.replace(R.id.container_body, new HomeFragment()).commit();
+
+                toolbarplus.setVisibility(View.GONE);
+                toolbaricon.setVisibility(View.VISIBLE);
 
             }
         });
@@ -580,9 +613,13 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 @Override
                 public void onClick(View view) {
                     mDrawerLayout.closeDrawer(Gravity.LEFT);
+                    MainActivity.bottomLayout.setVisibility(View.VISIBLE);
                     mFragmentManager = getSupportFragmentManager();
                     mFragmentTransaction = mFragmentManager.beginTransaction();
                     mFragmentTransaction.replace(R.id.container_body, new FavouritesFragment()).commit();
+
+                    toolbarplus.setVisibility(View.GONE);
+                    toolbaricon.setVisibility(View.VISIBLE);
 
                 }
             });
@@ -592,10 +629,14 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     public void onClick(View view) {
         mDrawerLayout.closeDrawer(Gravity.LEFT);
 //        toolbartitle.setText("Photos");
-        bottomLayout.setVisibility(View.GONE);
+      //  bottomLayout.setVisibility(View.GONE);
+        MainActivity.bottomLayout.setVisibility(View.VISIBLE);
         mFragmentManager = getSupportFragmentManager();
         mFragmentTransaction = mFragmentManager.beginTransaction();
         mFragmentTransaction.replace(R.id.container_body, new PhotosFragment()).commit();
+
+        toolbarplus.setVisibility(View.GONE);
+        toolbaricon.setVisibility(View.VISIBLE);
 
     }
 });
@@ -604,12 +645,15 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             @Override
             public void onClick(View view) {
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
+                MainActivity.bottomLayout.setVisibility(View.VISIBLE);
                 bottommessages.setBackgroundColor(Color.parseColor("#2f6fff"));
                 search.setBackgroundColor(Color.parseColor("#ffffff"));
                 notification.setBackgroundColor(Color.parseColor("#ffffff"));
                 mFragmentManager = getSupportFragmentManager();
                 mFragmentTransaction = mFragmentManager.beginTransaction();
                 mFragmentTransaction.replace(R.id.container_body, new MessageTabFragment()).commit();
+                toolbarplus.setVisibility(View.GONE);
+                toolbaricon.setVisibility(View.VISIBLE);
 
             }
         });
@@ -619,9 +663,12 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             @Override
             public void onClick(View view) {
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
+                MainActivity.bottomLayout.setVisibility(View.VISIBLE);
                 mFragmentManager = getSupportFragmentManager();
                 mFragmentTransaction = mFragmentManager.beginTransaction();
                 mFragmentTransaction.replace(R.id.container_body, new LikesTabFragment()).commit();
+                toolbarplus.setVisibility(View.GONE);
+                toolbaricon.setVisibility(View.VISIBLE);
 
             }
         });
@@ -630,9 +677,12 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             @Override
             public void onClick(View view) {
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
+                MainActivity.bottomLayout.setVisibility(View.VISIBLE);
                 mFragmentManager = getSupportFragmentManager();
                 mFragmentTransaction = mFragmentManager.beginTransaction();
                 mFragmentTransaction.replace(R.id.container_body, new FriendsSearchFragment()).commit();
+                toolbarplus.setVisibility(View.GONE);
+                toolbaricon.setVisibility(View.VISIBLE);
 
             }
         });
@@ -641,9 +691,12 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             @Override
             public void onClick(View view) {
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
+                MainActivity.bottomLayout.setVisibility(View.VISIBLE);
                 mFragmentManager = getSupportFragmentManager();
                 mFragmentTransaction = mFragmentManager.beginTransaction();
                 mFragmentTransaction.replace(R.id.container_body, new Nearby()).commit();
+                toolbarplus.setVisibility(View.GONE);
+                toolbaricon.setVisibility(View.VISIBLE);
 
             }
         });
@@ -652,9 +705,12 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             @Override
             public void onClick(View view) {
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
+                MainActivity.bottomLayout.setVisibility(View.VISIBLE);
                 mFragmentManager = getSupportFragmentManager();
                 mFragmentTransaction = mFragmentManager.beginTransaction();
                 mFragmentTransaction.replace(R.id.container_body, new VisitorFragment()).commit();
+                toolbarplus.setVisibility(View.GONE);
+                toolbaricon.setVisibility(View.VISIBLE);
 
             }
         });
@@ -680,9 +736,12 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             @Override
             public void onClick(View view) {
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
+                MainActivity.bottomLayout.setVisibility(View.VISIBLE);
                 mFragmentManager = getSupportFragmentManager();
                 mFragmentTransaction = mFragmentManager.beginTransaction();
                 mFragmentTransaction.replace(R.id.container_body, new MatchesFragment()).commit();
+                toolbarplus.setVisibility(View.GONE);
+                toolbaricon.setVisibility(View.VISIBLE);
 
 
             }
@@ -747,43 +806,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             @Override
             public void onResponse(String response) {
                 Log.e("response", response.toString());
-                //prog.dismiss();
 
-                /*try {
-
-                    JSONObject jobj = new JSONObject(response.toString());
-                    JSONArray jarray = jobj.getJSONArray("data");
-                    if (jarray.length() == 0) {
-                        // dataleft = false;
-                        return;
-                    }
-                    for (int i = 0; i < jarray.length(); i++) {
-                        JSONObject jo = jarray.getJSONObject(i);
-                        WallDataBean pdb = new WallDataBean();
-                        pdb.setLast_name(jo.getString("last_name"));
-                        pdb.setUser_name(jo.getString("user_name"));
-                        pdb.setPost_img(jo.getString("post_img"));
-                        pdb.setPost_comments(jo.getInt("post_comments"));
-                        pdb.setPost_likes(jo.getInt("post_likes"));
-                        pdb.setPerson_country(jo.getString("person_country"));
-                        pdb.setPerson_profile_img(jo.getString("person_profile_img"));
-                        pdb.setPost_id(jo.getString("post_id"));
-                        pdb.setPerson_id(jo.getString("person_id"));
-                        pdb.setUser_id(jo.getString("user_id"));
-
-                        items.add(pdb);
-                    }
-
-
-// rv.setAdapter(adapter);
-                    // skipdata = shopdata.size();
-                    feedAdapter.notifyDataSetChanged();
-
-                } catch (Exception ex) {
-                    Log.e("error", ex.getMessage());
-                }
-
-*/
             }
         }, new Response.ErrorListener() {
             @Override
@@ -814,4 +837,28 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
     }
 
+    @Override
+    public void onBackPressed() {
+       this.finish();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==10)
+        {
+          String items=  data.getStringExtra("data");
+
+
+                Bundle bundle = new Bundle();
+                bundle.putString("data", items);
+                HomeFragment hme = new HomeFragment();
+                hme.setArguments(bundle);
+                mFragmentManager = getSupportFragmentManager();
+                mFragmentTransaction = mFragmentManager.beginTransaction();
+                mFragmentTransaction.replace(R.id.container_body, hme).commit();
+
+                //Toast.makeText(this,requestCode+""+items,Toast.LENGTH_LONG).show();
+          }
+    }
 }

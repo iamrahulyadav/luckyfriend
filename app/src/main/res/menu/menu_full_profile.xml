@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
+
+    <item
+        android:icon="@drawable/comment_grey"
+        android:title="comment"
+
+        app:showAsAction="ifRoom"
+        >
+        <menu>
+            <group
+                android:checkableBehavior="none"
+                android:menuCategory="container" >
+                <item
+                    android:id="@+id/editprofile"
+                    android:title="comment"
+
+                    >
+                </item>
+            </group>
+        </menu>
+    </item>
+
+</menu>

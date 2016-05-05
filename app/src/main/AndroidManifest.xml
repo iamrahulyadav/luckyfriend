@@ -8,6 +8,8 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <!-- To use account credentials -->
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <uses-feature
         android:name="android.hardware.touchscreen"
@@ -20,10 +22,9 @@
         android:required="false" />
     <uses-feature
         android:name="android.hardware.Camera"
-        android:required="true"></uses-feature>
+        android:required="true" />
 
-    <uses-permission android:name="android.permission.CAMERA"></uses-permission>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:name=".activity.Singleton"
@@ -44,10 +45,11 @@
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/app_name" >
-
-
         </activity>
 
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="b0ac7ea1dfea7bf5490049b7fb8935df519695f6" />
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -84,9 +86,6 @@
             android:label="@string/title_activity_sign_up"
             android:theme="@style/WhiteTheme" />
         <activity android:name=".activity.FillUserMandatoryFields" >
-
-
-
         </activity>
         <activity
             android:name=".activity.LoginActivity"
@@ -115,7 +114,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".activity.NewPost"
@@ -132,10 +130,16 @@
             android:name=".activity.UpdateStatus"
             android:label="@string/title_activity_update_status" >
         </activity>
-        <activity android:name=".activity.EditPost"/>
-        <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="b0ac7ea1dfea7bf5490049b7fb8935df519695f6" />
+        <activity android:name=".activity.EditPost" />
+        <activity android:name=".activity.ExtendedProfile.FullExtendedProfile" />
+        <activity
+            android:name=".activity.CountryFilter"
+            android:label="@string/title_activity_country_filter" >
+        </activity>
+        <activity
+            android:name=".activity.StateFilter"
+            android:label="@string/title_activity_state_filter" >
+        </activity>
     </application>
 
 </manifest>

@@ -1,6 +1,7 @@
 package com.init.luckyfriend.activity.AppTour;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,6 +18,8 @@ import android.widget.TextView;
 import com.init.luckyfriend.R;
 import com.init.luckyfriend.activity.Login;
 import com.init.luckyfriend.activity.LoginActivity;
+import com.init.luckyfriend.activity.MainActivity;
+import com.init.luckyfriend.activity.Singleton;
 import com.viewpagerindicator.CirclePageIndicator;
 
 public class AppTourSlides extends ActionBarActivity {
@@ -40,16 +43,18 @@ public class AppTourSlides extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_tour_slides);
 
-        messagetext=(TextView)findViewById(R.id.messagetext);
-        text=(TextView)findViewById(R.id.text);
-        appname=(TextView)findViewById(R.id.appname);
+        messagetext = (TextView) findViewById(R.id.messagetext);
+        text = (TextView) findViewById(R.id.text);
+        appname = (TextView) findViewById(R.id.appname);
 
-        custom=Typeface.createFromAsset(getAssets(),"SF-UI-Display-Regular.ttf");
+        custom = Typeface.createFromAsset(getAssets(), "SF-UI-Display-Regular.ttf");
         messagetext.setTypeface(custom);
         text.setTypeface(custom);
 
-        customappname=Typeface.createFromAsset(getAssets(),"NeoSansPro-Bold.ttf");
+        customappname = Typeface.createFromAsset(getAssets(), "NeoSansPro-Bold.ttf");
         appname.setTypeface(customappname);
+
+
 
 		/* Instantiate a ViewPager and a PagerAdapter. */
         mPager = (ViewPager) findViewById(R.id.pager);
@@ -57,25 +62,41 @@ public class AppTourSlides extends ActionBarActivity {
         mPager.setAdapter(mPagerAdapter);
 
 
-        skip=(LinearLayout)findViewById(R.id.skip);
+        skip = (LinearLayout) findViewById(R.id.skip);
         skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent login=new Intent(AppTourSlides.this,LoginActivity.class);
+                Intent login = new Intent(AppTourSlides.this, LoginActivity.class);
                 startActivity(login);
+                finish();
             }
         });
 
-        joinnow=(Button)findViewById(R.id.joinnow);
+        joinnow = (Button) findViewById(R.id.joinnow);
         joinnow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent login = new Intent(AppTourSlides.this, Login.class);
                 startActivity(login);
-
+                finish();
             }
         });
 
+        String uname= Singleton.pref.getString("uname",null);
+        String uprofilepic=Singleton.pref.getString("profilepic",null);
+        if(uname!=null)
+        {
+            Intent main = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(main);
+            finish();
+
+        }
+       /* else {
+            Intent mainact = new Intent(getApplicationContext(), AppTourSlides.class);
+            startActivity(mainact);
+            finish();
+        }
+*/
 
         CirclePageIndicator indicator = (CirclePageIndicator)
                 findViewById(R.id.indicator);
@@ -87,8 +108,7 @@ public class AppTourSlides extends ActionBarActivity {
         indicator.setRadius(5 * density);
 
 
-
-        NUM_PAGES=5;
+        NUM_PAGES = 5;
 
 
         // Auto start of viewpager
@@ -129,11 +149,7 @@ public class AppTourSlides extends ActionBarActivity {
             }
         });
 
-
-
-
-}
-
+    }
     /* PagerAdapter class */
     public class SlidePagerAdapter extends FragmentPagerAdapter {
         public SlidePagerAdapter(FragmentManager fm) {

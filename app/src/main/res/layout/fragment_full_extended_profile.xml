@@ -79,6 +79,7 @@ android:background="#e7f0f3"
             />
 
         <TextView
+            android:id="@+id/place"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Amsterdam, Netherlands"
@@ -107,15 +108,17 @@ android:background="#e7f0f3"
             android:layout_marginLeft="20dp"
             android:background="@drawable/white_selector_background"
             android:layout_marginTop="5dp"
+            android:padding="5dp"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="art"
+            android:text="net surfing"
             android:textSize="11.5sp"
             android:layout_marginLeft="20dp"
             android:background="@drawable/white_selector_background"
             android:layout_marginTop="5dp"
+            android:padding="5dp"
             />
         <RelativeLayout
             android:layout_width="match_parent"
@@ -138,6 +141,7 @@ android:background="#e7f0f3"
 
 
                 <TextView
+                    android:id="@+id/languages"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="English, Hindi"

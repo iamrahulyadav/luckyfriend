@@ -104,13 +104,16 @@ public class VistedYouFragment extends Fragment {
                          JSONObject jo = jarray.getJSONObject(i);
                          VisitedYouDataBean fdb = new VisitedYouDataBean();
                          fdb.setPost_img(jo.getString("post_img"));
-                         fdb.setPost_likes(jo.getString("post_likes"));
-                         fdb.setPost_comments(jo.getString("post_comments"));
+                         fdb.setPost_likes(jo.getInt("post_likes"));
+                         fdb.setPost_comments(jo.getInt("post_comments"));
                          fdb.setPerson_dob(jo.getString("person_dob"));
                          fdb.setPerson_country(jo.getString("person_country"));
                          fdb.setUser_name(jo.getString("user_name"));
                          fdb.setLast_name(jo.getString("last_name"));
                          fdb.setPerson_profile_pic(jo.getString("person_profile_pic"));
+                         fdb.setPerson_id(jo.getString("person_id"));
+                         fdb.setIsliked(jo.getInt("isliked"));
+                         fdb.setPost_id(jo.getString("post_id"));
 
                          int year=0,mon=0,day=0;
                          String[] data=fdb.getPerson_dob().split("-");

@@ -2,9 +2,11 @@ package com.init.luckyfriend.activity.HomeFragment;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.Fragment;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -38,6 +40,7 @@ import com.init.luckyfriend.activity.DATA.CommentData;
 import com.init.luckyfriend.activity.DATA.WallDataBean;
 import com.init.luckyfriend.activity.ExtendedProfile.FullExtendedProfile;
 import com.init.luckyfriend.activity.ExtendedProfile.FullProfile;
+import com.init.luckyfriend.activity.MainActivity;
 import com.init.luckyfriend.activity.PhotosFragment.PhotosFragment;
 import com.init.luckyfriend.activity.Profile.Profile;
 import com.init.luckyfriend.activity.Singleton;
@@ -71,7 +74,6 @@ public class WallFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     ProgressBar progress;
     public CommentArrayAdapter adapter;
     RecyclerView loadcomments;
-
 
     public WallFeedAdapter(Activity context, List<WallDataBean> list) {
         this.context = context;
@@ -174,7 +176,8 @@ public class WallFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 params.put("rqid", 3 + "");
                 params.put("post_id", postid);
                 params.put("person_id", Singleton.pref.getString("person_id", ""));
-                params.put("noti_type",1+"");
+                params.put("receiver_id",personid);
+                //params.put("noti_type",1+"");
 
                 return params;
             }
@@ -231,7 +234,7 @@ public class WallFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
             switch (view.getId()) {
                 case R.id.like_icon:
-                    updatelike(wdb.getPost_id(), wdb.getPerson_id(), getAdapterPosition());
+             updatelike(wdb.getPost_id(), wdb.getPerson_id(), getAdapterPosition());
                     break;
 
                 case R.id.add:
@@ -276,7 +279,7 @@ public class WallFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                         @Override
                         public void onClick(View view) {
                         //   sendMessage(comments.getText().toString(), UserType.OTHER);
-                        send(comments.getText().toString(),wdb.getPost_id());
+                        send(comments.getText().toString(),wdb.getPost_id(),wdb.getPerson_id());
 
                           }
                     });
@@ -287,25 +290,21 @@ public class WallFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
                 case R.id.ivFeedCenter:
 
-                    Toast.makeText(context, wdb.getUser_name(), Toast.LENGTH_LONG).show();
-                    android.app.FragmentManager manager=context.getFragmentManager();
-                    Fragment newFragment = new FullProfile();
-                    android.app.FragmentTransaction transaction = manager.beginTransaction();
+                   // Toast.makeText(context, wdb.getPerson_id(), Toast.LENGTH_LONG).show();
+                    youvisited(wdb.getPerson_id());
+                    MainActivity.bottomLayout.setVisibility(View.GONE);
+                    Intent newFragment = new Intent(context,FullExtendedProfile.class);
 
-// Replace whatever is in the fragment_container view with this fragment,
-// and add the transaction to the back stack if needed
-                    transaction.replace(R.id.container_body ,new Profile());
-
-
-// Commit the transaction
-                    transaction.commit();
-
+                    newFragment.putExtra("person_id",wdb.getPerson_id());
+                    context.startActivity(newFragment);
+                    context.finish();
+                    break;
             }
         }
 
 
 
-        private void send(String comment,final String post_id) {
+        private void send(String comment,final String post_id,final String person_id) {
 
             SimpleDateFormat currentDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date todayDate = new Date();
@@ -321,10 +320,10 @@ public class WallFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             adapter.notifyDataSetChanged();
             comments.setText("");
 
-            sendMessageToServer(comment,thisDate,post_id);
+            sendMessageToServer(comment,thisDate,post_id,person_id);
         }
 
-        private void sendMessageToServer(final String comment, final String thisDate,final String postid) {
+        private void sendMessageToServer(final String commenttext, final String thisDate,final String postid,final String person_id) {
             RequestQueue queue = Volley.newRequestQueue(context);
             StringRequest sr = new StringRequest(Request.Method.POST,context.getString(R.string.url), new Response.Listener<String>() {
                 @Override
@@ -345,10 +344,12 @@ public class WallFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     Map<String, String> params = new HashMap<String, String>();
                     params.put("rqid", 30+"");
                     params.put("person_id", Singleton.pref.getString("person_id",""));
-                    params.put("coment",comment);
+                    params.put("comment",commenttext);
                     params.put("date",thisDate);
                     params.put("post_id",postid);
-
+                    params.put("receiver_id",person_id);
+                    //  params.put("noti_type",0+"");
+                    //  Log.e("commenttext",commenttext);
                     return params;
                 }
 
@@ -419,24 +420,39 @@ public class WallFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     }
 
-    private void addList() {
-       String name[]={"deven","sanjay","naveen","rajesh"};
-        String com[]={"nice1","nice1","nice","nice"};
-        String img[]={"http://e2ua.com/data/wallpapers/62/WDF_1074487.jpg","http://e2ua.com/data/wallpapers/62/WDF_1074487.jpg","http://e2ua.com/data/wallpapers/62/WDF_1074487.jpg","http://e2ua.com/data/wallpapers/62/WDF_1074487.jpg"};
-        String date[]={"23-4-2014","23-4-2015","23-4-2016","23-4-2017"};
+    private void youvisited(final String person_id) {
+        RequestQueue queue = Volley.newRequestQueue(context);
+        StringRequest sr = new StringRequest(Request.Method.POST, context.getResources().getString(R.string.url), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.e("visited ", response.toString());
+           }
 
-        for (int i =0;i<name.length;i++){
+            }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+//showing snakebar here
+            }
+        }) {
 
-            progress.setVisibility(View.GONE);
-            CommentData commentData=new CommentData();
-            commentData.setCommenttxxt(com[i]);
-            commentData.setUname(name[i]);
-            commentData.setProfilepic(img[i]);
-            commentData.setCtime(date[i]);
-            loaded.add(commentData);
-        }
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("rqid", 33 +"");
+                params.put("person_id", Singleton.pref.getString("person_id", ""));
+                params.put("person_visit_id",person_id );
+
+                return params;
+            }
+
+
+        };
+        queue.add(sr);
+
+
 
     }
+
 
     private void readComments(final String post_id) {
 
@@ -457,7 +473,7 @@ public class WallFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                             return;
                         }
 
-                            for (int i = 0; i < jobj.length(); i++) {
+                            for (int i = 0; i < jarray.length(); i++) {
 
 
                                 JSONObject jo = jarray.getJSONObject(i);
@@ -492,7 +508,7 @@ public class WallFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 params.put("rqid", 29 +"");
                 params.put("person_id", Singleton.pref.getString("person_id", ""));
                 params.put("post_id", post_id);
-                params.put("noti_type",0+"");
+ //               params.put("noti_type",0+"");
 
                 return params;
             }

@@ -117,13 +117,15 @@ public void getFavourite(final String person_id)
                     JSONObject jo = jarray.getJSONObject(i);
                     FavouriteDataBean fdb = new FavouriteDataBean();
                     fdb.setPost_img(jo.getString("post_img"));
-                    fdb.setPost_likes(jo.getString("post_likes"));
-                    fdb.setPost_comments(jo.getString("post_comments"));
+                    fdb.setPost_likes(jo.getInt("post_likes"));
+                    fdb.setPost_comments(jo.getInt("post_comments"));
                     fdb.setPost_user_first_name(jo.getString("post_user_first_name"));
                     fdb.setPost_user_last_name(jo.getString("post_user_last_name"));
                     fdb.setPost_user_profile_pic(jo.getString("post_user_profile_pic"));
                     fdb.setPost_user_country(jo.getString("post_user_country"));
-                  fdb.setPost_user_dob(jo.getString("post_user_dob"));
+                    fdb.setPost_user_dob(jo.getString("post_user_dob"));
+                    fdb.setPost_id(jo.getString("post_id"));
+
 
                     int year=0,mon=0,day=0;
                     String[] data=fdb.getPost_user_dob().split("-");
@@ -135,8 +137,6 @@ public void getFavourite(final String person_id)
                 }
 
 
-                // rv.setAdapter(adapter);
-                // skipdata = shopdata.size();
                 feedAdapter.notifyDataSetChanged();
 
             } catch (Exception ex) {

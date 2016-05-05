@@ -90,20 +90,24 @@ public class LikesYou extends android.support.v4.app.Fragment {
                     JSONArray jarray = jobj.getJSONArray("data");
                     if (jarray.length() == 0) {
                         // dataleft = false;
-                        Toast.makeText(getContext(), "Noone likes you yet", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "No one likes you yet", Toast.LENGTH_LONG).show();
                         return;
                     }
                     for (int i = 0; i < jarray.length(); i++) {
                         JSONObject jo = jarray.getJSONObject(i);
                         FavouriteDataBean fdb = new FavouriteDataBean();
                         fdb.setPost_img(jo.getString("post_img"));
-                        fdb.setPost_likes(jo.getString("post_likes"));
-                        fdb.setPost_comments(jo.getString("post_comments"));
+                        fdb.setPost_likes(jo.getInt("post_likes"));
+                        fdb.setPost_comments(jo.getInt("post_comments"));
                         fdb.setPost_user_first_name(jo.getString("user_name"));
                         fdb.setPost_user_last_name(jo.getString("last_name"));
                         fdb.setPost_user_profile_pic(jo.getString("person_profile_pic"));
                         fdb.setPost_user_country(jo.getString("person_country"));
                         fdb.setPost_user_dob(jo.getString("person_dob"));
+                        fdb.setPost_id(jo.getString("post_id"));
+                        fdb.setPerson_id(jo.getString("person_id"));
+                        fdb.setIsliked(jo.getInt("isliked"));
+
 
                         int year=0,mon=0,day=0;
                         String[] data=fdb.getPost_user_dob().split("-");

@@ -8,9 +8,38 @@ public class VisitedYouDataBean {
     String last_name;
     String user_name;
     String post_img;
-    String post_likes;
-    String post_comments;
+    int post_likes;
+    int post_comments;
     String person_country;
+    int isliked;
+    String post_id;
+    String person_id;
+
+    public String getPerson_id() {
+        return person_id;
+    }
+
+    public void setPerson_id(String person_id) {
+        this.person_id = person_id;
+    }
+
+    public String getPost_id() {
+
+        return post_id;
+    }
+
+    public void setPost_id(String post_id) {
+        this.post_id = post_id;
+    }
+
+    public int getIsliked() {
+
+        return isliked;
+    }
+
+    public void setIsliked(int isliked) {
+        this.isliked = isliked;
+    }
 
     public String getPerson_country() {
         return person_country;
@@ -30,20 +59,20 @@ public class VisitedYouDataBean {
 
     String person_dob;
 
-    public String getPost_comments() {
+    public int getPost_comments() {
         return post_comments;
     }
 
-    public void setPost_comments(String post_comments) {
+    public void setPost_comments(int post_comments) {
         this.post_comments = post_comments;
     }
 
-    public String getPost_likes() {
+    public int getPost_likes() {
 
         return post_likes;
     }
 
-    public void setPost_likes(String post_likes) {
+    public void setPost_likes(int post_likes) {
         this.post_likes = post_likes;
     }
 

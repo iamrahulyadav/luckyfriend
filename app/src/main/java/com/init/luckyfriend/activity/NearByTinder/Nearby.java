@@ -51,6 +51,13 @@ public class Nearby extends Fragment implements FlingCardListener.ActionDownInte
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        prog=new ProgressDialog(getActivity());
+        prog.setMessage("Wait loading nearby....");
+
+
+
+        getnearby();
+
     }
 
     @Override
@@ -60,12 +67,6 @@ public class Nearby extends Fragment implements FlingCardListener.ActionDownInte
 
         flingContainer = (SwipeFlingAdapterView)rootView.findViewById(R.id.frame);
 
-        prog=new ProgressDialog(getActivity());
-        prog.setMessage("Wait loading nearby....");
-
-
-
-        getnearby();
         myAppAdapter = new MyAppAdapter(al, getActivity());
         flingContainer.setAdapter(myAppAdapter);
 
@@ -261,6 +262,9 @@ public class Nearby extends Fragment implements FlingCardListener.ActionDownInte
                 params.put("person_country",Singleton.pref.getString("person_country",""));
                 params.put("person_loc", Singleton.pref.getString("person_city", ""));
                 params.put("person_id", Singleton.pref.getString("person_id", ""));
+
+               // Log.e("location details",Singleton.pref.getString("person_country","")+""+Singleton.pref.getString("person_city", "")+""+Singleton.pref.getString("person_id", ""));
+
 
                 return params;
             }

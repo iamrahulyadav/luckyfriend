@@ -10,6 +10,7 @@ import android.content.pm.Signature;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.service.media.MediaBrowserService;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
@@ -50,8 +51,15 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.init.luckyfriend.R;
 import com.init.luckyfriend.activity.DATA.WallDataBean;
 import com.init.luckyfriend.activity.HomeFragment.HomeFragment;
+import com.twitter.sdk.android.Twitter;
+import com.twitter.sdk.android.core.Callback;
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.TwitterAuthConfig;
+import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.TwitterSession;
+import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
-import org.json.JSONArray;
+import io.fabric.sdk.android.Fabric;import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -61,6 +69,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+
 
 
 public class Login extends AppCompatActivity implements  View.OnClickListener,GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
@@ -76,21 +85,35 @@ public class Login extends AppCompatActivity implements  View.OnClickListener,Go
     private String username = "", userimage = "", useremail = "";
 
     // Note: Your consumer key and secret should be obfuscated in your source code before shipping.
-    private static final int TWITTER_SIGN_IN = 0;
+    private static final int TWITTER_SIGN_IN = 1;
 
     TextView textView;
     ProgressDialog show;
     String typeLogin;
     GoogleSignInAccount acct;
+    TwitterLoginButton loginButton;
+    TwitterSession session;
+    TextView twittername;
+    // Note: Your consumer key and secret should be obfuscated in your source code before shipping.
+    private static final String TWITTER_KEY = "TqKK6ItYHi4DqiDN2bCpwAQWa";
+    private static final String TWITTER_SECRET = "fkppV8NnPdmw62058CQq2RFEKAwBDiX44AehfpnDaAGXRJRym6";
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
+        Fabric.with(this, new Twitter(authConfig));
         FacebookSdk.sdkInitialize(getApplicationContext());
         //buidNewGoogleApiClient();
+
+
         setContentView(R.layout.activity_login);
+
         FacebookSdk.setApplicationId("1670451923204029");
+
 
 
         signupwith=(TextView)findViewById(R.id.signupwith);
@@ -99,41 +122,38 @@ public class Login extends AppCompatActivity implements  View.OnClickListener,Go
         name=(TextView)findViewById(R.id.name);
         fbsignup=(RelativeLayout)findViewById(R.id.fbsignup);
         googlesignup=(RelativeLayout)findViewById(R.id.google);
-        //twitter=(RelativeLayout)findViewById(R.id.twitter);
+        twitter=(RelativeLayout)findViewById(R.id.twitter);
+        twittername=(TextView)findViewById(R.id.twittername);
 
-        fbsignup.setOnClickListener(this);
-        googlesignup.setOnClickListener(this);
 
-        /*twitter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"clicked twitter",Toast.LENGTH_LONG).show();
-                loginButton.performClick();
-            }
-        });
-      */
-        /*loginButton = (TwitterLoginButton) findViewById(R.id.twitter_login_button);
+
+        loginButton = (TwitterLoginButton) findViewById(R.id.twitter_login_button);
         loginButton.setCallback(new Callback<TwitterSession>() {
             @Override
             public void success(Result<TwitterSession> result) {
+
                 session = result.data;
 
                 String username = session.getUserName();
                 Long  userid = session.getUserId();
+                //String twitter_id = result.data.getUserId() + "";
+                String accessToken = result.data.getAuthToken().token;
+                String secretToken = result.data.getAuthToken().secret;
+
+                Log.e("data", result.data + "");
 
 
-                //textView.setText("Hi " + username);
-                Log.e("Twitter Username","Hi " + username);
-                getUserData();
+                saveTwitterToken(accessToken, secretToken, username);
+
             }
 
             @Override
-            public void failure(TwitterException e) {
-                Log.e("TwitterKit", "Login with Twitter failure", e);
-
+            public void failure(TwitterException exception) {
+                Log.e("TwitterKit", "Login with Twitter failure", exception);
             }
         });
-*/
+
+
 
 
 
@@ -161,8 +181,10 @@ public class Login extends AppCompatActivity implements  View.OnClickListener,Go
         // signup database
         signup.setOnClickListener(this);
 
-        // facebook signup
         fbsignup.setOnClickListener(this);
+
+        twitter.setOnClickListener(this);
+
 
         /*try {
             PackageInfo info = getPackageManager().getPackageInfo(
@@ -264,6 +286,70 @@ public class Login extends AppCompatActivity implements  View.OnClickListener,Go
 
     }
 
+    private void saveTwitterToken(final String accessToken,final String secretToken,final String username) {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        StringRequest sr = new StringRequest(Request.Method.POST,getResources().getString(R.string.url), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.e(" twitter response", response.toString());
+
+
+                try {
+                    JSONObject jobj = new JSONObject(response.toString());
+
+
+                    if (jobj.getBoolean("status")) {
+                        String person_id = jobj.getString("person_id");
+
+                        SharedPreferences.Editor edit=Singleton.pref.edit();
+                        edit.putString("person_id", person_id);
+                        edit.putString("uname",username);
+                        edit.commit();
+
+                        Intent MainIntent=new Intent(getApplicationContext(),MainActivity.class);
+                        MainIntent.putExtra("typeLogin",2);
+
+                        startActivity(MainIntent);
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // prog.dismiss();
+//            Log.e("error",error.getMessage());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("rqid", 31+"");
+                params.put("twitterid",username);
+                params.put("accesstoken",accessToken);
+
+
+
+
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/x-www-form-urlencoded");
+                return params;
+            }
+        };
+        queue.add(sr);
+
+
+    }
+
     private void saveFBData(final String id,final String fname,final String lname,final String email,final String gender) {
         RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest sr = new StringRequest(Request.Method.POST,getResources().getString(R.string.url), new Response.Listener<String>() {
@@ -325,21 +411,19 @@ public class Login extends AppCompatActivity implements  View.OnClickListener,Go
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         // Check which request we're responding to
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(result);
         }
-        else if(requestCode == TWITTER_SIGN_IN)
-        {
-         //   loginButton.onActivityResult(requestCode, resultCode, data);
+
+
+        else {
+            loginButton.onActivityResult(requestCode, resultCode, data);
+            callbackManager.onActivityResult(requestCode, resultCode, data);
 
         }
-        else
-        callbackManager.onActivityResult(requestCode, resultCode, data);
-
 
     }
 
@@ -510,21 +594,30 @@ public class Login extends AppCompatActivity implements  View.OnClickListener,Go
     {
         switch (view.getId()) {
             case R.id.fbsignup:
-               Toast.makeText(getApplicationContext(), "clicked", Toast.LENGTH_LONG).show();
+               //Toast.makeText(getApplicationContext(), "clicked", Toast.LENGTH_LONG).show();
              LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "user_friends", "email", "user_location","user_birthday","user_posts"));
+                finish();
                 break;
 
             case R.id.google:
-                Toast.makeText(getApplicationContext(),"clicked gplus ",Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(),"clicked gplus ",Toast.LENGTH_LONG).show();
                 signIn();
+                finish();
                 break;
 
             case R.id.signup:
                 Intent Signup=new Intent(getApplicationContext(),SignUpActivity.class);
-                Signup.putExtra("typeLogin",4);
+                Signup.putExtra("typeLogin", 4);
 
                 startActivity(Signup);
+                finish();
+                break;
 
+            case R.id.twitter:
+               // Toast.makeText(getApplicationContext(),"clicked twitter",Toast.LENGTH_LONG).show();
+                loginButton.performClick();
+                finish();
+                break;
         }
     }
 

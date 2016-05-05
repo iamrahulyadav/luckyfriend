@@ -7,8 +7,28 @@ import java.io.Serializable;
  */
 public class PostDataBean implements Serializable
 {
-    String post_comments;
-    String post_likes;
+    int post_comments;
+    int post_likes;
+    int isliked;
+
+    public String getPerson_id() {
+        return person_id;
+    }
+
+    public void setPerson_id(String person_id) {
+        this.person_id = person_id;
+    }
+
+    String person_id;
+
+    public int getIsliked() {
+        return isliked;
+    }
+
+    public void setIsliked(int isliked) {
+        this.isliked = isliked;
+    }
+
     String post_img;
     String post_id;
     String post_date;
@@ -60,12 +80,12 @@ public class PostDataBean implements Serializable
         this.post_id = post_id;
     }
 
-    public String getPost_likes() {
+    public int getPost_likes() {
 
         return post_likes;
     }
 
-    public void setPost_likes(String post_likes) {
+    public void setPost_likes(int post_likes) {
         this.post_likes = post_likes;
     }
 
@@ -78,12 +98,12 @@ public class PostDataBean implements Serializable
         this.post_img = post_img;
     }
 
-    public String getPost_comments() {
+    public int getPost_comments() {
 
         return post_comments;
     }
 
-    public void setPost_comments(String post_comments) {
+    public void setPost_comments(int post_comments) {
         this.post_comments = post_comments;
     }
 

@@ -109,6 +109,8 @@ public class LoginActivity extends AppCompatActivity {
                         Intent login=new Intent(getApplicationContext(),MainActivity.class);
                         login.putExtra("typeLogin",5);
 
+                        startActivity(login);
+                        finish();
 
                       //save data on shared preference
                         SharedPreferences.Editor edit= Singleton.pref.edit();
@@ -116,8 +118,8 @@ public class LoginActivity extends AppCompatActivity {
                         edit.putString("person_id",jobj.getString("person_id"));
                         edit.putString("user_email",jobj.getString("user_email"));
                         edit.putString("person_gender",jobj.getString("person_gender"));
-                        edit.putString("person_country",jobj.getString("person_country"));
-                        edit.putString("person_city",jobj.getString("person_location"));
+                        edit.putString("person_country", jobj.getString("person_country"));
+                        edit.putString("person_city", jobj.getString("person_location"));
                         edit.putString("profile_pic",jobj.getString("profilepic"));
 
 
@@ -125,8 +127,6 @@ public class LoginActivity extends AppCompatActivity {
                         edit.commit();
 
 
-                        startActivity(login);
-                        finish();
                     }
                     else
                     {
@@ -198,5 +198,11 @@ public class LoginActivity extends AppCompatActivity {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+
+    this.finish();
     }
 }

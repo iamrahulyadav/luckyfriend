@@ -88,13 +88,14 @@ public class FriendsOnlySearch extends Fragment {
             public void onResponse(String response) {
                 Log.e("friends only", response.toString());
                 prog.dismiss();
+                items.clear();
                 try {
 
                     JSONObject jobj = new JSONObject(response.toString());
                     JSONArray jarray = jobj.getJSONArray("data");
                     if (jarray.length() == 0) {
                         // dataleft = false;
-                        Toast.makeText(getActivity(),"No friends yet..",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(),"No friends yet..",Toast.LENGTH_LONG).show();
                         return;
                     }
                     for (int i = 0; i < jarray.length(); i++) {
@@ -108,8 +109,8 @@ public class FriendsOnlySearch extends Fragment {
                         pdb.setPerson_country(jo.getString("person_country"));
                         pdb.setPerson_profile_img(jo.getString("person_profile_pic"));
                         pdb.setPeron_dob(jo.getString("person_dob"));
-                        //pdb.setPost_id(jo.getString("post_id"));
-                        //pdb.setPerson_id(jo.getString("person_id"));
+                        pdb.setPost_id(jo.getString("post_id"));
+                        pdb.setIsLiked(jo.getInt("isliked"));
                        // pdb.setUser_id(jo.getString("user_id"));
 
                         int year=0,mon=0,day=0;

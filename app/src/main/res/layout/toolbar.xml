@@ -16,7 +16,18 @@
             android:background="@android:color/transparent"
             android:id="@+id/toolbar_icon"
             android:paddingRight="10dp"
+
             />
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/toolbar_plus"
+            android:layout_gravity="right|center_vertical"
+            android:background="@android:color/transparent"
+            android:id="@+id/toolbar_plus"
+            android:paddingRight="10dp"
+android:visibility="gone"            />
+
 
         <ImageButton
             android:layout_width="wrap_content"

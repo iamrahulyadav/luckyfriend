@@ -98,9 +98,9 @@ public class PostFragment extends Fragment {
             public void onResponse(String response) {
                 Log.e("mypost", response.toString());
               prog.dismiss();
+                items.clear();
 
                 try {
-                    items.clear();
                     JSONObject jobj = new JSONObject(response.toString());
                     JSONArray jarray = jobj.getJSONArray("data");
                     if (jarray.length() == 0) {
@@ -115,11 +115,13 @@ public class PostFragment extends Fragment {
                         pdb.setPost_id(jo.getString("post_id"));
                         pdb.setPost_img(jo.getString("post_img"));
                         pdb.setPost_date(jo.getString("post_date"));
-                        pdb.setPost_likes(jo.getString("post_likes"));
-                        pdb.setPost_comments(jo.getString("post_comments"));
+                        pdb.setPost_likes(jo.getInt("post_likes"));
+                        pdb.setPost_comments(jo.getInt("post_comments"));
                         pdb.setPerson_profile_pic(jo.getString("person_profile_pic"));
                         pdb.setUser_name(jo.getString("user_name"));
                         pdb.setLast_name(jo.getString("last_name"));
+                        pdb.setIsliked(jo.getInt("isliked"));
+                        pdb.setPerson_id(jo.getString("person_id"));
 
 
                         items.add(pdb);

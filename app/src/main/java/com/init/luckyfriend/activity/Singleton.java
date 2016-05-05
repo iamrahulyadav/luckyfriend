@@ -19,10 +19,6 @@ import io.fabric.sdk.android.Fabric;
  */
 public class Singleton extends Application {
 
-    // Note: Your consumer key and secret should be obfuscated in your source code before shipping.
-    private static final String TWITTER_KEY = "TqKK6ItYHi4DqiDN2bCpwAQWa";
-    private static final String TWITTER_SECRET = "fkppV8NnPdmw62058CQq2RFEKAwBDiX44AehfpnDaAGXRJRym6";
-
 
     public static DisplayImageOptions defaultOptions;
     public static ImageLoader imageLoader;
@@ -31,8 +27,8 @@ public class Singleton extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
-        Fabric.with(this, new Twitter(authConfig));
+       // TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
+        //Fabric.with(this, new Twitter(authConfig));
 
         pref=getSharedPreferences("luckylogin", Context.MODE_PRIVATE);
 
