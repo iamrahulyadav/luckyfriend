@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -83,10 +84,13 @@ public class AppTourSlides extends ActionBarActivity {
         });
 
         String uname= Singleton.pref.getString("uname",null);
-        String uprofilepic=Singleton.pref.getString("profilepic",null);
+        String uprofilepic=Singleton.pref.getString("uimage","pic.1fotonin.com/data/wallpapers/80/WDF_1252080.jpg");
+       // Log.e("uprofilepic",uprofilepic);
+
         if(uname!=null)
         {
             Intent main = new Intent(getApplicationContext(), MainActivity.class);
+            main.putExtra("typeLogin",6);
             startActivity(main);
             finish();
 

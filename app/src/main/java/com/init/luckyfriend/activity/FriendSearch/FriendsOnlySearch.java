@@ -40,6 +40,10 @@ public class FriendsOnlySearch extends Fragment {
     private ProgressDialog prog;
     private ArrayList<WallDataBean> items=new ArrayList<>();
     Toolbar topToolBar;
+    private boolean loading = true;
+    int visibleItemCount;
+    int pastVisiblesItems, totalItemCount;
+    int skipdata=0;
 
 
 
@@ -48,7 +52,7 @@ public class FriendsOnlySearch extends Fragment {
         super.onCreate(savedInstanceState);
 
         prog=new ProgressDialog(getActivity());
-        prog.setMessage("wait loading data ....");
+        prog.setMessage("Wait loading data ....");
         // getData();
         getFriends();
 
@@ -72,6 +76,27 @@ public class FriendsOnlySearch extends Fragment {
 
         feedAdapter = new FriendsOnlyAdapter(getActivity(),items);
         rvFeed.setAdapter(feedAdapter);
+
+        rvFeed.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0) //check for scroll down
+                {
+                    visibleItemCount = linearLayoutManager.getChildCount();
+                    totalItemCount = linearLayoutManager.getItemCount();
+                    pastVisiblesItems = linearLayoutManager.findFirstVisibleItemPosition();
+
+                    if (loading) {
+                        if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                            loading = false;
+                            getFriends();
+//                            Toast.makeText(getActivity(), "called", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+            }
+        });
+
 
 
         // Inflate the layout for this fragment
@@ -111,7 +136,7 @@ public class FriendsOnlySearch extends Fragment {
                         pdb.setPeron_dob(jo.getString("person_dob"));
                         pdb.setPost_id(jo.getString("post_id"));
                         pdb.setIsLiked(jo.getInt("isliked"));
-                       // pdb.setUser_id(jo.getString("user_id"));
+                        pdb.setPerson_id(jo.getString("person_id"));
 
                         int year=0,mon=0,day=0;
                         String[] data=pdb.getPeron_dob().split("-");
@@ -125,9 +150,13 @@ public class FriendsOnlySearch extends Fragment {
                         items.add(pdb);
                     }
 
+                    skipdata=items.size();
+                    if(jarray.length()<5)
+                        loading=false;
+                    else
+                        loading=true;
 
-// rv.setAdapter(adapter);
-                    // skipdata = shopdata.size();
+
                     feedAdapter.notifyDataSetChanged();
 
                 }
@@ -150,6 +179,7 @@ public class FriendsOnlySearch extends Fragment {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("rqid", 17+"");
                 params.put("person_id", Singleton.pref.getString("person_id", ""));
+                params.put("skipdata",skipdata+"");
                 return params;
             }
 

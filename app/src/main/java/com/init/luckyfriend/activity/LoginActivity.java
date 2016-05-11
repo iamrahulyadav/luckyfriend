@@ -120,7 +120,7 @@ public class LoginActivity extends AppCompatActivity {
                         edit.putString("person_gender",jobj.getString("person_gender"));
                         edit.putString("person_country", jobj.getString("person_country"));
                         edit.putString("person_city", jobj.getString("person_location"));
-                        edit.putString("profile_pic",jobj.getString("profilepic"));
+                        edit.putString("uimage",jobj.getString("profilepic"));
 
 
 

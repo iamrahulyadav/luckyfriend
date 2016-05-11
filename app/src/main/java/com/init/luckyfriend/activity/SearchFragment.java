@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -58,10 +59,61 @@ public class SearchFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-       /* prog=new ProgressDialog(getActivity());
+        prog=new ProgressDialog(getActivity());
         prog.setMessage("wait loading data ....");
-        getData();
-*/
+        Bundle extra = getArguments();
+        if (extra!= null)
+            ParseData(extra.getString("data"));
+    }
+    private void ParseData(String response) {
+        try {
+
+            JSONObject jobj = new JSONObject(response.toString());
+            JSONArray jarray = jobj.getJSONArray("data");
+            if (jarray.length() == 0) {
+                // dataleft = false;
+                Toast.makeText(getActivity(), "No data available", Toast.LENGTH_LONG).show();
+                return;
+            }
+            for (int i = 0; i < jarray.length(); i++) {
+                JSONObject jo = jarray.getJSONObject(i);
+                WallDataBean pdb = new WallDataBean();
+                pdb.setLast_name(jo.getString("last_name"));
+                pdb.setUser_name(jo.getString("user_name"));
+                pdb.setPost_img(jo.getString("post_img"));
+                pdb.setPost_comments(jo.getInt("post_comments"));
+                pdb.setPost_likes(jo.getInt("post_likes"));
+                pdb.setPerson_country(jo.getString("person_country"));
+                pdb.setPerson_profile_img(jo.getString("person_profile_pic"));
+                pdb.setPost_id(jo.getString("post_id"));
+                pdb.setPerson_id(jo.getString("person_id"));
+                pdb.setPeron_dob(jo.getString("person_dob"));
+                pdb.setIsLiked(jo.getInt("isliked"));
+
+                int year = 0, mon = 0, day = 0;
+                String[] data = pdb.getPeron_dob().split("-");
+                year = Integer.parseInt(data[0]);
+                mon = Integer.parseInt(data[1]);
+                day = Integer.parseInt(data[2]);
+                pdb.setPeron_dob(getAge(year, mon, day)+" " + "Years" + "");
+
+
+                items.add(pdb);
+                // Log.e("items", items + "");
+
+            }
+
+
+// rv.setAdapter(adapter);
+            // skipdata = shopdata.size();
+            feedAdapter.notifyDataSetChanged();
+
+        } catch (Exception ex) {
+            Log.e("error", ex.getMessage());
+            // Toast.makeText(getContext(),"No data",Toast.LENGTH_LONG).show();
+        }
+
+
     }
 
 
@@ -81,12 +133,10 @@ public class SearchFragment extends Fragment {
         };
         rvFeed.setLayoutManager(linearLayoutManager);
 
-        Bundle data=this.getArguments();
-        String message=data.getString("message");
-        Log.e("me",message);
 
-  //      feedAdapter = new WallFeedAdapter(getActivity(),items);
-   //     rvFeed.setAdapter(feedAdapter);
+
+        feedAdapter = new WallFeedAdapter(getActivity(),items);
+        rvFeed.setAdapter(feedAdapter);
 
         // Inflate the layout for this fragment
         return rootView;
@@ -142,7 +192,7 @@ public class SearchFragment extends Fragment {
                         year=Integer.parseInt(data[0]);
                         mon=Integer.parseInt(data[1]);
                         day=Integer.parseInt(data[2]);
-                        pdb.setPeron_dob(getAge(year, mon, day) + "years" + "");
+                        pdb.setPeron_dob(getAge(year, mon, day)+" " + "Years" + "");
 
 
                         items.add(pdb);

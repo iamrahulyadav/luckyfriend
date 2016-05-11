@@ -43,6 +43,11 @@ public class FavouritesFragment extends Fragment {
     private ProgressDialog prog;
     private ArrayList<FavouriteDataBean> items=new ArrayList<>();
     Toolbar topToolBar;
+    private boolean loading = true;
+    int visibleItemCount;
+    int pastVisiblesItems, totalItemCount;
+    int skipdata=0;
+    String person_id;
 
 
 
@@ -51,9 +56,9 @@ public class FavouritesFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         prog=new ProgressDialog(getActivity());
-        prog.setMessage("wait loading data ....");
+        prog.setMessage("Wait loading data ....");
 
-        String person_id=Singleton.pref.getString("person_id","");
+        person_id=Singleton.pref.getString("person_id","");
         getFavourite(person_id);
 
     }
@@ -67,16 +72,33 @@ public class FavouritesFragment extends Fragment {
         rvFeed=(RecyclerView)rootView.findViewById(R.id.recycler_view);
 
 
-        linearLayoutManager = new LinearLayoutManager(getActivity()) {
-            @Override
-            protected int getExtraLayoutSpace(RecyclerView.State state) {
-                return 300;
-            }
-        };
+        linearLayoutManager = new LinearLayoutManager(getActivity()) ;
         rvFeed.setLayoutManager(linearLayoutManager);
 
         feedAdapter = new FavouriteAdapter(getActivity(),items);
         rvFeed.setAdapter(feedAdapter);
+
+        rvFeed.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0) //check for scroll down
+                {
+                    visibleItemCount = linearLayoutManager.getChildCount();
+                    totalItemCount = linearLayoutManager.getItemCount();
+                    pastVisiblesItems = linearLayoutManager.findFirstVisibleItemPosition();
+
+                    if (loading) {
+                        if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                            loading = false;
+                            getFavourite(person_id);
+//                            Toast.makeText(getActivity(), "called", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+            }
+        });
+
+
 
 
         // Inflate the layout for this fragment
@@ -136,6 +158,11 @@ public void getFavourite(final String person_id)
                     items.add(fdb);
                 }
 
+                skipdata=items.size();
+                if(jarray.length()<5)
+                    loading=false;
+                else
+                    loading=true;
 
                 feedAdapter.notifyDataSetChanged();
 
@@ -156,6 +183,7 @@ public void getFavourite(final String person_id)
             Map<String, String> params = new HashMap<String, String>();
             params.put("rqid", 4+"");
             params.put("person_id",person_id);
+            params.put("skipdata",skipdata+"");
             return params;
         }
 

@@ -42,11 +42,21 @@ public class YouLike extends android.support.v4.app.Fragment {
 
     private ArrayList<FavouriteDataBean> items=new ArrayList<>();
     ProgressDialog prog;
+    private boolean loading = true;
+    int visibleItemCount;
+    int pastVisiblesItems, totalItemCount;
+    int skipdata=0;
+
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        prog=new ProgressDialog(getContext());
+        prog.setMessage("Wait loading data....");
+
+        getLike();
 
     }
 
@@ -58,21 +68,32 @@ public class YouLike extends android.support.v4.app.Fragment {
         rvFeed=(RecyclerView)rootView.findViewById(R.id.recycler_view);
         // getActivity().getSupportActionBar().setTitle("Homeeee");
 
-        linearLayoutManager = new LinearLayoutManager(getActivity()) {
-            @Override
-            protected int getExtraLayoutSpace(RecyclerView.State state) {
-                return 300;
-            }
-        };
+        linearLayoutManager = new LinearLayoutManager(getActivity());
         rvFeed.setLayoutManager(linearLayoutManager);
 
         feedAdapter = new YouLikeAdapter(getActivity(),items);
         rvFeed.setAdapter(feedAdapter);
 
-        prog=new ProgressDialog(getContext());
-        prog.setMessage("wait loading data...");
+        rvFeed.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0) //check for scroll down
+                {
+                    visibleItemCount = linearLayoutManager.getChildCount();
+                    totalItemCount = linearLayoutManager.getItemCount();
+                    pastVisiblesItems = linearLayoutManager.findFirstVisibleItemPosition();
 
-        getLike();
+                    if (loading) {
+                        if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                            loading = false;
+                            getLike();
+//                            Toast.makeText(getActivity(), "called", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+            }
+        });
+
 
         // Inflate the layout for this fragment
         return rootView;
@@ -125,8 +146,12 @@ public class YouLike extends android.support.v4.app.Fragment {
                     }
 
 
-                    // rv.setAdapter(adapter);
-                    // skipdata = shopdata.size();
+                    skipdata=items.size();
+                    if(jarray.length()<5)
+                        loading=false;
+                    else
+                        loading=true;
+
                     feedAdapter.notifyDataSetChanged();
 
                 } catch (Exception ex) {
@@ -147,6 +172,8 @@ public class YouLike extends android.support.v4.app.Fragment {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("rqid", 13+"");
                 params.put("person_id",Singleton.pref.getString("person_id",""));
+                params.put("skipdata",skipdata+"");
+
                 return params;
             }
 

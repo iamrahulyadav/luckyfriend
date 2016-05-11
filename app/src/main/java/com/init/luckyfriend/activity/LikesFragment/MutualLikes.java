@@ -40,6 +40,11 @@ public class MutualLikes extends android.support.v4.app.Fragment {
     YouLikeAdapter feedAdapter;
     ProgressDialog prog;
     private ArrayList<FavouriteDataBean> items=new ArrayList<>();
+    private boolean loading = true;
+    int visibleItemCount;
+    int pastVisiblesItems, totalItemCount;
+    int skipdata=0;
+
 
 
     @Override
@@ -47,7 +52,7 @@ public class MutualLikes extends android.support.v4.app.Fragment {
         super.onCreate(savedInstanceState);
 
         prog=new ProgressDialog(getContext());
-        prog.setMessage("wait loading data..");
+        prog.setMessage("Wait loading data....");
 
         getLike();
 
@@ -73,6 +78,25 @@ public class MutualLikes extends android.support.v4.app.Fragment {
         feedAdapter = new YouLikeAdapter(getActivity(),items);
         rvFeed.setAdapter(feedAdapter);
 
+        rvFeed.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0) //check for scroll down
+                {
+                    visibleItemCount = linearLayoutManager.getChildCount();
+                    totalItemCount = linearLayoutManager.getItemCount();
+                    pastVisiblesItems = linearLayoutManager.findFirstVisibleItemPosition();
+
+                    if (loading) {
+                        if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                            loading = false;
+                            getLike();
+//                            Toast.makeText(getActivity(), "called", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+            }
+        });
 
         // Inflate the layout for this fragment
         return rootView;
@@ -123,8 +147,6 @@ prog.show();
                     }
 
 
-                    // rv.setAdapter(adapter);
-                    // skipdata = shopdata.size();
                     feedAdapter.notifyDataSetChanged();
 
                 } catch (Exception ex) {
@@ -145,6 +167,7 @@ prog.show();
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("rqid", 21+"");
                 params.put("person_id",Singleton.pref.getString("person_id",""));
+                params.put("skipdata",skipdata+"");
                 return params;
             }
 

@@ -74,6 +74,11 @@ public class WallFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     ProgressBar progress;
     public CommentArrayAdapter adapter;
     RecyclerView loadcomments;
+    RecyclerView recyclerView;
+    private boolean loading;
+    int visibleItemCount = 5;
+    int pastVisiblesItems, totalItemCount;
+
 
     public WallFeedAdapter(Activity context, List<WallDataBean> list) {
         this.context = context;
@@ -86,8 +91,11 @@ public class WallFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(context).inflate(R.layout.item_feed, parent, false);
 
+
         return new CellFeedViewHolder(view);
     }
+
+
 
 
     @Override
@@ -125,7 +133,7 @@ public class WallFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
            Singleton.imageLoader.displayImage(gd.getPost_img(), holder.ivFeedCenter, Singleton.defaultOptions);
 
 
-        holder.country.setText(gd.getPerson_country());
+        holder.country.setText(gd.getPeron_dob()+", "+gd.getPerson_country());
         //holder.comment.setText(2+"");
         holder.name.setText(gd.getUser_name() + " " + gd.getLast_name());
 
@@ -297,7 +305,7 @@ public class WallFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
                     newFragment.putExtra("person_id",wdb.getPerson_id());
                     context.startActivity(newFragment);
-                    context.finish();
+
                     break;
             }
         }
@@ -313,7 +321,7 @@ public class WallFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             CommentData commentData=new CommentData();
             commentData.setCommenttxxt(comment);
             commentData.setUname(Singleton.pref.getString("uname", ""));
-            commentData.setProfilepic(Singleton.pref.getString("profile_pic", ""));
+            commentData.setProfilepic(Singleton.pref.getString("uimage", ""));
              commentData.setCtime(thisDate);
             loaded.add(commentData);
 
@@ -406,7 +414,6 @@ public class WallFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     params.put("rqid", 12 + "");
                     params.put("person_id", Singleton.pref.getString("person_id", ""));
                     params.put("friend_reqperson_id", friend_person_id);
-                    params.put("noti_type",2+"");
 
                     return params;
                 }

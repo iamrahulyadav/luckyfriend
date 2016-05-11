@@ -267,7 +267,7 @@ public class FillUserMandatoryFields extends Activity implements View.OnClickLis
                         edit.putString("person_gender",jobj.getString("person_gender"));
                         edit.putString("person_country",jobj.getString("person_country"));
                         edit.putString("person_city",jobj.getString("person_city"));
-                        edit.putString("profile_pic",jobj.getString("profile_pic"));
+                        edit.putString("uimage",jobj.getString("profile_pic"));
 
                         edit.commit();
                     }

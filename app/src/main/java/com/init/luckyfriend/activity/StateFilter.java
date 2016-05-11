@@ -30,7 +30,8 @@ public class StateFilter extends AppCompatActivity implements  AdapterView.OnIte
     ImageView check;
     ListView listview;
     MySimpleArrayAdapter adapter;
-    boolean[] mVisisbilityList={false,false,false,false,false} ;
+    boolean[] mVisisbilityList={false,false,false,false,false};
+
     ImageButton back;
     String val;
     int arraylength;
@@ -56,10 +57,8 @@ public class StateFilter extends AppCompatActivity implements  AdapterView.OnIte
                 {
                     mVisisbilityList[i] = false;
                 }
-                arraylength=indiaState.length;
-*/
-
-                adapter = new MySimpleArrayAdapter(this,mVisisbilityList,indiaState);
+                arraylength=indiaState.length;*/
+            adapter = new MySimpleArrayAdapter(this,mVisisbilityList,indiaState);
             listview.setAdapter(adapter);
         }
         else if(country.equalsIgnoreCase("australia"))

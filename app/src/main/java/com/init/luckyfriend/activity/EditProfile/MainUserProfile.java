@@ -85,11 +85,11 @@ public class MainUserProfile extends AppCompatActivity implements View.OnClickLi
         });
 */
 
-        String profilepic=Singleton.pref.getString("profile_pic","");
-        byte[] decodedString = Base64.decode(profilepic, Base64.DEFAULT);
-        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-        profimg.setImageBitmap(decodedByte);
-
+        String profilepic=Singleton.pref.getString("uimage", "");
+       // byte[] decodedString = Base64.decode(profilepic, Base64.DEFAULT);
+        //Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        //profimg.setImageBitmap(decodedByte);
+        Singleton.imageLoader.displayImage(profilepic,profimg,Singleton.defaultOptions);
         profimg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

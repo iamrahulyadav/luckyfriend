@@ -44,12 +44,15 @@ public class HomeFragment extends Fragment {
     LinearLayoutManager linearLayoutManager;
     WallFeedAdapter feedAdapter;
     private ProgressDialog prog;
-    private ArrayList<WallDataBean> items=new ArrayList<>();
+    private ArrayList<WallDataBean> items = new ArrayList<>();
     Toolbar topToolBar;
     TextView notification;
     FragmentManager mFragmentManager;
     FragmentTransaction mFragmentTransaction;
-
+    private boolean loading = true;
+    int visibleItemCount;
+    int pastVisiblesItems, totalItemCount;
+    int skipdata=0;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -59,94 +62,57 @@ public class HomeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        prog=new ProgressDialog(getActivity());
-        prog.setMessage("wait loading data ....");
-     Bundle extra= getArguments();
-     if(extra==null)
-        getData();
-        else
-     {
-     //    Toast.makeText(getActivity(),extra.getString("data"),Toast.LENGTH_SHORT).show();
-         ParseData(extra.getString("data"));
-     }
 
     }
-private void ParseData(String response)
-{
-    try {
 
-        JSONObject jobj = new JSONObject(response.toString());
-        JSONArray jarray = jobj.getJSONArray("data");
-        if (jarray.length() == 0) {
-            // dataleft = false;
-            Toast.makeText(getActivity(),"No data available",Toast.LENGTH_LONG).show();
-            return;
-        }
-        for (int i = 0; i < jarray.length(); i++) {
-            JSONObject jo = jarray.getJSONObject(i);
-            WallDataBean pdb = new WallDataBean();
-            pdb.setLast_name(jo.getString("last_name"));
-            pdb.setUser_name(jo.getString("user_name"));
-            pdb.setPost_img(jo.getString("post_img"));
-            pdb.setPost_comments(jo.getInt("post_comments"));
-            pdb.setPost_likes(jo.getInt("post_likes"));
-            pdb.setPerson_country(jo.getString("person_country"));
-            pdb.setPerson_profile_img(jo.getString("person_profile_pic"));
-            pdb.setPost_id(jo.getString("post_id"));
-            pdb.setPerson_id(jo.getString("person_id"));
-            pdb.setPeron_dob(jo.getString("person_dob"));
-            pdb.setIsLiked(jo.getInt("isliked"));
-
-            int year=0,mon=0,day=0;
-            String[] data=pdb.getPeron_dob().split("-");
-            year=Integer.parseInt(data[0]);
-            mon=Integer.parseInt(data[1]);
-            day=Integer.parseInt(data[2]);
-            pdb.setPeron_dob(getAge(year, mon, day) + "years" + "");
-
-
-            items.add(pdb);
-            Log.e("items",items+"");
-
-        }
-
-
-// rv.setAdapter(adapter);
-        // skipdata = shopdata.size();
-        feedAdapter.notifyDataSetChanged();
-
-    } catch (Exception ex) {
-        Log.e("error", ex.getMessage());
-        Toast.makeText(getContext(),"No data",Toast.LENGTH_LONG).show();
-    }
-
-
-}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
-        rvFeed=(RecyclerView)rootView.findViewById(R.id.recycler_view);
-       // getActivity().getSupportActionBar().setTitle("Homeeee");
+        rvFeed = (RecyclerView) rootView.findViewById(R.id.recycler_view);
+        // getActivity().getSupportActionBar().setTitle("Homeeee");
 
-        linearLayoutManager = new LinearLayoutManager(getActivity()) {
-            @Override
-            protected int getExtraLayoutSpace(RecyclerView.State state) {
-                return 300;
-            }
-        };
+        linearLayoutManager = new LinearLayoutManager(getActivity());
+
         rvFeed.setLayoutManager(linearLayoutManager);
 
 
-        feedAdapter = new WallFeedAdapter(getActivity(),items);
+        prog = new ProgressDialog(getActivity());
+        prog.setMessage("Wait loading data ....");
+
+        //Toast.makeText(getContext(),"called",Toast.LENGTH_LONG).show();
+        getData();
+
+
+        feedAdapter = new WallFeedAdapter(getActivity(), items);
         rvFeed.setAdapter(feedAdapter);
+
+        rvFeed.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0) //check for scroll down
+                {
+                    visibleItemCount = linearLayoutManager.getChildCount();
+                    totalItemCount = linearLayoutManager.getItemCount();
+                    pastVisiblesItems = linearLayoutManager.findFirstVisibleItemPosition();
+
+                    if (loading) {
+                        if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                            loading = false;
+                            getData();
+//                            Toast.makeText(getActivity(), "called", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+            }
+        });
+
 
         // Inflate the layout for this fragment
         return rootView;
     }
-
 
 
     @Override
@@ -161,22 +127,18 @@ private void ParseData(String response)
 
     private void getData() {
         prog.show();
-       // String url ="http://192.168.0.7/test.php";
+        // String url ="http://192.168.0.7/test.php";
         RequestQueue queue = Volley.newRequestQueue(getActivity());
-        StringRequest sr = new StringRequest(Request.Method.POST,getResources().getString(R.string.url), new Response.Listener<String>() {
+        StringRequest sr = new StringRequest(Request.Method.POST, getResources().getString(R.string.url), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.e("response", response.toString());
                 prog.dismiss();
-                items.clear();
+//                items.clear();
                 try {
 
                     JSONObject jobj = new JSONObject(response.toString());
                     JSONArray jarray = jobj.getJSONArray("data");
-                    if (jarray.length() == 0) {
-                       // dataleft = false;
-                        return;
-                    }
                     for (int i = 0; i < jarray.length(); i++) {
                         JSONObject jo = jarray.getJSONObject(i);
                         WallDataBean pdb = new WallDataBean();
@@ -192,20 +154,24 @@ private void ParseData(String response)
                         pdb.setPeron_dob(jo.getString("person_dob"));
                         pdb.setIsLiked(jo.getInt("isliked"));
 
-                        int year=0,mon=0,day=0;
-                        String[] data=pdb.getPeron_dob().split("-");
-                        year=Integer.parseInt(data[0]);
-                        mon=Integer.parseInt(data[1]);
-                        day=Integer.parseInt(data[2]);
-                        pdb.setPeron_dob(getAge(year, mon, day) + "years" + "");
+                        int year = 0, mon = 0, day = 0;
+                        String[] data = pdb.getPeron_dob().split("-");
+                        year = Integer.parseInt(data[0]);
+                        mon = Integer.parseInt(data[1]);
+                        day = Integer.parseInt(data[2]);
+                        pdb.setPeron_dob(getAge(year, mon, day) +" "+"Years" + "");
 
 
                         items.add(pdb);
+
                     }
 
 
-// rv.setAdapter(adapter);
-                   // skipdata = shopdata.size();
+                    skipdata=items.size();
+                    if(jarray.length()<5)
+                        loading=false;
+                    else
+                    loading=true;
                     feedAdapter.notifyDataSetChanged();
 
                 } catch (Exception ex) {
@@ -217,16 +183,19 @@ private void ParseData(String response)
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-            prog.dismiss();
+                prog.dismiss();
+                loading=true;
 //            Log.e("error",error.getMessage());
             }
         }) {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("rqid", 1+"");
-                params.put("person_id", Singleton.pref.getString("person_id",""));
+                params.put("rqid", 1 + "");
+                params.put("person_id",Singleton.pref.getString("person_id", ""));
+                params.put("skipdata",skipdata+"");
 
+                Log.e("person_id", Singleton.pref.getString("person_id", ""));
                 return params;
             }
 
@@ -240,6 +209,7 @@ private void ParseData(String response)
         queue.add(sr);
 
     }
+
     public int getAge(int DOByear, int DOBmonth, int DOBday) {
 
         int age;
@@ -251,11 +221,10 @@ private void ParseData(String response)
 
         age = currentYear - DOByear;
 
-        if(DOBmonth > currentMonth){
+        if (DOBmonth > currentMonth) {
             --age;
-        }
-        else if(DOBmonth == currentMonth){
-            if(DOBday > todayDay){
+        } else if (DOBmonth == currentMonth) {
+            if (DOBday > todayDay) {
                 --age;
             }
         }

@@ -58,6 +58,7 @@ import com.twitter.sdk.android.core.TwitterAuthConfig;
 import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
+import com.twitter.sdk.android.core.models.User;
 
 import io.fabric.sdk.android.Fabric;import org.json.JSONArray;
 import org.json.JSONException;
@@ -134,11 +135,13 @@ public class Login extends AppCompatActivity implements  View.OnClickListener,Go
 
                 session = result.data;
 
+
                 String username = session.getUserName();
                 Long  userid = session.getUserId();
                 //String twitter_id = result.data.getUserId() + "";
                 String accessToken = result.data.getAuthToken().token;
                 String secretToken = result.data.getAuthToken().secret;
+
 
                 Log.e("data", result.data + "");
 
@@ -242,22 +245,21 @@ public class Login extends AppCompatActivity implements  View.OnClickListener,Go
                                             jobj.put("gender", gender);
                                             Log.e("data", jobj.toString());
 
-                                            saveFBData(id, fname, lname, email, gender);
+                                            String image="https://graph.facebook.com/"+id+"/picture?type=large";
+                                            saveFBData(id, fname, lname, email, gender, image, country);
 
                                             SharedPreferences.Editor edit=Singleton.pref.edit();
-                                            edit.putString("uname",fname+" "+lname);
-                                            edit.putString("ugender",gender);
-                                            edit.putString("ucountry",country);
-                                            edit.putString("uimage","https://graph.facebook.com/"+id+"/picture?type=large");
+                                            edit.putString("uname",fname);
+                                            edit.putString("ugender", gender);
+                                            edit.putString("ucountry", country);
+                                            edit.putString("uimage", image);
+
                                             edit.commit();
 
 
-                                            Intent   intent = new Intent(getApplicationContext(),MainActivity.class);
-                                            //intent.putExtra("data", jobj.toString());
 
-                                            intent.putExtra("typeLogin",1);
-                                            startActivity(intent);
-                                            // checkFbuser(id);
+
+
 
                                         } catch (Exception ex) {
                                             //    Log.d("Error",ex.getMessage());
@@ -294,6 +296,7 @@ public class Login extends AppCompatActivity implements  View.OnClickListener,Go
                 Log.e(" twitter response", response.toString());
 
 
+
                 try {
                     JSONObject jobj = new JSONObject(response.toString());
 
@@ -310,6 +313,7 @@ public class Login extends AppCompatActivity implements  View.OnClickListener,Go
                         MainIntent.putExtra("typeLogin",2);
 
                         startActivity(MainIntent);
+                        finish();
 
                     }
                 } catch (JSONException e) {
@@ -350,7 +354,7 @@ public class Login extends AppCompatActivity implements  View.OnClickListener,Go
 
     }
 
-    private void saveFBData(final String id,final String fname,final String lname,final String email,final String gender) {
+    private void saveFBData(final String id,final String fname,final String lname,final String email,final String gender,final String image,final String country) {
         RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest sr = new StringRequest(Request.Method.POST,getResources().getString(R.string.url), new Response.Listener<String>() {
             @Override
@@ -368,6 +372,13 @@ public class Login extends AppCompatActivity implements  View.OnClickListener,Go
                         SharedPreferences.Editor edit=Singleton.pref.edit();
                         edit.putString("person_id",person_id);
                         edit.commit();
+
+
+                        Intent   intent = new Intent(getApplicationContext(),MainActivity.class);
+
+                        intent.putExtra("typeLogin",1);
+                        startActivity(intent);
+                        finish();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -391,6 +402,9 @@ public class Login extends AppCompatActivity implements  View.OnClickListener,Go
                 params.put("lname",lname);
                 params.put("gender",gender);
                 params.put("email",email);
+                params.put("image",image);
+                params.put("country",country);
+
 
 
 
@@ -419,13 +433,17 @@ public class Login extends AppCompatActivity implements  View.OnClickListener,Go
         }
 
 
-        else {
+        else
             loginButton.onActivityResult(requestCode, resultCode, data);
+
+
+
             callbackManager.onActivityResult(requestCode, resultCode, data);
+
 
         }
 
-    }
+
 
     // [START handleSignInResult]
     private void handleSignInResult(GoogleSignInResult result) {
@@ -472,7 +490,7 @@ public class Login extends AppCompatActivity implements  View.OnClickListener,Go
 
                             SharedPreferences.Editor edit = Singleton.pref.edit();
                             edit.putString("uname", name);
-                            Toast.makeText(Login.this, name, Toast.LENGTH_SHORT).show();
+                         //   Toast.makeText(Login.this, name, Toast.LENGTH_SHORT).show();
                            // edit.putString("uemail", jobj.getString("uemail"));
                              edit.putString("uimage", userimage);
                             edit.putString("person_id", person_id);
@@ -595,14 +613,14 @@ public class Login extends AppCompatActivity implements  View.OnClickListener,Go
         switch (view.getId()) {
             case R.id.fbsignup:
                //Toast.makeText(getApplicationContext(), "clicked", Toast.LENGTH_LONG).show();
-             LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "user_friends", "email", "user_location","user_birthday","user_posts"));
-                finish();
+                LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "user_friends", "email", "user_location", "user_birthday", "user_posts"));
+                //finish();
                 break;
 
             case R.id.google:
                 //Toast.makeText(getApplicationContext(),"clicked gplus ",Toast.LENGTH_LONG).show();
                 signIn();
-                finish();
+                //finish();
                 break;
 
             case R.id.signup:
@@ -616,7 +634,7 @@ public class Login extends AppCompatActivity implements  View.OnClickListener,Go
             case R.id.twitter:
                // Toast.makeText(getApplicationContext(),"clicked twitter",Toast.LENGTH_LONG).show();
                 loginButton.performClick();
-                finish();
+                //finish();
                 break;
         }
     }

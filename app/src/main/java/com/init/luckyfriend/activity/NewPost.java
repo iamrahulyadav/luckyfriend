@@ -27,6 +27,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.init.luckyfriend.R;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
@@ -93,6 +95,9 @@ public class NewPost extends AppCompatActivity {
         cross.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent finish=new Intent();
+                setResult(11,finish);
+
                 finish();
             }
         });
@@ -119,7 +124,20 @@ public class NewPost extends AppCompatActivity {
                 Log.e("post", response.toString());
                 prog.dismiss();
                 Toast.makeText(getApplicationContext(),"uploaded successfully",Toast.LENGTH_LONG).show();
-                finish();
+
+                try {
+                    JSONObject jobj=new JSONObject(response);
+                        //String imageurl = jobj.getString("imgurl");
+
+                        Intent back = new Intent();
+                        back.putExtra("data", response);
+                        setResult(11, back);
+                        finish();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
             }
 
 
@@ -211,5 +229,14 @@ public class NewPost extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent finish=new Intent();
+        setResult(11,finish);
+
+        finish();
+
     }
 }

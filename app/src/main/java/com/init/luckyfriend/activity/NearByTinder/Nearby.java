@@ -52,7 +52,7 @@ public class Nearby extends Fragment implements FlingCardListener.ActionDownInte
         super.onCreate(savedInstanceState);
 
         prog=new ProgressDialog(getActivity());
-        prog.setMessage("Wait loading nearby....");
+        prog.setMessage("Wait loading data ....");
 
 
 

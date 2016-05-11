@@ -117,7 +117,7 @@ public class FriendsOnlyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         ImageView ivFeedCenter;
         TextView caption, likes, comment, country, name;
         ImageButton commenticon, likeicon;
-        EditText comments;
+        EditText commentsbox;
         Dialog commentdialog;
         ImageButton send;
 
@@ -146,6 +146,7 @@ public class FriendsOnlyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
             switch (view.getId()) {
                 case R.id.like:
+                    //Toast.makeText(context,wdb.getPerson_id()+"",Toast.LENGTH_LONG).show();
                     updatelike(wdb.getPost_id(), wdb.getPerson_id(), getAdapterPosition());
                     break;
 
@@ -160,7 +161,7 @@ public class FriendsOnlyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     loadcomments.setLayoutManager(mLayoutManager);
 
 
-                    comments = (EditText) commentdialog.findViewById(R.id.commentbox);
+                    commentsbox = (EditText) commentdialog.findViewById(R.id.commentbox);
                     send = (ImageButton) commentdialog.findViewById(R.id.send);
                     TextView close = (TextView) commentdialog.findViewById(R.id.closedialog);
                     close.setOnClickListener(new View.OnClickListener() {
@@ -184,8 +185,9 @@ public class FriendsOnlyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                         @Override
                         public void onClick(View view) {
                             //   sendMessage(comments.getText().toString(), UserType.OTHER);
-                            send(comments.getText().toString(), wdb.getPost_id());
-
+                            //Log.e("wdb.person_id",wdb.getPerson_id());
+                           // Toast.makeText(context,wdb.getPerson_id()+"",Toast.LENGTH_LONG).show();
+                            send(commentsbox.getText().toString(), wdb.getPost_id(), wdb.getPerson_id(),getAdapterPosition());
                         }
                     });
 
@@ -239,7 +241,7 @@ public class FriendsOnlyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     params.put("rqid", 3 + "");
                     params.put("post_id", postid);
                     params.put("person_id", Singleton.pref.getString("person_id", ""));
-                    params.put("noti_type",1+"");
+                   // params.put("noti_type",1+"");
 
                     return params;
                 }
@@ -248,34 +250,53 @@ public class FriendsOnlyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             };
             queue.add(sr);
         }
-        private void send(String comment, final String post_id) {
+        private void send(String commenttext,final String post_id,final String person_id,final int pos) {
 
             SimpleDateFormat currentDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date todayDate = new Date();
             String thisDate = currentDate.format(todayDate);
 
-            CommentData commentData = new CommentData();
-            commentData.setCommenttxxt(comment);
+            CommentData commentData=new CommentData();
+            commentData.setCommenttxxt(commenttext);
             commentData.setUname(Singleton.pref.getString("uname", ""));
-            commentData.setProfilepic(Singleton.pref.getString("profile_pic", ""));
+            commentData.setProfilepic(Singleton.pref.getString("uimage", ""));
             commentData.setCtime(thisDate);
             loaded.add(commentData);
 
             adapter.notifyDataSetChanged();
-            comments.setText("");
+            commentsbox.setText("");
 
-            sendMessageToServer(comment, thisDate, post_id);
+            sendMessageToServer(commenttext,thisDate,post_id,person_id,pos);
         }
 
-        private void sendMessageToServer(final String commenttext, final String thisDate, final String postid) {
+        private void sendMessageToServer(final String commenttext, final String thisDate,final String postid,final String person_id,final int position) {
             RequestQueue queue = Volley.newRequestQueue(context);
-            StringRequest sr = new StringRequest(Request.Method.POST, context.getString(R.string.url), new Response.Listener<String>() {
+            StringRequest sr = new StringRequest(Request.Method.POST,context.getString(R.string.url), new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
                     Log.e("response", response.toString());
-                    //  prog.dismiss();
-                    // items.clear();
-                }
+                    try {
+
+                        JSONObject jobj = new JSONObject(response.toString());
+                        if (jobj.getBoolean("status")) {
+                            boolean val = jobj.getBoolean("status");
+                            if(val==true){
+                                WallDataBean wdb = data.get(position);
+                                wdb.setPost_comments(wdb.getPost_comments() + 1);
+                                // wdb.setIsLiked(1);
+                                notifyItemChanged(position);
+                            }
+                            else
+                            {
+
+                            }
+
+                        }
+
+                    } catch (Exception ex) {
+                        Log.e("error", ex.getMessage() + "");
+                    }
+                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
@@ -286,13 +307,14 @@ public class FriendsOnlyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 @Override
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<String, String>();
-                    params.put("rqid", "30");
-                    params.put("person_id", Singleton.pref.getString("person_id", ""));
-                    params.put("comment", commenttext);
-                    params.put("date", thisDate);
-                    params.put("post_id", postid);
-                    //params.put("noti_type",0+"");
-                    Log.e("commenttext", commenttext);
+                    params.put("rqid", 30+"");
+                    params.put("person_id", Singleton.pref.getString("person_id",""));
+                    params.put("comment",commenttext);
+                    params.put("date",thisDate);
+                    params.put("post_id",postid);
+                    params.put("receiver_id",person_id);
+                    //  params.put("noti_type",0+"");
+                     // Log.e("values",Singleton.pref.getString("person_id","")+""+commenttext+""+thisDate+""+postid+""+data.get(getAdapterPosition()).getPerson_id());
                     return params;
                 }
 
@@ -311,14 +333,14 @@ public class FriendsOnlyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
     private void readComments(final String post_id) {
 
-        //progress.setVisibility(View.VISIBLE);
+        progress.setVisibility(View.VISIBLE);
         RequestQueue queue = Volley.newRequestQueue(context);
         StringRequest sr = new StringRequest(Request.Method.POST, context.getResources().getString(R.string.url), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.e("comments", response.toString());
 
-          //      progress.setVisibility(View.GONE);
+                progress.setVisibility(View.GONE);
                 loaded.clear();
                 try {
                     JSONObject jobj = new JSONObject(response.toString());
@@ -328,7 +350,7 @@ public class FriendsOnlyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                         return;
                     }
 
-                    for (int i = 0; i < jobj.length(); i++) {
+                    for (int i = 0; i < jarray.length(); i++) {
 
 
                         JSONObject jo = jarray.getJSONObject(i);
@@ -363,7 +385,7 @@ public class FriendsOnlyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 params.put("rqid", 29 +"");
                 params.put("person_id", Singleton.pref.getString("person_id", ""));
                 params.put("post_id", post_id);
-                params.put("noti_type",0+"");
+                //               params.put("noti_type",0+"");
 
                 return params;
             }
@@ -375,4 +397,5 @@ public class FriendsOnlyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
 
     }
+
 }

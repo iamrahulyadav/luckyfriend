@@ -78,6 +78,8 @@ public class Filter extends AppCompatActivity implements View.OnClickListener {
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+               Intent finish=new Intent();
+                setResult(10, finish);
                 finish();
             }
         });
@@ -178,38 +180,25 @@ public class Filter extends AppCompatActivity implements View.OnClickListener {
             public void onResponse(String response) {
                 Log.e("search  details", response.toString());
 
-                 Intent intent = new Intent();
-                 intent.putExtra("data", response);
-                 setResult(10, intent);
-                 finish();//finishing activity//  searching.dismiss();
-
-                //multipleRowModelList.clear();
-               /* try {
+                try {
 
                     JSONObject jobj = new JSONObject(response.toString());
                     JSONArray jarray = jobj.getJSONArray("data");
                     if (jarray.length() == 0) {
                         // dataleft = false;
-                        Toast.makeText(getApplicationContext(),"No data available according to your given data..",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "No data available according to your given data..", Toast.LENGTH_LONG).show();
                         return;
-                    }
-                 else
-                    {
-                        Bundle bundle = new Bundle();
-                        bundle.putString("message", response.toString());
-                        SearchFragment fragInfo = new SearchFragment();
-                        fragInfo.setArguments(bundle);
-                        FragmentManager mFragmentManager = getSupportFragmentManager();
-
-                        FragmentTransaction transaction = mFragmentManager.beginTransaction();
-                        transaction.replace(R.id.container_body, fragInfo);
-                        transaction.commit();
-
-
+                    } else {
+                        Intent intent = new Intent();
+                        intent.putExtra("data", response);
+                        setResult(10, intent);
+                        finish();//finishing activity//  searching.dismiss();
                     }
                 } catch (Exception ex) {
-                    Log.e("notification error", ex.getMessage() + "");
-                }*/
+                    Log.e(" error...........", ex.getMessage() + "");
+                    Toast.makeText(getApplicationContext(), "No data available according to your given data..", Toast.LENGTH_LONG).show();
+
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -258,5 +247,14 @@ public class Filter extends AppCompatActivity implements View.OnClickListener {
                 nexticon1.setVisibility(View.GONE);
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent finish=new Intent();
+        setResult(10, finish);
+        finish();
+
+
     }
 }

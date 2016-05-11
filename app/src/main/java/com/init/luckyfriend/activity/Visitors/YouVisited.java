@@ -38,6 +38,10 @@ public class YouVisited extends Fragment {
     VisitedYouAdapter feedAdapter;
     private ProgressDialog prog;
     private ArrayList<VisitedYouDataBean> items=new ArrayList<>();
+    private boolean loading = true;
+    int visibleItemCount;
+    int pastVisiblesItems, totalItemCount;
+    int skipdata=0;
 
 
 
@@ -47,7 +51,7 @@ public class YouVisited extends Fragment {
 
 
         prog=new ProgressDialog(getContext());
-        prog.setMessage("wait loading data..");
+        prog.setMessage("Wait loading data....");
 
         getYouVisited();
     }
@@ -72,6 +76,25 @@ public class YouVisited extends Fragment {
         feedAdapter = new VisitedYouAdapter(getActivity(),items);
         rvFeed.setAdapter(feedAdapter);
 
+        rvFeed.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0) //check for scroll down
+                {
+                    visibleItemCount = linearLayoutManager.getChildCount();
+                    totalItemCount = linearLayoutManager.getItemCount();
+                    pastVisiblesItems = linearLayoutManager.findFirstVisibleItemPosition();
+
+                    if (loading) {
+                        if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                            loading = false;
+                            getYouVisited();
+//                            Toast.makeText(getActivity(), "called", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+            }
+        });
 
 
         // Inflate the layout for this fragment
@@ -124,8 +147,11 @@ public class YouVisited extends Fragment {
                     }
 
 
-                    // rv.setAdapter(adapter);
-                    // skipdata = shopdata.size();
+                    skipdata=items.size();
+                    if(jarray.length()<5)
+                        loading=false;
+                    else
+                        loading=true;
                     feedAdapter.notifyDataSetChanged();
 
                 } catch (Exception ex) {
@@ -146,6 +172,8 @@ public class YouVisited extends Fragment {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("rqid", 20+"");
                 params.put("person_id", Singleton.pref.getString("person_id",""));
+                params.put("skipdata",skipdata+"");
+
 
                 return params;
             }

@@ -32,6 +32,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,12 +42,17 @@ public class PostFragment extends Fragment {
     LinearLayoutManager linearLayoutManager;
     PostFeedAdapter feedAdapter;
     private ProgressDialog prog;
-    private ArrayList<PostDataBean> items=new ArrayList<>();
+    ArrayList<PostDataBean> items=new ArrayList<>();
     Toolbar topToolBar;
     TextView notification;
     FragmentManager mFragmentManager;
     FragmentTransaction mFragmentTransaction;
     public static PostFragment  pf;
+    String lastname,firstname,profilepic;
+    private boolean loading = true;
+    int visibleItemCount;
+    int pastVisiblesItems, totalItemCount;
+    int skipdata=0;
 
 
     @Override
@@ -54,11 +60,54 @@ public class PostFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
              prog=new ProgressDialog(getActivity());
-             prog.setMessage("wait loading data");
+             prog.setMessage("Wait loading data....");
              pf=this;
-        getPost();
+             //getPost();
+        Bundle extra = getArguments();
+        if (extra == null)
+            getPost();
+        else {
+            //  Toast.makeText(getActivity(),extra.getString("data"),Toast.LENGTH_SHORT).show();
+            //  ParseData(extra.getString("data"));
+            getPost();
+             }
 
-         }
+    }
+
+    private void ParseData(String response) {
+
+        try {
+            JSONObject jobj = new JSONObject(response.toString());
+            JSONArray jarray = jobj.getJSONArray("data");
+            for (int i = 0; i < jarray.length(); i++) {
+                JSONObject jo = jarray.getJSONObject(i);
+
+                PostDataBean pdb = new PostDataBean();
+                //pdb.setPost_id(jo.getString("post_id"));
+                pdb.setPost_img(jo.getString("imgurl"));
+                pdb.setPost_date(jo.getString("post_date"));
+                pdb.setPost_likes(0);
+                pdb.setPost_comments(0);
+                pdb.setPerson_profile_pic(Singleton.pref.getString("uimage",""));
+                pdb.setUser_name(firstname);
+                pdb.setLast_name(lastname);
+                pdb.setIsliked(0);
+               // pdb.setPerson_id(jo.getString("person_id"));
+                //  Log.e("postdetails",lastname+firstname+profilepic);
+                items.add(pdb);
+                Log.e("item new post",items+"");
+            }
+
+
+            feedAdapter.notifyDataSetChanged();
+        } catch (Exception ex) {
+//                    Log.e("error", ex.getMessage());
+        }
+
+
+
+    }
+
 
 
     @Override
@@ -80,6 +129,28 @@ public class PostFragment extends Fragment {
 
         feedAdapter = new PostFeedAdapter(getActivity(),items);
         rvFeed.setAdapter(feedAdapter);
+
+        rvFeed.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0) //check for scroll down
+                {
+                    visibleItemCount = linearLayoutManager.getChildCount();
+                    totalItemCount = linearLayoutManager.getItemCount();
+                    pastVisiblesItems = linearLayoutManager.findFirstVisibleItemPosition();
+
+                    if (loading)
+                    {
+                        if ((visibleItemCount + pastVisiblesItems) >= totalItemCount)
+                        {
+                            loading = false;
+                            getPost();
+//                            Toast.makeText(getActivity(), "called", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+            }
+        });
 
 
 
@@ -111,6 +182,7 @@ public class PostFragment extends Fragment {
                     }
                     for (int i = 0; i < jarray.length(); i++) {
                         JSONObject jo = jarray.getJSONObject(i);
+
                         PostDataBean pdb = new PostDataBean();
                         pdb.setPost_id(jo.getString("post_id"));
                         pdb.setPost_img(jo.getString("post_img"));
@@ -123,13 +195,20 @@ public class PostFragment extends Fragment {
                         pdb.setIsliked(jo.getInt("isliked"));
                         pdb.setPerson_id(jo.getString("person_id"));
 
+                        lastname=jo.getString("last_name");;
+                        firstname=jo.getString("user_name");
+                        //profilepic=jo.getString("person_profile_pic");
 
+                      //  Log.e("postdetails",lastname+firstname+profilepic);
                         items.add(pdb);
                     }
 
 
-// rv.setAdapter(adapter);
-                    // skipdata = shopdata.size();
+                    skipdata=items.size();
+                    if(jarray.length()<5)
+                        loading=false;
+                    else
+                        loading=true;
                     feedAdapter.notifyDataSetChanged();
                 } catch (Exception ex) {
 //                    Log.e("error", ex.getMessage());
@@ -153,7 +232,7 @@ public class PostFragment extends Fragment {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("rqid", 16+"");
                 params.put("person_id", Singleton.pref.getString("person_id", ""));
-
+                params.put("skipdata",skipdata+"");
 
                 return params;
             }

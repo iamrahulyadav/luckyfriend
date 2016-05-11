@@ -216,7 +216,7 @@ holder.ivFeedCenter.setImageResource(R.drawable.iiiii);
             CommentData commentData=new CommentData();
             commentData.setCommenttxxt(commenttxt);
             commentData.setUname(Singleton.pref.getString("uname", ""));
-            commentData.setProfilepic(Singleton.pref.getString("profile_pic", ""));
+            commentData.setProfilepic(Singleton.pref.getString("uimage", ""));
             commentData.setCtime(thisDate);
             loaded.add(commentData);
 
@@ -309,7 +309,6 @@ holder.ivFeedCenter.setImageResource(R.drawable.iiiii);
                     params.put("rqid", 12 + "");
                     params.put("person_id", Singleton.pref.getString("person_id", ""));
                     params.put("friend_reqperson_id", friend_person_id);
-                    params.put("noti_type",2+"");
 
                     return params;
                 }

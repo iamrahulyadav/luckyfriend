@@ -283,7 +283,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
               name=Singleton.pref.getString("uname","");
               username.setText(name);
                 gender=Singleton.pref.getString("person_gender","");
-          String profilepic=Singleton.pref.getString("profile_pic","");
+          String profilepic=Singleton.pref.getString("uimage","");
           Singleton.imageLoader.displayImage(profilepic,profileimage,Singleton.defaultOptions);
 
           if(gender.compareToIgnoreCase("Male")==0)
@@ -314,7 +314,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
               username.setText(Singleton.pref.getString("uname", ""));
 
               gender = Singleton.pref.getString("person_gender","");
-              String profilepic=Singleton.pref.getString("profile_pic","");
+              String profilepic=Singleton.pref.getString("uimage","");
 
               if(profilepic==""){
                   profileimage.setImageResource(R.drawable.iiiii);
@@ -345,6 +345,43 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                   }
               }
           }
+
+        if(type == 6) {
+            Singleton.pref.getString("uname", "");
+            username.setText(Singleton.pref.getString("uname", ""));
+
+            gender = Singleton.pref.getString("person_gender","");
+            String profilepic=Singleton.pref.getString("uimage","");
+
+            if(profilepic==""){
+                profileimage.setImageResource(R.drawable.iiiii);
+            }
+            else
+                Singleton.imageLoader.displayImage(profilepic,profileimage,Singleton.defaultOptions);
+
+            if(gender.compareToIgnoreCase("Male")==0)
+            {
+                menu_layout.setBackgroundColor(Color.parseColor("#2f6fff"));
+                if (Build.VERSION.SDK_INT >= 21) {
+                    Window window = getWindow();
+                    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                    window.setStatusBarColor(getResources().getColor(R.color.textColorPrimary));
+                }
+
+
+            }
+
+            else {
+                menu_layout.setBackgroundColor(Color.parseColor("#f63e65"));
+                if (Build.VERSION.SDK_INT >= 21) {
+                    Window window = getWindow();
+                    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                    window.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
+                }
+            }
+        }
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -383,7 +420,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                     public void onClick(View view) {
 
                         Intent newpost=new Intent(getApplicationContext(),NewPost.class);
-                        startActivity(newpost);
+                        startActivityForResult(newpost, 11);
 
                     }
                 });
@@ -600,6 +637,33 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             public void onClick(View view) {
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
                 MainActivity.bottomLayout.setVisibility(View.VISIBLE);
+
+                search.setBackgroundColor(Color.parseColor("#2f6fff"));
+                search.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.home_search_icon_white, 0, 0);
+                search.setTextColor(Color.parseColor("#ffffff"));
+
+                bottommessages.setBackgroundColor(Color.parseColor("#ffffff"));
+                bottommessages.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.home_message_icon, 0, 0);
+                bottommessages.setTextColor(Color.parseColor("#555e71"));
+
+                notification.setBackgroundColor(Color.parseColor("#ffffff"));
+                notification.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.home_notification_grey_icon, 0, 0);
+                notification.setTextColor(Color.parseColor("#555e71"));
+
+
+                bottomneraby.setBackgroundColor(Color.parseColor("#ffffff"));
+                bottomneraby.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.home_nearby_grey_icon, 0, 0);
+                bottomneraby.setTextColor(Color.parseColor("#555e71"));
+
+
+                bottommatches.setBackgroundColor(Color.parseColor("#ffffff"));
+                bottommatches.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.home_matches_grey_icon, 0, 0);
+                bottommatches.setTextColor(Color.parseColor("#555e71"));
+
+
+
+
+
                 mFragmentManager = getSupportFragmentManager();
                 mFragmentTransaction = mFragmentManager.beginTransaction();
                 mFragmentTransaction.replace(R.id.container_body, new HomeFragment()).commit();
@@ -647,8 +711,29 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
                 MainActivity.bottomLayout.setVisibility(View.VISIBLE);
                 bottommessages.setBackgroundColor(Color.parseColor("#2f6fff"));
+                bottommessages.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.home_message_white_icon, 0, 0);
+                bottommessages.setTextColor(Color.parseColor("#ffffff"));
+
                 search.setBackgroundColor(Color.parseColor("#ffffff"));
+                search.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.home_serach_icon, 0, 0);
+                search.setTextColor(Color.parseColor("#555e71"));
+
                 notification.setBackgroundColor(Color.parseColor("#ffffff"));
+                notification.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.home_notification_grey_icon, 0, 0);
+                notification.setTextColor(Color.parseColor("#555e71"));
+
+
+                bottomneraby.setBackgroundColor(Color.parseColor("#ffffff"));
+                bottomneraby.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.home_nearby_grey_icon, 0, 0);
+                bottomneraby.setTextColor(Color.parseColor("#555e71"));
+
+
+                bottommatches.setBackgroundColor(Color.parseColor("#ffffff"));
+                bottommatches.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.home_matches_grey_icon, 0, 0);
+                bottommatches.setTextColor(Color.parseColor("#555e71"));
+
+
+
                 mFragmentManager = getSupportFragmentManager();
                 mFragmentTransaction = mFragmentManager.beginTransaction();
                 mFragmentTransaction.replace(R.id.container_body, new MessageTabFragment()).commit();
@@ -692,6 +777,34 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             public void onClick(View view) {
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
                 MainActivity.bottomLayout.setVisibility(View.VISIBLE);
+
+                bottomneraby.setBackgroundColor(Color.parseColor("#2f6fff"));
+                bottomneraby.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.home_nearby_white_icon, 0, 0);
+                bottomneraby.setTextColor(Color.parseColor("#ffffff"));
+
+                search.setBackgroundColor(Color.parseColor("#ffffff"));
+                search.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.home_serach_icon, 0, 0);
+                search.setTextColor(Color.parseColor("#555e71"));
+
+                notification.setBackgroundColor(Color.parseColor("#ffffff"));
+                notification.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.home_notification_grey_icon, 0, 0);
+                notification.setTextColor(Color.parseColor("#555e71"));
+
+
+                bottommessages.setBackgroundColor(Color.parseColor("#ffffff"));
+                bottommessages.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.home_message_grey_icon, 0, 0);
+                bottommessages.setTextColor(Color.parseColor("#555e71"));
+
+
+                bottommatches.setBackgroundColor(Color.parseColor("#ffffff"));
+                bottommatches.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.home_matches_grey_icon, 0, 0);
+                bottommatches.setTextColor(Color.parseColor("#555e71"));
+
+
+
+
+
+
                 mFragmentManager = getSupportFragmentManager();
                 mFragmentTransaction = mFragmentManager.beginTransaction();
                 mFragmentTransaction.replace(R.id.container_body, new Nearby()).commit();
@@ -737,6 +850,34 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             public void onClick(View view) {
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
                 MainActivity.bottomLayout.setVisibility(View.VISIBLE);
+
+                bottommatches.setBackgroundColor(Color.parseColor("#2f6fff"));
+                bottommatches.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.home_matches_white_icon, 0, 0);
+                bottommatches.setTextColor(Color.parseColor("#ffffff"));
+
+                search.setBackgroundColor(Color.parseColor("#ffffff"));
+                search.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.home_serach_icon, 0, 0);
+                search.setTextColor(Color.parseColor("#555e71"));
+
+                notification.setBackgroundColor(Color.parseColor("#ffffff"));
+                notification.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.home_notification_grey_icon, 0, 0);
+                notification.setTextColor(Color.parseColor("#555e71"));
+
+
+                bottomneraby.setBackgroundColor(Color.parseColor("#ffffff"));
+                bottomneraby.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.home_nearby_grey_icon, 0, 0);
+                bottomneraby.setTextColor(Color.parseColor("#555e71"));
+
+
+                bottommessages.setBackgroundColor(Color.parseColor("#ffffff"));
+                bottommessages.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.home_message_grey_icon, 0, 0);
+                bottommessages.setTextColor(Color.parseColor("#555e71"));
+
+
+
+
+
+
                 mFragmentManager = getSupportFragmentManager();
                 mFragmentTransaction = mFragmentManager.beginTransaction();
                 mFragmentTransaction.replace(R.id.container_body, new MatchesFragment()).commit();
@@ -847,18 +988,41 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==10)
         {
-          String items=  data.getStringExtra("data");
 
+                String items=  data.getStringExtra("data");
 
+                if(items!=null) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("data", items);
+                    SearchFragment hme = new SearchFragment();
+                    hme.setArguments(bundle);
+                    mFragmentManager = getSupportFragmentManager();
+                    mFragmentTransaction = mFragmentManager.beginTransaction();
+                    mFragmentTransaction.replace(R.id.container_body, hme).commit();
+                }
+            else{
+
+                }
+                //Toast.makeText(this,requestCode+""+items,Toast.LENGTH_LONG).show();
+          }
+
+      else  if(requestCode==11)
+        {
+            String items=  data.getStringExtra("data");
+
+            if(items!=null) {
                 Bundle bundle = new Bundle();
                 bundle.putString("data", items);
-                HomeFragment hme = new HomeFragment();
+                PostFragment hme = new PostFragment();
                 hme.setArguments(bundle);
                 mFragmentManager = getSupportFragmentManager();
                 mFragmentTransaction = mFragmentManager.beginTransaction();
                 mFragmentTransaction.replace(R.id.container_body, hme).commit();
+            }
+           else
+            {
 
-                //Toast.makeText(this,requestCode+""+items,Toast.LENGTH_LONG).show();
-          }
+            }
+            }
     }
 }

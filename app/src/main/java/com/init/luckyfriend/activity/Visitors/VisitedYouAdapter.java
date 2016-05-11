@@ -260,7 +260,7 @@ public class VisitedYouAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHo
             CommentData commentData=new CommentData();
             commentData.setCommenttxxt(commenttxt);
             commentData.setUname(Singleton.pref.getString("uname", ""));
-            commentData.setProfilepic(Singleton.pref.getString("profile_pic", ""));
+            commentData.setProfilepic(Singleton.pref.getString("uimage", ""));
             commentData.setCtime(thisDate);
             loaded.add(commentData);
 

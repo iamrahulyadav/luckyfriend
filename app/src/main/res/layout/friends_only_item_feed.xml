@@ -75,7 +75,7 @@
                 android:id="@+id/ivFeedCenter"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/iiiii" />
+                android:src="@drawable/loading_icon" />
 
 
             <LinearLayout
@@ -98,7 +98,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    android:layout_marginTop="5dp">
+                    android:layout_marginTop="5dp"
+                    >
 
                     <LinearLayout
 
@@ -147,8 +148,8 @@
                             android:layout_width="45dp"
                             android:layout_height="45dp"
                             android:src="@drawable/comments_icon"
-                            android:textColor="#fff"
                             android:background="@android:color/transparent"
+                            android:layout_gravity="center"
                             />
 
                         <TextView
@@ -157,7 +158,6 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginRight="10dp"
-                            android:paddingTop="3dp"
                             android:text="11"
 
                             android:textColor="#fff"

@@ -95,6 +95,7 @@ public class EditPost extends AppCompatActivity {
             }
         });
 
+
         description=desc.getText().toString();
 
         upload.setOnClickListener(new View.OnClickListener() {
