@@ -82,12 +82,20 @@ public class FriendsOnlyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             holder.likeicon.setImageResource(R.drawable.like_icon);
 
 
+
+
         bindDefaultFeedItem(position, holder);
     }
 
     private void bindDefaultFeedItem(int position, CellFeedViewHolder holder) {
 
         WallDataBean gd = data.get(position);
+        String last_name;
+        if(gd.getLast_name()==null){
+            last_name="";
+        }
+        else
+        last_name=gd.getLast_name();
         //holder.likes.setText(gd.getPost_likes() + "");
         Singleton.imageLoader.displayImage(gd.getPerson_profile_img(), holder.ivUserProfile, Singleton.defaultOptions);
 
@@ -97,7 +105,7 @@ public class FriendsOnlyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         holder.country.setText(gd.getPeron_dob() + "," + gd.getPerson_country());
         holder.comment.setText(gd.getPost_comments() + "");
-        holder.name.setText(gd.getUser_name());
+        holder.name.setText(gd.getUser_name()+" "+last_name);
         holder.likes.setText(gd.getPost_likes() + "");
     }
 

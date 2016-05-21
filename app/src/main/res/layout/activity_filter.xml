@@ -149,8 +149,9 @@ android:background="#fff"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:visibility="gone"
+
         android:id="@+id/heightlayout"
+        android:visibility="gone"
         >
 
         <TextView
@@ -169,8 +170,8 @@ android:background="#fff"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             custom:tickColor="#222427"
-            custom:tickStart="15"
-            custom:tickEnd="50"
+            custom:tickStart="4"
+            custom:tickEnd="8"
             custom:tickHeight="0dp"
             custom:rangeBarColor="#222427"
             custom:temporaryPins="false"
@@ -186,69 +187,99 @@ android:background="#fff"
 
 
     </LinearLayout>
+
     <View
+        android:id="@+id/heightview"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#a9aeb9"
         android:visibility="gone"
         />
 
-    <RelativeLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
         android:id="@+id/statuslayout"
         android:visibility="gone"
         >
-
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/statuselect"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15sp"
+            android:layout_marginBottom="15sp"
             android:text="Status"
             android:textSize="16sp"
             android:textColor="#a9aeb9"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="10dp"
+
+            />
+        <TextView
+            android:id="@+id/statusval"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center"
+            />
+        <ImageView
+            android:id="@+id/next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/next"
+            android:layout_gravity="right|center"
             />
 
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Single"
-    android:textSize="16sp"
-    android:textColor="@color/HelpcolorPrimary"
-    android:layout_alignParentRight="true"
-    />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#a9aeb9"
+            android:layout_gravity="bottom"
+            />
+
+    </FrameLayout>
 
 
-    </RelativeLayout>
 
-    <View
+
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#a9aeb9"
+        android:layout_height="wrap_content"
+        android:id="@+id/mothertonguelayout"
         android:visibility="gone"
-        />
+        >
+        <TextView
+            android:id="@+id/motherTongueselect"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15sp"
+            android:layout_marginBottom="15sp"
+            android:text="Mother Tongue"
+            android:textSize="16sp"
+            android:textColor="#a9aeb9"
 
-<TextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="15sp"
-    android:layout_marginBottom="15sp"
-    android:text="Mother Tongue"
-    android:textSize="16sp"
-    android:textColor="#a9aeb9"
-    android:drawableRight="@drawable/next"
-    android:id="@+id/mothertongue"
-    android:visibility="gone"
-    />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#a9aeb9"
-        android:visibility="gone"
-        />
+            />
+        <TextView
+            android:id="@+id/mothertongueval"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center"
+            />
+        <ImageView
+            android:id="@+id/nexticon3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/next"
+            android:layout_gravity="right|center"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#a9aeb9"
+            android:layout_gravity="bottom"
+            />
+
+    </FrameLayout>
+
 <FrameLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content">

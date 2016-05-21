@@ -398,6 +398,9 @@
     <string name="title_activity_update_status">UpdateStatus</string>
     <string name="title_activity_country_filter">CountryFilter</string>
     <string name="title_activity_state_filter">StateFilter</string>
+    <string name="title_activity_image_edit">ImageEdit</string>
+    <string name="title_activity_mothertongue">Mothertongue</string>
+    <string name="title_activity_mothertongue_filter">MothertongueFilter</string>
 
 
 </resources>

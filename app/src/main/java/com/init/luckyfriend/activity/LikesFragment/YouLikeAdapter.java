@@ -80,6 +80,12 @@ public class YouLikeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         else
             holder.likes.setImageResource(R.drawable.like_icon);
 
+        if(gd.getIsfriend()==1) {
+
+            holder.add.setVisibility(View.GONE);
+        }
+        else
+            holder.add.setVisibility(View.VISIBLE);
 
 
         bindDefaultFeedItem(position, holder);

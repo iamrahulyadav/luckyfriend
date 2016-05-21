@@ -54,7 +54,7 @@ public class FullExtendedProfile extends AppCompatActivity implements View.OnCli
     private static final Integer[] IMAGES= {R.drawable.girlicon,R.drawable.female_icon,R.drawable.girlicon,R.drawable.iiiii};
     private ArrayList<Integer> ImagesArray = new ArrayList<Integer>();
     View rootView;
-    TextView place,languagestext,username;
+    TextView place,languagestext,username,block;
     ImageButton back,message;
 
     @Override
@@ -68,7 +68,9 @@ public class FullExtendedProfile extends AppCompatActivity implements View.OnCli
         username=(TextView)findViewById(R.id.username);
         back=(ImageButton)findViewById(R.id.back);
         message=(ImageButton)findViewById(R.id.message);
+        block=(TextView)findViewById(R.id.blockuser);
 
+        block.setOnClickListener(this);
         back.setOnClickListener(this);
         message.setOnClickListener(this);
 
@@ -222,6 +224,10 @@ public class FullExtendedProfile extends AppCompatActivity implements View.OnCli
             case R.id.message:
                 Toast.makeText(getApplicationContext(),"message",Toast.LENGTH_LONG).show();
                 break;
+            case R.id.blockuser:
+                Toast.makeText(getApplicationContext(),"user blocked",Toast.LENGTH_LONG).show();
+                break;
+
         }
     }
 }

@@ -59,7 +59,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="@drawable/btn_feed_action"
-                android:src="@drawable/home_plusicon" />
+                android:src="@drawable/home_plusicon"
+                android:id="@+id/add"
+                />
 
         </LinearLayout>
 

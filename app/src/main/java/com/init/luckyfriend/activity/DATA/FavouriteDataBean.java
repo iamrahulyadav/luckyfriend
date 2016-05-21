@@ -14,6 +14,15 @@ public class FavouriteDataBean {
     String post_user_country;
     int isliked;
     String person_id;
+    int isfriend;
+
+    public int getIsfriend() {
+        return isfriend;
+    }
+
+    public void setIsfriend(int isfriend) {
+        this.isfriend = isfriend;
+    }
 
     public String getPerson_id() {
         return person_id;

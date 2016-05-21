@@ -153,6 +153,7 @@ public class HomeFragment extends Fragment {
                         pdb.setPerson_id(jo.getString("person_id"));
                         pdb.setPeron_dob(jo.getString("person_dob"));
                         pdb.setIsLiked(jo.getInt("isliked"));
+                        pdb.setIsfriend(jo.getInt("isfriend"));
 
                         int year = 0, mon = 0, day = 0;
                         String[] data = pdb.getPeron_dob().split("-");

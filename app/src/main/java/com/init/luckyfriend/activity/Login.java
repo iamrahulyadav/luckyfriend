@@ -95,6 +95,8 @@ public class Login extends AppCompatActivity implements  View.OnClickListener,Go
     TwitterLoginButton loginButton;
     TwitterSession session;
     TextView twittername;
+    String  twitterImage,tusername,temail;
+    String accessToken,secretToken;
     // Note: Your consumer key and secret should be obfuscated in your source code before shipping.
     private static final String TWITTER_KEY = "TqKK6ItYHi4DqiDN2bCpwAQWa";
     private static final String TWITTER_SECRET = "fkppV8NnPdmw62058CQq2RFEKAwBDiX44AehfpnDaAGXRJRym6";
@@ -132,11 +134,37 @@ public class Login extends AppCompatActivity implements  View.OnClickListener,Go
         loginButton.setCallback(new Callback<TwitterSession>() {
             @Override
             public void success(Result<TwitterSession> result) {
+                //session = result.data;
+                 accessToken = result.data.getAuthToken().token;
+                 secretToken = result.data.getAuthToken().secret;
 
-                session = result.data;
+                session=Twitter.getSessionManager().getActiveSession();
+                Twitter.getApiClient(session).getAccountService()
+                        .verifyCredentials(true, false, new Callback<User>() {
+
+                            @Override
+                            public void failure(TwitterException e) {
+
+                            }
+
+                            @Override
+                            public void success(Result<User> userResult) {
+
+                                User user = userResult.data;
+                                twitterImage = user.profileImageUrl;
+                                tusername = user.name;
+                                //                temail=user.email;
+
+                                Log.e("twitter data", tusername + "   " + twitterImage + "  " + accessToken + "  " + secretToken);
+                                saveTwitterToken(accessToken, secretToken, tusername, twitterImage);
+
+                            }
+
+                        });
 
 
-                String username = session.getUserName();
+
+                /*String username = session.getUserName();
                 Long  userid = session.getUserId();
                 //String twitter_id = result.data.getUserId() + "";
                 String accessToken = result.data.getAuthToken().token;
@@ -144,11 +172,10 @@ public class Login extends AppCompatActivity implements  View.OnClickListener,Go
 
 
                 Log.e("data", result.data + "");
+*/
 
 
-                saveTwitterToken(accessToken, secretToken, username);
-
-            }
+                }
 
             @Override
             public void failure(TwitterException exception) {
@@ -288,7 +315,7 @@ public class Login extends AppCompatActivity implements  View.OnClickListener,Go
 
     }
 
-    private void saveTwitterToken(final String accessToken,final String secretToken,final String username) {
+    private void saveTwitterToken(final String accessToken,final String secretToken,final String tusername,final String tprofilepic) {
         RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest sr = new StringRequest(Request.Method.POST,getResources().getString(R.string.url), new Response.Listener<String>() {
             @Override
@@ -306,7 +333,9 @@ public class Login extends AppCompatActivity implements  View.OnClickListener,Go
 
                         SharedPreferences.Editor edit=Singleton.pref.edit();
                         edit.putString("person_id", person_id);
-                        edit.putString("uname",username);
+                        edit.putString("uname",tusername);
+                        edit.putString("uimage",tprofilepic);
+
                         edit.commit();
 
                         Intent MainIntent=new Intent(getApplicationContext(),MainActivity.class);
@@ -316,7 +345,7 @@ public class Login extends AppCompatActivity implements  View.OnClickListener,Go
                         finish();
 
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 
@@ -333,8 +362,10 @@ public class Login extends AppCompatActivity implements  View.OnClickListener,Go
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("rqid", 31+"");
-                params.put("twitterid",username);
+                params.put("twittername",tusername);
                 params.put("accesstoken",accessToken);
+                params.put("timage",tprofilepic);
+              //  params.put("temail",temail);
 
 
 

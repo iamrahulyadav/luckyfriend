@@ -68,8 +68,8 @@ public class PostFragment extends Fragment {
             getPost();
         else {
             //  Toast.makeText(getActivity(),extra.getString("data"),Toast.LENGTH_SHORT).show();
-            //  ParseData(extra.getString("data"));
-            getPost();
+              ParseData(extra.getString("data"));
+           //getPost();
              }
 
     }
@@ -160,7 +160,7 @@ public class PostFragment extends Fragment {
         return rootView;
 
     }
-
+private boolean firstiem=true;
     private void getPost() {
         prog.show();
         RequestQueue queue = Volley.newRequestQueue(getContext());
@@ -169,19 +169,22 @@ public class PostFragment extends Fragment {
             public void onResponse(String response) {
                 Log.e("mypost", response.toString());
               prog.dismiss();
-                items.clear();
 
                 try {
                     JSONObject jobj = new JSONObject(response.toString());
                     JSONArray jarray = jobj.getJSONArray("data");
-                    if (jarray.length() == 0) {
-                        // dataleft = false;
-                        Toast.makeText(getContext(),"No posts yet...",Toast.LENGTH_LONG).show();
+                    if(jarray.length()==0){
+                        if(firstiem) {
+                            Toast.makeText(getContext(), "No posts yet..", Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        }
 
-                        return;
-                    }
                     for (int i = 0; i < jarray.length(); i++) {
                         JSONObject jo = jarray.getJSONObject(i);
+
+                        lastname=jo.getString("last_name");;
+                        firstname=jo.getString("user_name");
 
                         PostDataBean pdb = new PostDataBean();
                         pdb.setPost_id(jo.getString("post_id"));
@@ -195,20 +198,22 @@ public class PostFragment extends Fragment {
                         pdb.setIsliked(jo.getInt("isliked"));
                         pdb.setPerson_id(jo.getString("person_id"));
 
-                        lastname=jo.getString("last_name");;
-                        firstname=jo.getString("user_name");
                         //profilepic=jo.getString("person_profile_pic");
 
                       //  Log.e("postdetails",lastname+firstname+profilepic);
                         items.add(pdb);
+                    firstiem=false;
                     }
 
 
                     skipdata=items.size();
+                    Log.e("skipdata size",skipdata+"");
                     if(jarray.length()<5)
                         loading=false;
                     else
                         loading=true;
+
+
                     feedAdapter.notifyDataSetChanged();
                 } catch (Exception ex) {
 //                    Log.e("error", ex.getMessage());
@@ -224,8 +229,7 @@ public class PostFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("response",error.getMessage()+"");
-      //          prog.dismiss();
-            }
+                 }
         }) {
             @Override
             protected Map<String, String> getParams() {
@@ -251,7 +255,7 @@ public class PostFragment extends Fragment {
     }
 public void refresh(String url,int pos)
 {
-    Toast.makeText(getActivity(),"called",Toast.LENGTH_LONG).show();
+    //Toast.makeText(getActivity(),"called",Toast.LENGTH_LONG).show();
     PostDataBean pdb=items.get(pos);
     pdb.setPost_img(url);
     feedAdapter.notifyDataSetChanged();

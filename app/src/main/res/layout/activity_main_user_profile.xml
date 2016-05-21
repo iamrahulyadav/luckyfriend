@@ -167,10 +167,10 @@
         android:layout_width="wrap_content"
         app:layout_anchor="@id/appbar"
         app:layout_anchorGravity="bottom|right|end"
-        android:src="@drawable/plus_icon"
+        android:src="@drawable/plus"
         android:layout_margin="@dimen/fab_margin"
         android:clickable="true"
         android:id="@+id/addpost"
         />
--->
+        -->
 </android.support.design.widget.CoordinatorLayout>

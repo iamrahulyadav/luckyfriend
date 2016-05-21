@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPropertyAnimatorListener;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -110,6 +111,13 @@ public class WallFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         else
             holder.likeicon.setImageResource(R.drawable.like_icon);
 
+
+        if(gd.getIsfriend()==1) {
+
+            holder.add.setVisibility(View.GONE);
+        }
+        else
+            holder.add.setVisibility(View.VISIBLE);
 
         bindDefaultFeedItem(position, holder);
 
@@ -246,11 +254,10 @@ public class WallFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     break;
 
                 case R.id.add:
-                    Toast.makeText(context, "friend request sent", Toast.LENGTH_LONG).show();
-//                    sendFriendRequest(wdb.getPerson_id(), getAdapterPosition());
+                    //Toast.makeText(context, "friend request sent", Toast.LENGTH_LONG).show();
                     String friend_person_id = wdb.getPerson_id();
-
-                    sendFriendRequest(friend_person_id);
+                    String post_id=wdb.getPost_id();
+                    sendFriendRequest(friend_person_id,post_id);
                     break;
 
                 case R.id.comment_icon:
@@ -373,7 +380,7 @@ public class WallFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
 
 
-        private void sendFriendRequest(final String friend_person_id) {
+        private void sendFriendRequest(final String friend_person_id,final String post_id) {
             //String url ="http://192.168.0.7/test.php";
 
             RequestQueue queue = Volley.newRequestQueue(context);
@@ -385,18 +392,14 @@ public class WallFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
                         JSONObject jobj = new JSONObject(response.toString());
                         if (jobj.getBoolean("status")) {
-                            int val = jobj.getInt("value");
-                            if (val == 1) {
-                                //WallDataBean wdb = data.get(pos);
-                                // wdb.setPost_likes(wdb.getPost_likes() - 1);
-                                // notifyItemChanged(pos);
-                            } else {
-                                //WallDataBean wdb = data.get(pos);
-                                //wdb.setPost_likes(wdb.getPost_likes() + 1);
-                                //notifyItemChanged(pos);
+                            Toast.makeText(context,"Friend request already sent", Toast.LENGTH_LONG).show();
+                        }
+                            else
+                            {
+                                Toast.makeText(context,"Friend request sent",Toast.LENGTH_LONG).show();
 
                             }
-                        }
+
 
                     } catch (Exception ex) {
                         Log.e("json parsing error", ex.getMessage() + "");
@@ -414,6 +417,7 @@ public class WallFeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     params.put("rqid", 12 + "");
                     params.put("person_id", Singleton.pref.getString("person_id", ""));
                     params.put("friend_reqperson_id", friend_person_id);
+                    params.put("post id", post_id);
 
                     return params;
                 }

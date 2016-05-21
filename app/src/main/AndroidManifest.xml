@@ -57,39 +57,50 @@
         <activity
             android:name=".activity.Help"
             android:label="My Account Help"
+            android:screenOrientation="portrait"
             android:theme="@style/MyTheme" />
         <activity
             android:name=".activity.HelpTopics"
             android:label="@string/title_activity_help_topics"
+            android:screenOrientation="portrait"
             android:theme="@style/WhiteTheme" >
         </activity>
         <activity
             android:name=".activity.MaritalFilter"
             android:label="@string/title_activity_marital_filter"
-            android:theme="@style/WhiteTheme" >
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".activity.Filter"
             android:label="@string/title_activity_filter"
+            android:screenOrientation="portrait"
             android:theme="@style/WhiteTheme" >
         </activity>
         <activity
             android:name=".activity.Settings"
             android:label="@string/title_activity_settings"
+            android:screenOrientation="portrait"
             android:theme="@style/SettingsTheme" />
         <activity
             android:name=".activity.AfterLogin"
-            android:label="@string/title_activity_after_login" />
-        <activity android:name=".activity.ChatFragment.ChatActivity" />
+            android:label="@string/title_activity_after_login"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ChatFragment.ChatActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.Login"
             android:label="@string/title_activity_sign_up"
+            android:screenOrientation="portrait"
             android:theme="@style/WhiteTheme" />
-        <activity android:name=".activity.FillUserMandatoryFields" >
+        <activity
+            android:name=".activity.FillUserMandatoryFields"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".activity.LoginActivity"
             android:label="@string/title_activity_login"
+            android:screenOrientation="portrait"
             android:theme="@style/PinkTheme" />
         <activity
             android:name=".Test"
@@ -97,48 +108,79 @@
         <activity
             android:name=".activity.SignUpActivity"
             android:label="@string/title_activity_sign_up"
+            android:screenOrientation="portrait"
             android:theme="@style/PinkTheme" />
         <activity
             android:name=".activity.VipActivity"
-            android:label="@string/title_activity_vip" />
+            android:label="@string/title_activity_vip"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.Boost"
             android:label="@string/title_activity_boost"
-            android:theme="@style/WhiteTheme" />
+            android:screenOrientation="portrait"
+            android:theme="@style/WhiteTheme" >
+
+
+        </activity>
         <activity
             android:name=".activity.AppTour.AppTourSlides"
             android:label="Lucky Friend"
+            android:screenOrientation="portrait"
             android:theme="@style/WhiteTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity
             android:name=".activity.NewPost"
-            android:label="@string/title_activity_new_post" >
+            android:label="@string/title_activity_new_post"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".activity.EditProfile.MainUserProfile"
-            android:label="@string/title_activity_main_user_profile" />
+            android:label="@string/title_activity_main_user_profile"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.EditProfile.EditProfile"
-            android:label="@string/title_activity_edit_profile" >
+            android:label="@string/title_activity_edit_profile"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".activity.UpdateStatus"
-            android:label="@string/title_activity_update_status" >
+            android:label="@string/title_activity_update_status"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".activity.EditPost" />
-        <activity android:name=".activity.ExtendedProfile.FullExtendedProfile" />
+        <activity
+            android:name=".activity.EditPost"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ExtendedProfile.FullExtendedProfile"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.CountryFilter"
-            android:label="@string/title_activity_country_filter" >
+            android:label="@string/title_activity_country_filter"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".activity.StateFilter"
-            android:label="@string/title_activity_state_filter" >
+            android:label="@string/title_activity_state_filter"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.EditProfile.ImageEdit"
+            android:label="@string/title_activity_image_edit"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.Mothertongue"
+            android:label="@string/title_activity_mothertongue" >
+        </activity>
+        <activity
+            android:name=".activity.MothertongueFilter"
+            android:label="@string/title_activity_mothertongue_filter" >
         </activity>
     </application>
 

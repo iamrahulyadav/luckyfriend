@@ -78,7 +78,7 @@
             android:layout_height="45dp"
             android:src="@drawable/comment_icon_blue"
             android:layout_gravity="center_vertical"
-            android:id="@+id/notiimage"
+            android:id="@+id/noticomment"
             android:layout_weight="0"
             />
     </LinearLayout>

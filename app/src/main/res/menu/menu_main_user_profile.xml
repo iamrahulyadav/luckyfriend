@@ -3,13 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto" >
 
     <item
-        android:icon="@drawable/ic_action_action_info_outline"
+        android:icon="@drawable/profilepic_edit"
+        android:title="Edit Image"
+        app:showAsAction="ifRoom">
+        <menu>
+
+                <item
+                    android:id="@+id/imgchk"
+                    android:title="Edit Image"
+                    >
+                </item>
+        </menu>
+    </item>
+
+    <item
+        android:icon="@drawable/edit_profile_icon"
         android:title="Edit Profile"
         app:showAsAction="ifRoom">
         <menu>
             <group
                 android:checkableBehavior="none"
                 android:menuCategory="container" >
+
                 <item
                     android:id="@+id/editprofile"
                     android:title="Edit Profile">

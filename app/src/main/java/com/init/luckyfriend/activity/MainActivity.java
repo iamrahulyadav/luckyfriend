@@ -214,7 +214,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
 
       type=getIntent().getIntExtra("typeLogin",1);
-        //Toast.makeText(MainActivity.this, "type " + type, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(MainActivity.this, "type " + type, Toast.LENGTH_SHORT).show();
 
        if(type==1){
            name=Singleton.pref.getString("uname","");
@@ -254,13 +254,13 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         if(type==2){
             name=Singleton.pref.getString("uname","");
             username.setText(name);
-           /* String profilepic=Singleton.pref.getString("uimage","");
+            String profilepic=Singleton.pref.getString("uimage","");
             // Singleton.imageLoader.displayImage(profilepic, profileimage, Singleton.defaultOptions);
             if (profilepic == "") {
                 profileimage.setImageResource(R.drawable.iiiii);
             } else
                 Singleton.imageLoader.displayImage(profilepic, profileimage, Singleton.defaultOptions);
-*/
+
 
         }
 
@@ -441,7 +441,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 //mFragmentTransaction = mFragmentManager.beginTransaction();
                 //mFragmentTransaction.replace(R.id.container_body, new Mai).commit();
                 Intent mainuserprofile=new Intent(getApplicationContext(), MainUserProfile.class);
-                startActivity(mainuserprofile);
+                startActivityForResult(mainuserprofile,13);
 
 
             }
@@ -1024,5 +1024,41 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
             }
             }
+
+        else  if(requestCode==13)
+        {
+            String items=  data.getStringExtra("image");
+
+            if(items!=null) {
+//                Toast.makeText(getApplicationContext(),items,Toast.LENGTH_LONG).show();
+               Singleton.imageLoader.displayImage(items,profileimage,Singleton.defaultOptions);
+
+                          }
+            else
+            {
+
+            }
+        }
+        if(requestCode==14)
+        {
+
+            String items=  data.getStringExtra("data");
+
+            if(items!=null) {
+                Bundle bundle = new Bundle();
+                bundle.putString("data", items);
+                AdvancedSearchFragment hme = new AdvancedSearchFragment();
+                hme.setArguments(bundle);
+                mFragmentManager = getSupportFragmentManager();
+                mFragmentTransaction = mFragmentManager.beginTransaction();
+                mFragmentTransaction.replace(R.id.container_body, hme).commit();
+            }
+            else{
+
+            }
+            //Toast.makeText(this,requestCode+""+items,Toast.LENGTH_LONG).show();
+        }
+
+
     }
 }

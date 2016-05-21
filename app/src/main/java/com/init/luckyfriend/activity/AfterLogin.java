@@ -37,7 +37,7 @@ public class AfterLogin extends AppCompatActivity {
     TextView appname,tagline;
     Typeface custom,customtagline;
     Integer type;
-    TextView location,maritalstatus,gender,looking_for,whatyoulookingfor;
+    TextView location,maritalstatus,gender,looking_for,whatyoulookingfor,dob;
     ProgressDialog prog;
     String person_id;
 
@@ -69,6 +69,7 @@ public class AfterLogin extends AppCompatActivity {
         gender=(TextView)findViewById(R.id.gender);
         whatyoulookingfor= (TextView)findViewById(R.id.whatlookingfor);
         looking_for=(TextView)findViewById(R.id.lookingfor);
+        dob=(TextView)findViewById(R.id.dob);
 
         person_id=Singleton.pref.getString("person_id","");
 
@@ -91,7 +92,12 @@ public class AfterLogin extends AppCompatActivity {
                     gender.setError("Please fill the sexuality");
                 return;
                 }
-              else if(looking_for.getText().toString()== null){
+                else if(dob.getText().toString()== null){
+                    dob.setError("Please fill date of birth");
+                    return;
+                }
+
+                else if(looking_for.getText().toString()== null){
                     looking_for.setError("Please fill the details");
                 return;
                 }
@@ -100,7 +106,7 @@ public class AfterLogin extends AppCompatActivity {
                 return;
                 }
 
-                submitDetails(location.getText().toString(),maritalstatus.getText().toString(),gender.getText().toString(),looking_for.getText().toString(),whatyoulookingfor.getText().toString());
+                submitDetails(location.getText().toString(),maritalstatus.getText().toString(),gender.getText().toString(),looking_for.getText().toString(),whatyoulookingfor.getText().toString(),dob.getText().toString());
 
                 //Intent home=new Intent(getApplicationContext(),MainActivity.class);
                 //home.putExtra("typeLogin",4);
@@ -109,7 +115,7 @@ public class AfterLogin extends AppCompatActivity {
         });
     }
 
-    private void submitDetails(final String loc,final String marital_status, final String persongender, final String looking_for, final String what_looking_for) {
+    private void submitDetails(final String loc,final String marital_status, final String persongender, final String looking_for, final String what_looking_for,final String dob) {
 
         prog.show();
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -158,6 +164,7 @@ public class AfterLogin extends AppCompatActivity {
                 params.put("looking_for",looking_for);
                 params.put("what_looking_for",what_looking_for);
                 params.put("person_id",person_id);
+                params.put("dob",dob);
                 return params;
             }
 

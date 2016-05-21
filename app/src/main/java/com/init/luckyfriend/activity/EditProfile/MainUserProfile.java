@@ -4,9 +4,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
@@ -37,13 +39,16 @@ import com.init.luckyfriend.activity.NewPost;
 import com.init.luckyfriend.activity.Singleton;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.SimpleTimeZone;
 
 import android.support.v7.graphics.Palette;
 import android.widget.Toast;
@@ -60,14 +65,21 @@ public class MainUserProfile extends AppCompatActivity implements View.OnClickLi
     @Bind(R.id.aboutuser) TextView aboutuser;
     @Bind(R.id.location) TextView location;
     @Bind(R.id.language) TextView language;
+    String imageP;
 
-  //  @Bind(R.id.addpost)
+   // @Bind(R.id.addpost)
     //FloatingActionButton addpost;
     @Bind(R.id.userprofileimage)
     ImageView profimg;
     private AlertDialog alert;
     public static int CAMERA_INTENT_CALLED=100;
     public static int GALLERY_INTENT_CALLED=200;
+    ImageView check;
+    String encodedImage;
+    Uri fileUri;
+    Uri selectedImage;
+    String picturePath;
+    String fileName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,16 +101,21 @@ public class MainUserProfile extends AppCompatActivity implements View.OnClickLi
        // byte[] decodedString = Base64.decode(profilepic, Base64.DEFAULT);
         //Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
         //profimg.setImageBitmap(decodedByte);
-        Singleton.imageLoader.displayImage(profilepic,profimg,Singleton.defaultOptions);
+//        Singleton.imageLoader.displayImage(profilepic,profimg,Singleton.defaultOptions);
+        Singleton.imageLoader.displayImage(Singleton.pref.getString("uimage",""),profimg,Singleton.defaultOptions);
+
+
         profimg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //showDialog();
+
+               // showDialog();
             }
         });
         //  setting typeface
 
 
+        fileName=new Date().getTime()+"luckyfriendprofilepic"+".jpg";
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -135,6 +152,8 @@ public class MainUserProfile extends AppCompatActivity implements View.OnClickLi
                     String dob=jobj.getString("dob");
                     String about=jobj.getString("aboutme");
                     String languages=jobj.getString("language");
+                    String interests=jobj.getString("interest");
+
                     String uname=jobj.getString("name");
                     collapsingToolbarLayout.setTitle(uname);
 
@@ -154,7 +173,8 @@ public class MainUserProfile extends AppCompatActivity implements View.OnClickLi
                     day=Integer.parseInt(data[2]);
                    //userinfo .setText(getAge(year, mon, day) +" "+ "years" + ","+country);
 
-
+                    String[] list=interests.split(",");
+                    Log.e("list size",list.length+"");
 
 
                 } catch (Exception ex) {
@@ -236,6 +256,8 @@ public class MainUserProfile extends AppCompatActivity implements View.OnClickLi
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main_user_profile, menu);
+       // check=(ImageView)findViewById(R.id.imgchk);
+
         return true;
     }
 
@@ -243,7 +265,10 @@ public class MainUserProfile extends AppCompatActivity implements View.OnClickLi
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         if (menuItem.getItemId() == android.R.id.home) {
 
-            onBackPressed();
+            Intent imagechange=new Intent();
+            imagechange.putExtra("image",imageP);
+            setResult(13,imagechange);
+            finish();
         }
         else if(menuItem.getItemId()==R.id.editprofile)
         {
@@ -251,6 +276,14 @@ public class MainUserProfile extends AppCompatActivity implements View.OnClickLi
 
             startActivityForResult(userprof, 2);
         }
+        else if(menuItem.getItemId()==R.id.imgchk)
+        {
+           Intent imageedit=new Intent(this,ImageEdit.class);
+            startActivityForResult(imageedit, 3);
+        }
+
+
+
         return super.onOptionsItemSelected(menuItem);
     }
     private void showDialog()
@@ -302,8 +335,30 @@ public class MainUserProfile extends AppCompatActivity implements View.OnClickLi
 
 
                 Bitmap photo = (Bitmap) data.getExtras().get("data");
-
                 profimg.setImageBitmap(photo);
+         //       check.setVisibility(View.VISIBLE);
+
+                String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                Cursor cursor = getContentResolver().query(selectedImage,
+                        filePathColumn, null, null, null);
+                cursor.moveToFirst();
+
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                picturePath = cursor.getString(columnIndex);
+                cursor.close();
+
+                Log.e("path", "----------------" + picturePath);
+                // Image
+                Bitmap bm = BitmapFactory.decodeFile(picturePath);
+                ByteArrayOutputStream bao = new ByteArrayOutputStream();
+                bm.compress(Bitmap.CompressFormat.JPEG, 90, bao);
+                byte[] ba = bao.toByteArray();
+                encodedImage = Base64.encodeToString(ba,Base64.DEFAULT);
+
+                Log.e("base64 profilepic", "-----" + encodedImage);
+
+
+
             }
             catch(Exception ex)
             {
@@ -316,7 +371,24 @@ public class MainUserProfile extends AppCompatActivity implements View.OnClickLi
                 final Uri imageUri = data.getData();
                 final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                 final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                profimg.setImageBitmap(selectedImage);
+           //     check.setVisibility(View.VISIBLE);
+
+                if (selectedImage != null) {
+
+                    profimg.setImageBitmap(selectedImage);
+
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    selectedImage.compress(Bitmap.CompressFormat.PNG, 100, stream);
+
+                    byte[] byteArray;
+
+                    byteArray = stream.toByteArray();
+                    encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+                    Log.e("encoded profilepic",encodedImage);
+
+                }
+
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
@@ -325,6 +397,30 @@ public class MainUserProfile extends AppCompatActivity implements View.OnClickLi
            // Toast.makeText(getApplicationContext(),requestCode+"",Toast.LENGTH_LONG).show();
         retrievedata();
         }
+        else if(requestCode==3){
+             imageP=  data.getStringExtra("imgurl");
+            if(imageP!=null) {
+                Singleton.imageLoader.displayImage(imageP, profimg, Singleton.defaultOptions);
+
+            }
+        else
+            {
+                Singleton.imageLoader.displayImage(Singleton.pref.getString("uimage",""), profimg, Singleton.defaultOptions);
+
+            }
+        }
+
+
+    }
+
+    @Override
+    public void onBackPressed() {
+      //  Toast.makeText(getApplicationContext(),"called",Toast.LENGTH_LONG).show();
+        Intent imagechange=new Intent();
+        imagechange.putExtra("image",imageP);
+        setResult(13,imagechange);
+        finish();
+
     }
 }
 

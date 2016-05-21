@@ -113,7 +113,6 @@ public class FriendsOnlySearch extends Fragment {
             public void onResponse(String response) {
                 Log.e("friends only", response.toString());
                 prog.dismiss();
-                items.clear();
                 try {
 
                     JSONObject jobj = new JSONObject(response.toString());
@@ -136,6 +135,8 @@ public class FriendsOnlySearch extends Fragment {
                         pdb.setPeron_dob(jo.getString("person_dob"));
                         pdb.setPost_id(jo.getString("post_id"));
                         pdb.setIsLiked(jo.getInt("isliked"));
+                        pdb.setIsfriend(jo.getInt("isfriend"));
+
                         pdb.setPerson_id(jo.getString("person_id"));
 
                         int year=0,mon=0,day=0;

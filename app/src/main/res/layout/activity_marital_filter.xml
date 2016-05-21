@@ -55,70 +55,18 @@
         android:layout_marginRight="15dp"
         />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Single"
-            android:textSize="18sp"
-            android:textColor="@color/HelpcolorPrimary"
-            android:gravity="start"
-            android:layout_toLeftOf="@+id/accountopen"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp"
-            android:layout_marginLeft="15dp"
-            />
-
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#dadada"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        />
-<TextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="Divorced"
-    android:paddingTop="15dp"
-    android:paddingBottom="15dp"
-    android:textSize="18sp"
-    android:gravity="start"
-    android:layout_marginLeft="15dp"
-    />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#dadada"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        />
-    <TextView
+    <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Separated"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp"
-        android:textSize="18sp"
-        android:gravity="start"
-        android:layout_marginLeft="15dp"
-        />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#dadada"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Widowed"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp"
-        android:textSize="18sp"
-        android:gravity="start"
-        android:layout_marginLeft="15dp"
-        />
+        android:id="@+id/list"
+        android:divider="#a9aeb9"
+        android:dividerHeight="1dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="10dp"
+        android:textColor="#a9aeb9"
 
+        >
+
+
+    </ListView>
 </LinearLayout>

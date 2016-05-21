@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,6 +47,7 @@ public class Nearby extends Fragment implements FlingCardListener.ActionDownInte
     private ArrayList<Data> al=new ArrayList<>();
     private SwipeFlingAdapterView flingContainer;
     ProgressDialog prog;
+    int skipdata=0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,6 +74,8 @@ public class Nearby extends Fragment implements FlingCardListener.ActionDownInte
 
 
 
+
+
         flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
             @Override
             public void removeFirstObjectInAdapter() {
@@ -90,6 +94,10 @@ public class Nearby extends Fragment implements FlingCardListener.ActionDownInte
                 //You also have access to the original object.
                 //If you want to use it just cast it (String) dataObject
 
+                if(al.size()==0)
+                {
+                    getnearby();
+                }
             }
 
             @Override
@@ -241,7 +249,7 @@ public class Nearby extends Fragment implements FlingCardListener.ActionDownInte
 
 
                     // rv.setAdapter(adapter);
-                    // skipdata = shopdata.size();
+                     skipdata = al.size();
                     myAppAdapter.notifyDataSetChanged();
                 } catch (Exception ex) {
                     Log.e("json parsing error", ex.getMessage());
@@ -262,8 +270,9 @@ public class Nearby extends Fragment implements FlingCardListener.ActionDownInte
                 params.put("person_country",Singleton.pref.getString("person_country",""));
                 params.put("person_loc", Singleton.pref.getString("person_city", ""));
                 params.put("person_id", Singleton.pref.getString("person_id", ""));
+                params.put("skipdata",skipdata+"");
 
-               // Log.e("location details",Singleton.pref.getString("person_country","")+""+Singleton.pref.getString("person_city", "")+""+Singleton.pref.getString("person_id", ""));
+                // Log.e("location details",Singleton.pref.getString("person_country","")+""+Singleton.pref.getString("person_city", "")+""+Singleton.pref.getString("person_id", ""));
 
 
                 return params;

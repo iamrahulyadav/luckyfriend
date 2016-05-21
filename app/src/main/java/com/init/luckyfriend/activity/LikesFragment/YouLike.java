@@ -133,6 +133,8 @@ public class YouLike extends android.support.v4.app.Fragment {
                         fdb.setPost_user_dob(jo.getString("person_dob"));
                         fdb.setPost_id(jo.getString("post_id"));
                         fdb.setIsliked(jo.getInt("isliked"));
+                        fdb.setIsfriend(jo.getInt("isfriend"));
+
                         fdb.setPerson_id(jo.getString("person_id"));
 
 

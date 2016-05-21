@@ -135,6 +135,7 @@ prog.show();
                         fdb.setPost_id(jo.getString("post_id"));
                         fdb.setIsliked(jo.getInt("isliked"));
                         fdb.setPerson_id(jo.getString("person_id"));
+                        fdb.setIsfriend(jo.getInt("isfriend"));
 
 
                         int year=0,mon=0,day=0;

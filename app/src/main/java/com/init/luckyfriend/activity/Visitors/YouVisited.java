@@ -102,7 +102,7 @@ public class YouVisited extends Fragment {
 
     }
 
-
+private boolean firsttime=true;
     private void getYouVisited() {
     prog.show();
         RequestQueue queue = Volley.newRequestQueue(getActivity());
@@ -118,6 +118,7 @@ public class YouVisited extends Fragment {
                     JSONArray jarray = jobj.getJSONArray("data");
                     if (jarray.length() == 0) {
                         // dataleft = false;
+                        if(firsttime)
                         Toast.makeText(getActivity(), "you visited no one yet...", Toast.LENGTH_LONG).show();
                         return;
                     }
@@ -144,6 +145,7 @@ public class YouVisited extends Fragment {
                         day=Integer.parseInt(data[2]);
                         fdb.setPerson_dob(getAge(year,mon,day)+"Years"+"");
                         items.add(fdb);
+                    firsttime=false;
                     }
 
 

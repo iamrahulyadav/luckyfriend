@@ -147,6 +147,7 @@ public void getFavourite(final String person_id)
                     fdb.setPost_user_country(jo.getString("post_user_country"));
                     fdb.setPost_user_dob(jo.getString("post_user_dob"));
                     fdb.setPost_id(jo.getString("post_id"));
+                    fdb.setIsfriend(jo.getInt("isfriend"));
 
 
                     int year=0,mon=0,day=0;

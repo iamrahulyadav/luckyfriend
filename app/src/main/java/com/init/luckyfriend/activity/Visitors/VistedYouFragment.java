@@ -114,7 +114,7 @@ public class VistedYouFragment extends Fragment {
              public void onResponse(String response) {
                  prog.dismiss();
                  Log.e("visitedyou", response.toString());
-                items.clear();
+
                  try {
 
                      JSONObject jobj = new JSONObject(response.toString());

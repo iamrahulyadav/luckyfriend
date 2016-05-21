@@ -17,6 +17,15 @@ public class WallDataBean
     String like_person_id;
     String peron_dob;
     int isLiked;
+    int isfriend;
+
+    public int getIsfriend() {
+        return isfriend;
+    }
+
+    public void setIsfriend(int isfriend) {
+        this.isfriend = isfriend;
+    }
 
     public int getIsLiked() {
         return isLiked;

@@ -2,6 +2,7 @@ package com.init.luckyfriend.activity.WallSearch;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.media.Image;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -72,23 +74,34 @@ public class FavouriteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
         final CellFeedViewHolder holder = (CellFeedViewHolder) viewHolder;
+
+        FavouriteDataBean gd=data.get(position);
+        if(gd.getIsfriend()==1) {
+
+            holder.add.setVisibility(View.GONE);
+        }
+        else
+            holder.add.setVisibility(View.VISIBLE);
+
+
         bindDefaultFeedItem(position, holder);
     }
 
     private void bindDefaultFeedItem(int position, CellFeedViewHolder holder) {
 
         FavouriteDataBean gd=data.get(position);
+        String last_name;
 
         holder.likecount.setText(gd.getPost_likes() + "");
         Singleton.imageLoader.displayImage(gd.getPost_img(), holder.ivFeedCenter, Singleton.defaultOptions);
         Singleton.imageLoader.displayImage(gd.getPost_user_profile_pic(), holder.userimg, Singleton.defaultOptions);
         if(gd.getPost_user_last_name()==null){
-          String last_name="";
+           last_name="";
         }
         else {
-            String last_name = gd.getPost_user_last_name();
+             last_name = gd.getPost_user_last_name();
         }
-        holder.username.setText(gd.getPost_user_first_name() );
+        holder.username.setText(gd.getPost_user_first_name()+" "+last_name );
 
         holder.userdetails.setText(gd.getPost_user_dob() + "," + gd.getPost_user_country());
 
@@ -107,7 +120,7 @@ public class FavouriteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public  class CellFeedViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView ivFeedCenter,userimg;
         TextView caption;
-        ImageButton likes,comments;
+        ImageButton likes,comments,add;
         TextView likecount,username,userdetails;
         EditText commentsbox;
         Dialog commentdialog;
@@ -124,6 +137,7 @@ public class FavouriteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             caption = (TextView) view.findViewById(R.id.caption);
             likes=(ImageButton)view.findViewById(R.id.like);
             comments=(ImageButton)view.findViewById(R.id.comments);
+            add=(ImageButton)view.findViewById(R.id.add);
 
             comments.setOnClickListener(this);
 
@@ -177,10 +191,68 @@ public class FavouriteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     commentdialog.show();
                     break;
 
+                case R.id.add:
+                    String friend_person_id = fdb.getPerson_id();
+                    String post_id=fdb.getPost_id();
+                    sendFriendRequest(friend_person_id, post_id);
+                    break;
+
             }
 
         }
-        private void readComments(final String post_id) {
+        private void sendFriendRequest(final String friend_person_id,final String post_id) {
+            //String url ="http://192.168.0.7/test.php";
+
+            RequestQueue queue = Volley.newRequestQueue(context);
+            StringRequest sr = new StringRequest(Request.Method.POST, context.getResources().getString(R.string.url), new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    Log.e("friend add", response.toString());
+                    try {
+
+                        JSONObject jobj = new JSONObject(response.toString());
+                        if (jobj.getBoolean("status")) {
+                            Toast.makeText(context, "Friend request already sent", Toast.LENGTH_LONG).show();
+                        }
+                        else
+                        {
+                            Toast.makeText(context,"Friend request sent",Toast.LENGTH_LONG).show();
+
+                        }
+
+
+                    } catch (Exception ex) {
+                        Log.e("json parsing error", ex.getMessage() + "");
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+//showing snakebar here
+                }
+            }) {
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("rqid", 12 + "");
+                    params.put("person_id", Singleton.pref.getString("person_id", ""));
+                    params.put("friend_reqperson_id", friend_person_id);
+                    params.put("post id", post_id);
+
+                    return params;
+                }
+
+
+            };
+            queue.add(sr);
+
+        }
+
+
+
+
+
+    private void readComments(final String post_id) {
 
             progress.setVisibility(View.VISIBLE);
             RequestQueue queue = Volley.newRequestQueue(context);
@@ -263,7 +335,7 @@ public class FavouriteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             adapter.notifyDataSetChanged();
             commentsbox.setText("");
 
-            sendMessageToServer(comment,thisDate,post_id);
+            sendMessageToServer(comment, thisDate, post_id);
         }
 
         private void sendMessageToServer(final String comment, final String thisDate,final String postid) {

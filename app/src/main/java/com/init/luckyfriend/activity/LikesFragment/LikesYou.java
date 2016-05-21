@@ -45,6 +45,7 @@ public class LikesYou extends android.support.v4.app.Fragment {
 
 
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,6 +101,7 @@ public class LikesYou extends android.support.v4.app.Fragment {
         return rootView;
 
     }
+    private boolean firstiem=true;
 
     private void getLike() {
 
@@ -116,6 +118,7 @@ public class LikesYou extends android.support.v4.app.Fragment {
                     JSONArray jarray = jobj.getJSONArray("data");
                     if (jarray.length() == 0) {
                         // dataleft = false;
+                        if(firstiem)
                         Toast.makeText(getContext(), "No one likes you yet", Toast.LENGTH_LONG).show();
                         return;
                     }
@@ -133,6 +136,7 @@ public class LikesYou extends android.support.v4.app.Fragment {
                         fdb.setPost_id(jo.getString("post_id"));
                         fdb.setPerson_id(jo.getString("person_id"));
                         fdb.setIsliked(jo.getInt("isliked"));
+                        fdb.setIsfriend(jo.getInt("isfriend"));
 
 
                         int year=0,mon=0,day=0;
@@ -140,8 +144,9 @@ public class LikesYou extends android.support.v4.app.Fragment {
                         year=Integer.parseInt(data[0]);
                         mon=Integer.parseInt(data[1]);
                         day=Integer.parseInt(data[2]);
-                        fdb.setPost_user_dob(getAge(year,mon,day)+"years"+"");
+                        fdb.setPost_user_dob(getAge(year,mon,day)+"years"+ "");
                         items.add(fdb);
+                        firstiem=false;
                     }
 
 
