@@ -170,7 +170,7 @@ public class FillUserMandatoryFields extends Activity implements View.OnClickLis
                 }
 
 
-              //  savedata(ugender, datetime.getText().toString(), ucountry, city.getText().toString(), umaritalstatus, usex, lookingfor, whatyoulookingfor.getText().toString());
+
 
                 savedata();
 
@@ -264,9 +264,9 @@ public class FillUserMandatoryFields extends Activity implements View.OnClickLis
 
 
                         SharedPreferences.Editor edit = Singleton.pref.edit();;
-                        edit.putString("person_gender",jobj.getString("person_gender"));
-                        edit.putString("person_country",jobj.getString("person_country"));
-                        edit.putString("person_city",jobj.getString("person_city"));
+                        edit.putString("ugender",jobj.getString("person_gender"));
+                        edit.putString("ucountry",jobj.getString("person_country"));
+                        edit.putString("ucity",jobj.getString("person_city"));
                         edit.putString("uimage",jobj.getString("profile_pic"));
 
                         edit.commit();
@@ -306,6 +306,8 @@ public class FillUserMandatoryFields extends Activity implements View.OnClickLis
                 params.put("person_id",Singleton.pref.getString("person_id", ""));
                 params.put("encoded_image",encodedImage);
                 params.put("fname",fileName);
+
+
 
                 return params;
             }

@@ -2,6 +2,8 @@ package com.init.luckyfriend.activity;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -16,13 +18,17 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.internal.view.ContextThemeWrapper;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -54,6 +60,7 @@ import com.init.luckyfriend.activity.FriendSearch.FriendsSearchFragment;
 import com.init.luckyfriend.activity.HomeFragment.HomeFragment;
 import com.init.luckyfriend.activity.LikesFragment.LikesTabFragment;
 import com.init.luckyfriend.activity.Messages.MessageTabFragment;
+import com.init.luckyfriend.activity.MyPost.PostDataBean;
 import com.init.luckyfriend.activity.MyPost.PostFragment;
 import com.init.luckyfriend.activity.NearByTinder.Nearby;
 import com.init.luckyfriend.activity.Notification.NotificationFragment;
@@ -104,21 +111,49 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
 
-        toolbartitle=(TextView)findViewById(R.id.toolbar_title);
-        toolbaricon=(ImageButton)findViewById(R.id.toolbar_icon);
-        toolbarplus=(ImageButton)findViewById(R.id.toolbar_plus);
+        toolbartitle = (TextView) findViewById(R.id.toolbar_title);
+        toolbaricon = (ImageButton) findViewById(R.id.toolbar_icon);
+        toolbarplus = (ImageButton) findViewById(R.id.toolbar_plus);
 
-        status=(ImageButton)findViewById(R.id.update_status);
+        status = (ImageButton) findViewById(R.id.update_status);
 
 //        prog=new ProgressDialog(this);
-  //      prog.setMessage("Updating status...");
+        //      prog.setMessage("Updating status...");
 
         toolbaricon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Intent filter=new Intent(getApplicationContext(),Filter.class);
+                PopupMenu popup = new PopupMenu(MainActivity.this, toolbaricon);
+                //Inflating the Popup using xml file
+                popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
+
+                //registering popup with OnMenuItemClickListener
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+                        //Toast.makeText(MainActivity.this, "You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+                        Intent filter=new Intent(getApplicationContext(),Filter.class);
+                        startActivityForResult(filter, 10);
+
+                        return true;
+                    }
+                });
+
+                popup.show();//showing popup menu
+
+
+                //closing the setOnClickListener method
+
+               /* Context wrapper = new ContextThemeWrapper(getApplicationContext(), R.style.PopupMenu);
+                PopupMenu popupMenu = new PopupMenu(wrapper, view);
+                popupMenu.setOnMenuItemClickListener(new MenuClick());
+                popupMenu.inflate(R.menu.action_menu);
+                popupMenu.show();
+*/
+
+    /*             Intent filter=new Intent(getApplicationContext(),Filter.class);
                 startActivityForResult(filter, 10);
+      */
             }
         });
 
@@ -282,7 +317,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         if(type == 4) {
               name=Singleton.pref.getString("uname","");
               username.setText(name);
-                gender=Singleton.pref.getString("person_gender","");
+                gender=Singleton.pref.getString("ugender","");
           String profilepic=Singleton.pref.getString("uimage","");
           Singleton.imageLoader.displayImage(profilepic,profileimage,Singleton.defaultOptions);
 
@@ -313,7 +348,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
               Singleton.pref.getString("uname", "");
               username.setText(Singleton.pref.getString("uname", ""));
 
-              gender = Singleton.pref.getString("person_gender","");
+              gender = Singleton.pref.getString("ugender","");
               String profilepic=Singleton.pref.getString("uimage","");
 
               if(profilepic==""){
@@ -350,7 +385,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             Singleton.pref.getString("uname", "");
             username.setText(Singleton.pref.getString("uname", ""));
 
-            gender = Singleton.pref.getString("person_gender","");
+            gender = Singleton.pref.getString("ugender","");
             String profilepic=Singleton.pref.getString("uimage","");
 
             if(profilepic==""){
@@ -582,6 +617,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 notification.setBackgroundColor(Color.parseColor("#ffffff"));
                 notification.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.home_notification_grey_icon, 0, 0);
                 notification.setTextColor(Color.parseColor("#555e71"));
+
 
                 bottommatches.setBackgroundColor(Color.parseColor("#ffffff"));
                 bottommatches.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.home_matches_grey_icon, 0, 0);
@@ -1061,4 +1097,46 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
 
     }
+
+    private class MenuClick implements PopupMenu.OnMenuItemClickListener {
+        int pos;
+
+        public MenuClick(int pos) {
+            this.pos = pos;
+        }
+
+        public MenuClick(){
+
+        }
+
+        @Override
+        public boolean onMenuItemClick(final MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.user_edit:
+                    //Toast.makeText(context, "Edit Clicked" + pos, Toast.LENGTH_SHORT).show();
+                    break;
+
+
+
+                case R.id.user_delete:
+//                    Toast.makeText(context, "Delete Clicked" + pos, Toast.LENGTH_SHORT).show();
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getApplicationContext());
+                    alertDialogBuilder.setMessage("Do you really want to delete the post ?");
+
+                    alertDialogBuilder.setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface arg0, int arg1) {
+                            // Toast.makeText(context, "You clicked yes button", Toast.LENGTH_LONG).show();
+
+
+                        }
+                    });
+
+                                        break;
+            }
+            return false;
+        }
+
+    }
+
 }

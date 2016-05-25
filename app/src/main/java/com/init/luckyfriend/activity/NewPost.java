@@ -19,6 +19,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -86,8 +87,11 @@ public class NewPost extends AppCompatActivity {
                     return;
                 }
                else if(imgEncoded!=null) {
-                   sendpost();
 
+                    Toast.makeText(getApplicationContext(), "Clicked", Toast.LENGTH_LONG).show();
+
+                    send();
+                    return;
                 }
                 }
         });
@@ -113,26 +117,24 @@ public class NewPost extends AppCompatActivity {
         Log.e("date",date);
     }
 
-    private void sendpost() {
-
+    private void send() {
         prog.show();
         RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest sr = new StringRequest(Request.Method.POST, getResources().getString(R.string.url), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                //prog.setVisibility(View.GONE);
-                Log.e("post", response.toString());
                 prog.dismiss();
-                Toast.makeText(getApplicationContext(),"uploaded successfully",Toast.LENGTH_LONG).show();
+                Log.e("post", response.toString());
 
+              Toast.makeText(getApplicationContext(),"uploaded successfully",Toast.LENGTH_LONG).show();
                 try {
                     JSONObject jobj=new JSONObject(response);
-                        //String imageurl = jobj.getString("imgurl");
+                    //String imageurl = jobj.getString("imgurl");
 
-                        Intent back = new Intent();
-                        back.putExtra("data", response);
-                        setResult(11, back);
-                        finish();
+                    Intent back = new Intent();
+                    back.putExtra("data", response);
+                    setResult(11, back);
+                    finish();
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -146,6 +148,7 @@ public class NewPost extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 Log.e("response",error.getMessage()+"");
                 prog.dismiss();
+                Toast.makeText(getApplicationContext(),"Unable to upload image.. Please try later",Toast.LENGTH_LONG).show();
             }
         }) {
             @Override
@@ -158,6 +161,7 @@ public class NewPost extends AppCompatActivity {
                 params.put("date",date+"");
                 params.put("fname",fileName);
 
+                Log.e("send111",fileName);
                 return params;
             }
 
@@ -169,8 +173,13 @@ public class NewPost extends AppCompatActivity {
             }
         };
         queue.add(sr);
+        sr.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS* 2, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+
 
     }
+
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

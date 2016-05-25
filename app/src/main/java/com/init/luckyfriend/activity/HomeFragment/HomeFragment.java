@@ -195,8 +195,10 @@ public class HomeFragment extends Fragment {
                 params.put("rqid", 1 + "");
                 params.put("person_id",Singleton.pref.getString("person_id", ""));
                 params.put("skipdata",skipdata+"");
+                params.put("ugender",Singleton.pref.getString("ugender", ""));
+                params.put("ucountry",Singleton.pref.getString("ucountry", ""));
 
-                Log.e("person_id", Singleton.pref.getString("person_id", ""));
+                Log.e("person_details", Singleton.pref.getString("ugender", "")+Singleton.pref.getString("ucountry", "")+Singleton.pref.getString("ucity", "")+Singleton.pref.getString("uname", ""));
                 return params;
             }
 

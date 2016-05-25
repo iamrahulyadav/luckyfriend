@@ -67,9 +67,9 @@ public class PostFragment extends Fragment {
         if (extra == null)
             getPost();
         else {
-            //  Toast.makeText(getActivity(),extra.getString("data"),Toast.LENGTH_SHORT).show();
-              ParseData(extra.getString("data"));
-           //getPost();
+            // Toast.makeText(getActivity(),extra.getString("data"),Toast.LENGTH_SHORT).show();
+              //ParseData(extra.getString("data"));
+           getPost();
              }
 
     }
@@ -163,7 +163,7 @@ public class PostFragment extends Fragment {
 private boolean firstiem=true;
     private void getPost() {
         prog.show();
-        RequestQueue queue = Volley.newRequestQueue(getContext());
+        RequestQueue queue = Volley.newRequestQueue(getActivity());
         StringRequest sr = new StringRequest(Request.Method.POST, getResources().getString(R.string.url), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -175,7 +175,7 @@ private boolean firstiem=true;
                     JSONArray jarray = jobj.getJSONArray("data");
                     if(jarray.length()==0){
                         if(firstiem) {
-                            Toast.makeText(getContext(), "No posts yet..", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), "No posts yet..", Toast.LENGTH_LONG).show();
                             return;
                         }
                         }

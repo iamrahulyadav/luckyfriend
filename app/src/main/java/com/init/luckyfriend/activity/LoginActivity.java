@@ -117,9 +117,9 @@ public class LoginActivity extends AppCompatActivity {
                         edit.putString("uname",jobj.getString("uname"));
                         edit.putString("person_id",jobj.getString("person_id"));
                         edit.putString("user_email",jobj.getString("user_email"));
-                        edit.putString("person_gender",jobj.getString("person_gender"));
-                        edit.putString("person_country", jobj.getString("person_country"));
-                        edit.putString("person_city", jobj.getString("person_location"));
+                        edit.putString("ugender",jobj.getString("person_gender"));
+                        edit.putString("ucountry", jobj.getString("person_country"));
+                        edit.putString("ucity", jobj.getString("person_location"));
                         edit.putString("uimage",jobj.getString("profilepic"));
 
 
